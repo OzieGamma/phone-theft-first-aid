@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="About us" description="Made by people whose phones were stolen.">
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">About us</h1>
+    </header>
+
+    <div class="stack body">
+      <p>
+        Our phones were stolen. We spent the next hour on hold, searching on borrowed phones, and finding out too late
+        what we should have done first. So we wrote it down. Here's what to do, in order. It's free. It always will be.
+      </p>
+      <p>We are not a security company or an agency. No ads. No tracking. We never sell to anyone while they panic.</p>
+    </div>
+  </div>
+
+  <!-- Layer 4: advocacy. Black ground and condensed caps stay out of the checklist. -->
+  <section class="advocacy" aria-labelledby="advocacy-title">
+    <div class="wrap">
+      <h2 id="advocacy-title" class="display">This happened to us. It shouldn't take a website to fix it.</h2>
+      <ul>
+        <li>A blocked phone should be a dead phone. Everywhere.</li>
+        <li>Phone makers: stop making stolen phones worth reselling.</li>
+        <li>Operators: one call, one minute, blocked.</li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .body {
+    font-size: 18px;
+    line-height: 29px;
+  }
+
+  .advocacy {
+    margin-block-start: var(--space-8);
+    padding-block: var(--space-8);
+    background: var(--black);
+    color: var(--white);
+  }
+  .advocacy ul {
+    margin-block-start: var(--space-6);
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-condensed);
+    font-stretch: 75%;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 32px;
+    text-transform: uppercase;
+  }
+  .advocacy li + li {
+    margin-block-start: var(--space-4);
+  }
+</style>

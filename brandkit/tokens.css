@@ -1,0 +1,96 @@
+/* Phone Theft First Aid — generated from tokens.json */
+:root, [data-theme="light"] {
+  --paper: #F1F1EC;
+  --surface-raised: #FFFFFF;
+  --surface-sunken: #E2E2DA;
+  --ink: #111111;
+  --ink-muted: #45453F;
+  --line: #BDBDB3;
+  --line-strong: #55554E;
+  --edge: #111111;
+  --tape: #FFD400;
+  --on-tape: #111111;
+  --tape-soft: #FFF2A8;
+  --stamp: #C4170F;
+  --on-stamp: #FFFFFF;
+  --stamp-soft: #FBE3DF;
+  --action: #1D3FBF;
+  --action-soft: #E2E7FA;
+  --done: #00695C;
+  --on-done: #FFFFFF;
+  --done-soft: #D2EFEA;
+  --warn: #A33A00;
+  --warn-fill: #FF7A00;
+  --warn-soft: #FFE6D1;
+  --focus: #111111;
+  --black: #111111;
+  --white: #FFFFFF;
+  --shadow-hard: 4px 4px 0 #111111;
+  --shadow-sheet: 6px 6px 0 #111111;
+  --focus-ring: 0 0 0 2px #F1F1EC, 0 0 0 5px #111111;
+}
+[data-theme="dark"] {
+  --paper: #121212;
+  --surface-raised: #1C1C1A;
+  --surface-sunken: #0A0A09;
+  --ink: #F4F4EF;
+  --ink-muted: #BDBDB4;
+  --line: #33332F;
+  --line-strong: #8F8F86;
+  --edge: #F4F4EF;
+  --tape: #FFD400;
+  --on-tape: #111111;
+  --tape-soft: #3A3200;
+  --stamp: #FF6B5E;
+  --on-stamp: #111111;
+  --stamp-soft: #3A0F0B;
+  --action: #8EA6FF;
+  --action-soft: #17213F;
+  --done: #4FD3B8;
+  --on-done: #111111;
+  --done-soft: #0C2B26;
+  --warn: #FFA15C;
+  --warn-fill: #FF7A00;
+  --warn-soft: #3A1B05;
+  --focus: #FFD400;
+  --black: #111111;
+  --white: #FFFFFF;
+  --shadow-hard: 4px 4px 0 #000000;
+  --shadow-sheet: 6px 6px 0 #000000;
+  --focus-ring: 0 0 0 2px #121212, 0 0 0 5px #FFD400;
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --radius-0: 0px;
+  --radius-xs: 2px;
+  --radius-round: 999px;
+  --tap-min: 48px;
+  --tap-primary: 64px;
+  --badge: 48px;
+  --picto-sm: 24px;
+  --picto-lg: 40px;
+  --border-hard: 3px;
+  --tilt-tape: -2deg;
+  --tilt-stamp: -6deg;
+  --font-sans: "Noto Sans", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans Devanagari", "Noto Sans SC", "Noto Sans JP", "Noto Sans KR", system-ui, sans-serif;
+  --font-condensed: "Noto Sans", "Noto Sans Arabic", "Noto Sans Hebrew", "Noto Sans Devanagari", "Noto Sans SC", "Noto Sans JP", "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "Noto Sans Mono", ui-monospace, Menlo, monospace;
+}
+.poster { font-family: var(--font-condensed); font-size: 80px; line-height: 72px; font-weight: 900; letter-spacing: -0.01em; font-stretch: 75%; text-transform: uppercase; }
+.display { font-family: var(--font-condensed); font-size: 44px; line-height: 44px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; }
+.title { font-family: var(--font-condensed); font-size: 30px; line-height: 34px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; }
+.step-number { font-family: var(--font-sans); font-size: 28px; line-height: 28px; font-weight: 900; }
+.step { font-family: var(--font-sans); font-size: 22px; line-height: 30px; font-weight: 800; }
+.step-detail { font-family: var(--font-sans); font-size: 18px; line-height: 29px; font-weight: 400; }
+.button { font-family: var(--font-sans); font-size: 20px; line-height: 24px; font-weight: 800; }
+.body { font-family: var(--font-sans); font-size: 17px; line-height: 27px; font-weight: 400; }
+.caption { font-family: var(--font-sans); font-size: 14px; line-height: 21px; font-weight: 500; }
+.label { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 700; letter-spacing: 0.04em; }
+.code { font-family: var(--font-mono); font-size: 18px; line-height: 26px; font-weight: 700; letter-spacing: 0.04em; }

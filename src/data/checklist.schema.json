@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phone Theft First Aid checklist",
+  "description": "One file per language. The website asks the items one by one; a PDF renders every item with all variants labelled.",
+  "type": "object",
+  "required": [
+    "lang",
+    "dir",
+    "title",
+    "allDone",
+    "items"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "lang": {
+      "type": "string"
+    },
+    "dir": {
+      "enum": [
+        "ltr",
+        "rtl"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "allDone": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/check"
+          },
+          {
+            "$ref": "#/$defs/choice"
+          },
+          {
+            "$ref": "#/$defs/step"
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "picto": {
+      "enum": [
+        "lock",
+        "locate",
+        "wipe",
+        "sim-block",
+        "password",
+        "card",
+        "police-report",
+        "insurance",
+        "imei",
+        "backup",
+        "borrowed-device",
+        "language",
+        "check",
+        "arrow",
+        "alert",
+        "info"
+      ]
+    },
+    "when": {
+      "description": "Show only when the answer to choice <key> is <option id>. If that choice was answered with an option no line refers to (e.g. \"Not sure\"), every variant shows with its label.",
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "line": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "when": {
+              "$ref": "#/$defs/when"
+            }
+          }
+        }
+      ]
+    },
+    "choice": {
+      "description": "A question that tailors later steps. Not printed as a step.",
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "picto",
+        "question",
+        "options"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "choice"
+        },
+        "picto": {
+          "$ref": "#/$defs/picto"
+        },
+        "question": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "step": {
+      "description": "One action. Numbered in order of appearance.",
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "picto",
+        "title",
+        "time",
+        "lines"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "step"
+        },
+        "picto": {
+          "$ref": "#/$defs/picto"
+        },
+        "title": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/line"
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": [
+        "label",
+        "href"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string",
+          "description": "Shown instead of the address, e.g. for tel: links."
+        },
+        "href": {
+          "type": "string",
+          "format": "uri"
+        },
+        "when": {
+          "$ref": "#/$defs/when"
+        }
+      }
+    },
+    "check": {
+      "description": "A card read before the steps, confirmed with one button. Not numbered.",
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "picto",
+        "title",
+        "lines",
+        "continue"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "check"
+        },
+        "picto": {
+          "$ref": "#/$defs/picto"
+        },
+        "title": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/line"
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        },
+        "continue": {
+          "type": "string",
+          "description": "Label of the button that moves on."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+---
+// Layer 2: what you're owed. A firm headline, then what to insist on.
+import Picto, { type PictoName } from './Picto.astro';
+
+interface Props {
+  picto: PictoName;
+  title: string;
+}
+
+const { picto, title } = Astro.props;
+---
+
+<section class="rights">
+  <h2 class="rights-title">
+    <Picto name={picto} size="lg" />
+    <span>{title}</span>
+  </h2>
+  <div class="rights-body"><slot /></div>
+</section>
+
+<style>
+  .rights {
+    padding: var(--space-5);
+    border: var(--border-hard) solid var(--edge);
+    border-inline-start-width: var(--space-3);
+    background: var(--surface-raised);
+  }
+  .rights-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  .rights-body {
+    margin-block-start: var(--space-3);
+    font-size: 18px;
+    line-height: 29px;
+  }
+  .rights-body :global(p + p) {
+    margin-block-start: var(--space-2);
+  }
+</style>

@@ -1,0 +1,156 @@
+/* Base styles. Colours, sizes and fonts come from brandkit/tokens.css only. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Full-height column: the footer sits at the bottom of the screen or lower. */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 27px;
+}
+
+h1,
+h2,
+h3,
+p,
+ol,
+ul {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: var(--border-hard) solid var(--focus);
+  outline-offset: 2px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Typed voice: codes such as *#06# stay LTR inside RTL text. */
+code,
+.label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+code {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.label {
+  font-size: 14px;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+/* Notice voice. Scripts without case keep normal width (brandkit README, Type). */
+.display,
+.title {
+  font-family: var(--font-condensed);
+  font-stretch: 75%;
+  text-transform: uppercase;
+}
+.display {
+  font-size: 44px;
+  line-height: 44px;
+  font-weight: 900;
+}
+.title {
+  font-size: 30px;
+  line-height: 34px;
+  font-weight: 800;
+}
+:is(:lang(ar), :lang(he), :lang(hi), :lang(zh), :lang(ja), :lang(ko)) :is(.display, .title) {
+  font-stretch: 100%;
+}
+
+.page-head {
+  padding-block: var(--space-6) var(--space-5);
+}
+.page-head p {
+  margin-block-start: var(--space-3);
+}
+
+.stack > * + * {
+  margin-block-start: var(--space-5);
+}
+
+/* Buttons: taped-on objects. A press drops the shadow; nothing else moves. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-min);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-hard) solid var(--edge);
+  border-radius: var(--radius-0);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-hard);
+  font: inherit;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:active {
+  box-shadow: none;
+  translate: 4px 4px;
+}
+.btn-primary {
+  min-height: var(--tap-primary);
+  background: var(--tape);
+  color: var(--on-tape);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn:active {
+    translate: none;
+  }
+}

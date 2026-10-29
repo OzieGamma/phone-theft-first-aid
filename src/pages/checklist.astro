@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Checklist from '../components/Checklist.astro';
+import { ui } from '../i18n/en';
+import { getChecklist } from '../lib/checklist';
+
+const list = getChecklist(ui.lang);
+---
+
+<Base title={list.title}>
+  <div class="wrap page">
+    <h1 class="visually-hidden">{list.title}</h1>
+    <Checklist />
+  </div>
+</Base>
+
+<style>
+  .page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+

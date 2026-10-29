@@ -1,0 +1,186 @@
+{
+  "$schema": "./checklist.schema.json",
+  "lang": "en",
+  "dir": "ltr",
+  "title": "Phone stolen? Do this now.",
+  "allDone": "All 6 done. Breathe.",
+  "items": [
+    {
+      "id": "safe",
+      "type": "check",
+      "picto": "alert",
+      "title": "Are you safe?",
+      "lines": [
+        "If you are hurt or in danger, call the emergency number first.",
+        "You can call it from any phone, even without a SIM card."
+      ],
+      "links": [
+        {
+          "label": "112",
+          "detail": "Europe and most countries",
+          "href": "tel:112"
+        },
+        {
+          "label": "999",
+          "detail": "United Kingdom",
+          "href": "tel:999"
+        },
+        {
+          "label": "911",
+          "detail": "United States and Canada",
+          "href": "tel:911"
+        }
+      ],
+      "continue": "I am safe"
+    },
+    {
+      "id": "borrowed",
+      "type": "check",
+      "picto": "borrowed-device",
+      "title": "On a borrowed phone or computer?",
+      "lines": [
+        "Open a private window.",
+        "Sign out of every account when you are done."
+      ],
+      "continue": "Continue"
+    },
+    {
+      "id": "phone",
+      "type": "choice",
+      "picto": "info",
+      "question": "Which phone was stolen?",
+      "options": [
+        {
+          "id": "iphone",
+          "label": "iPhone"
+        },
+        {
+          "id": "android",
+          "label": "Android"
+        },
+        {
+          "id": "unsure",
+          "label": "Not sure"
+        }
+      ]
+    },
+    {
+      "id": "cards",
+      "type": "step",
+      "picto": "card",
+      "title": "Freeze your bank cards.",
+      "time": "About 5 minutes per bank",
+      "lines": [
+        "Call your bank. The number is on the bank website and on the back of your card.",
+        "Or freeze the cards in your banking app on another device.",
+        "Ask about any payments made since the theft."
+      ]
+    },
+    {
+      "id": "sim",
+      "type": "step",
+      "picto": "sim-block",
+      "title": "Block your SIM card.",
+      "time": "About 10 minutes, plus time on hold",
+      "lines": [
+        "Call your mobile operator from any phone.",
+        "Ask them to block the SIM.",
+        "Ask for a new SIM with the same number.",
+        "A blocked SIM cannot receive your login codes."
+      ]
+    },
+    {
+      "id": "lock",
+      "type": "step",
+      "picto": "lock",
+      "title": "Lock your phone.",
+      "time": "About 2 minutes",
+      "lines": [
+        "On any phone or computer, open the page for your phone. Sign in.",
+        {
+          "text": "Choose Mark as lost. You do not need a code from your phone.",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "Choose Secure device.",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "The same page shows where the phone is. Do not go there yourself. Give the location to the police."
+      ],
+      "links": [
+        {
+          "label": "iPhone",
+          "href": "https://www.icloud.com/find",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "label": "Android",
+          "href": "https://www.google.com/android/find",
+          "when": {
+            "phone": "android"
+          }
+        },
+        {
+          "label": "Samsung",
+          "href": "https://smartthingsfind.samsung.com",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "email",
+      "type": "step",
+      "picto": "password",
+      "title": "Change your email password.",
+      "time": "About 3 minutes",
+      "lines": [
+        "Start with email. Email can reset everything else.",
+        "Then choose Sign out of all other devices.",
+        "Next, change the passwords for your bank and social accounts."
+      ]
+    },
+    {
+      "id": "police",
+      "type": "step",
+      "picto": "police-report",
+      "title": "Report the theft to the police.",
+      "time": "Today",
+      "lines": [
+        "Get a copy of the report and a reference number.",
+        "Your insurer and your operator will ask for them.",
+        {
+          "text": "Bring the IMEI number if you can find it. It is on the phone box, and in your Apple account.",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "Bring the IMEI number if you can find it. It is on the phone box, and in your Google account.",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "erase",
+      "type": "step",
+      "picto": "wipe",
+      "title": "Erase your phone.",
+      "time": "When you are sure it is gone",
+      "lines": [
+        "Use the same page you used to lock it. Choose Erase.",
+        "After you erase it, you may not see where it is.",
+        "Do not remove the phone from your account. Then it stays locked for the thief."
+      ]
+    }
+  ]
+}

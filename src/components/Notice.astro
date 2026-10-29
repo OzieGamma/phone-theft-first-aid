@@ -1,0 +1,46 @@
+---
+// Info note or warning banner. Warnings carry the triangle and a hazard strip, never colour alone.
+import Picto, { type PictoName } from './Picto.astro';
+
+interface Props {
+  tone?: 'info' | 'warn';
+  picto?: PictoName;
+  title: string;
+}
+
+const { tone = 'info', picto = tone === 'warn' ? 'alert' : 'info', title } = Astro.props;
+---
+
+<aside class:list={['notice', tone]} role={tone === 'warn' ? 'alert' : undefined}>
+  <Picto name={picto} />
+  <div>
+    <p class="notice-title">{title}</p>
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .notice {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: var(--border-hard) solid var(--edge);
+    background: var(--action-soft);
+    color: var(--ink);
+  }
+  .notice.warn {
+    position: relative;
+    padding-block-start: calc(var(--space-4) + var(--space-3));
+    background: var(--warn-soft);
+  }
+  .notice.warn::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--space-3);
+    background: repeating-linear-gradient(-45deg, var(--warn-fill) 0 10px, var(--black) 10px 20px);
+  }
+  .notice-title {
+    font-weight: 800;
+  }
+</style>

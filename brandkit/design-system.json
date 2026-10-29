@@ -1,0 +1,219 @@
+{
+  "v": 3,
+  "assetGroups": {
+    "Logos": {
+      "files": {
+        "lockup-on-dark.svg": {
+          "blob": "220518d5429fd56ebc493d51db3b8078",
+          "name": "lockup-on-dark.svg",
+          "size": 6233,
+          "type": "image/svg+xml"
+        },
+        "lockup-on-light.svg": {
+          "blob": "1a621075ba2d960ca3530ff8141a0d2f",
+          "name": "lockup-on-light.svg",
+          "size": 6233,
+          "type": "image/svg+xml"
+        },
+        "mark-mono-dark.svg": {
+          "blob": "ab5ecdab0ee7be683deec7dcbe9cedf0",
+          "name": "mark-mono-dark.svg",
+          "size": 796,
+          "type": "image/svg+xml"
+        },
+        "mark-mono-light.svg": {
+          "blob": "b309e8e531e190e8e257ce354f25f840",
+          "name": "mark-mono-light.svg",
+          "size": 846,
+          "type": "image/svg+xml"
+        },
+        "mark.svg": {
+          "blob": "6bd41d2668b39149cf9367a405028299",
+          "name": "mark.svg",
+          "size": 796,
+          "type": "image/svg+xml"
+        },
+        "wordmark.svg": {
+          "blob": "53d0db7925305d2cf776d311747a7ba8",
+          "name": "wordmark.svg",
+          "size": 4206,
+          "type": "image/svg+xml"
+        },
+        "tape-label.svg": {
+          "blob": "824cb2b61975db0cd64f13d0dc91c7b2",
+          "name": "tape-label.svg",
+          "size": 4319,
+          "type": "image/svg+xml"
+        }
+      },
+      "name": "Logos",
+      "order": [
+        "mark.svg",
+        "lockup-on-light.svg",
+        "lockup-on-dark.svg",
+        "wordmark.svg",
+        "tape-label.svg",
+        "mark-mono-dark.svg",
+        "mark-mono-light.svg"
+      ],
+      "tile": "l"
+    },
+    "Pictograms": {
+      "files": {
+        "alert.svg": {
+          "blob": "5e2ac10f65cfe939f0fd2d6f63aff2a6",
+          "name": "alert.svg",
+          "size": 332,
+          "type": "image/svg+xml"
+        },
+        "arrow.svg": {
+          "blob": "1ecd73efc622ac6f67c8ce3a7efa858b",
+          "name": "arrow.svg",
+          "size": 237,
+          "type": "image/svg+xml"
+        },
+        "backup.svg": {
+          "blob": "9cfeba2fba68016fba9490ff4aef91d0",
+          "name": "backup.svg",
+          "size": 300,
+          "type": "image/svg+xml"
+        },
+        "borrowed-device.svg": {
+          "blob": "4c116c0a9332fe5cc25fc60be3f681c4",
+          "name": "borrowed-device.svg",
+          "size": 506,
+          "type": "image/svg+xml"
+        },
+        "card.svg": {
+          "blob": "dbeff3779750b5853498ca1e589529e3",
+          "name": "card.svg",
+          "size": 317,
+          "type": "image/svg+xml"
+        },
+        "check.svg": {
+          "blob": "94165c28e69df825c66980aed60045cc",
+          "name": "check.svg",
+          "size": 200,
+          "type": "image/svg+xml"
+        },
+        "imei.svg": {
+          "blob": "9494411a97698146b4d5f3e6df4b3195",
+          "name": "imei.svg",
+          "size": 467,
+          "type": "image/svg+xml"
+        },
+        "info.svg": {
+          "blob": "27c36f72acc04e49a5aa616a88c0ed55",
+          "name": "info.svg",
+          "size": 297,
+          "type": "image/svg+xml"
+        },
+        "insurance.svg": {
+          "blob": "87252147c6e88a0d338a3c81a8cac73f",
+          "name": "insurance.svg",
+          "size": 327,
+          "type": "image/svg+xml"
+        },
+        "language.svg": {
+          "blob": "ebbaec026be458cef14f563fc5b4f454",
+          "name": "language.svg",
+          "size": 570,
+          "type": "image/svg+xml"
+        },
+        "locate.svg": {
+          "blob": "ed16023a7ea54ebe7020462dec6ab1dd",
+          "name": "locate.svg",
+          "size": 329,
+          "type": "image/svg+xml"
+        },
+        "lock.svg": {
+          "blob": "fd70b4a33edb8e23f36945a8f187338b",
+          "name": "lock.svg",
+          "size": 415,
+          "type": "image/svg+xml"
+        },
+        "password.svg": {
+          "blob": "7ab4b79e8a588d670fca4eb08c6964e8",
+          "name": "password.svg",
+          "size": 304,
+          "type": "image/svg+xml"
+        },
+        "police-report.svg": {
+          "blob": "029abe545ec052690bf7840c161c4b86",
+          "name": "police-report.svg",
+          "size": 393,
+          "type": "image/svg+xml"
+        },
+        "sim-block.svg": {
+          "blob": "c867e207ac0e07f3a193833355b049c4",
+          "name": "sim-block.svg",
+          "size": 485,
+          "type": "image/svg+xml"
+        },
+        "wipe.svg": {
+          "blob": "51eeb63788f5ebe76b94db812ec1317b",
+          "name": "wipe.svg",
+          "size": 375,
+          "type": "image/svg+xml"
+        }
+      },
+      "name": "Pictograms",
+      "order": [
+        "lock.svg",
+        "locate.svg",
+        "wipe.svg",
+        "sim-block.svg",
+        "password.svg",
+        "card.svg",
+        "police-report.svg",
+        "insurance.svg",
+        "imei.svg",
+        "backup.svg",
+        "borrowed-device.svg",
+        "language.svg",
+        "check.svg",
+        "arrow.svg",
+        "alert.svg",
+        "info.svg"
+      ],
+      "tile": "s"
+    }
+  },
+  "blobs": {},
+  "createdOnFiles": {
+    "at": "2026-10-27T14:50:00Z",
+    "v": 1
+  },
+  "docs": {
+    "readme": "project/README.md",
+    "sections": [
+      "project/voice.md"
+    ]
+  },
+  "groups": [
+    "Logos",
+    "Pictograms"
+  ],
+  "lastChange": {
+    "at": "2026-10-27T15:45:00Z",
+    "by": "Claude",
+    "note": "Final name Phone Theft First Aid; grassroots notice/zine character, new logo, palette and voice.",
+    "via": "Claude Code"
+  },
+  "layout": "files",
+  "libraries": [
+    {
+      "global": "React",
+      "name": "react",
+      "version": "18"
+    },
+    {
+      "global": "ReactDOM",
+      "name": "react-dom",
+      "version": "18"
+    }
+  ],
+  "namespace": "TheftKit",
+  "sections": {},
+  "title": "Phone Theft First Aid"
+}

@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import Picto, { type PictoName } from '../components/Picto.astro';
+
+const items: { picto: PictoName; title: string; lines: string[] }[] = [
+  {
+    picto: 'imei',
+    title: 'Write down your IMEI.',
+    lines: ['Type *#06# in the phone app. The number appears.', 'Write it on paper. Keep it at home.'],
+  },
+  {
+    picto: 'sim-block',
+    title: 'Set a SIM PIN.',
+    lines: ['Then a thief cannot move your SIM to another phone to get your login codes.'],
+  },
+  {
+    picto: 'locate',
+    title: 'Turn on Find My.',
+    lines: ['iPhone: Find My iPhone. Android: Find My Device.', 'Check that you know the password for that account.'],
+  },
+  {
+    picto: 'lock',
+    title: 'Turn on theft protection.',
+    lines: ['iPhone: Stolen Device Protection. Android: Theft protection.', 'It asks for your face or fingerprint before big changes.'],
+  },
+  {
+    picto: 'password',
+    title: 'Write your recovery codes on paper.',
+    lines: ['Do this for your email first.', 'Keep the paper at home, not in your wallet.'],
+  },
+  {
+    picto: 'backup',
+    title: 'Back up your phone.',
+    lines: ['Photos and contacts are what people miss most.'],
+  },
+];
+---
+
+<Base title="Do this tonight" description="So the next thief gets less. Six things to set up on your phone tonight.">
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">Do this tonight</h1>
+      <p>So the next thief gets less.</p>
+    </header>
+
+    <ul class="cards">
+      {
+        items.map((item) => (
+          <li>
+            <h2>
+              <Picto name={item.picto} size="lg" />
+              <span>{item.title}</span>
+            </h2>
+            {item.lines.map((line) => (
+              <p set:html={line.replace('*#06#', '<code>*#06#</code>')} />
+            ))}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+  .cards li {
+    padding: var(--space-5);
+    background: var(--surface-raised);
+    border: 2px solid var(--line-strong);
+    font-size: 18px;
+    line-height: 29px;
+  }
+  .cards h2 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-block-end: var(--space-2);
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  .cards p + p {
+    margin-block-start: var(--space-2);
+  }
+</style>

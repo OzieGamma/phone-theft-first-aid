@@ -1,0 +1,118 @@
+---
+import '../styles/fonts.css';
+import '../../brandkit/tokens.css';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { ui } from '../i18n/en';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = 'What to do in the first minutes after your phone is stolen. Free, no ads, no tracking.' } = Astro.props;
+const fullTitle = title ? `${title} | ${ui.name}` : ui.name;
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const nav = [
+  { href: '/', label: ui.nav.home },
+  { href: '/rights/', label: ui.nav.rights },
+  { href: '/prevention/', label: ui.nav.prevention },
+  { href: '/about/', label: ui.nav.about },
+  { href: '/privacy/', label: ui.nav.privacy },
+];
+---
+
+<!doctype html>
+<html lang={ui.lang} dir={ui.dir} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="theme-color" content="#FFD400" />
+  </head>
+  <body>
+    <a class="skip btn" href="#main">{ui.skip}</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <Logo />
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <nav aria-label="Site">
+          <ul>
+            {nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <p>{ui.footer}</p>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    inset-inline-start: var(--space-4);
+    inset-block-start: calc(-1 * var(--tap-primary) - var(--space-4));
+    z-index: 1;
+  }
+  .skip:focus {
+    inset-block-start: var(--space-2);
+  }
+
+  .site-header {
+    border-block-end: var(--border-hard) solid var(--edge);
+    background: var(--surface-raised);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block: var(--space-2);
+  }
+
+
+  .site-footer {
+    margin-block-start: var(--space-8);
+    padding-block: var(--space-6);
+    border-block-start: var(--border-hard) solid var(--edge);
+    background: var(--surface-raised);
+    color: var(--ink-muted);
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .site-footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-4);
+    padding: 0;
+    list-style: none;
+    margin-block-end: var(--space-4);
+  }
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .site-footer a[aria-current='page'] {
+    text-decoration-thickness: 5px;
+  }
+</style>

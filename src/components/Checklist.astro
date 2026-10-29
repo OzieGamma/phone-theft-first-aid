@@ -1,0 +1,426 @@
+---
+// Layer 1: the checklist, from src/data/checklist.<lang>.json.
+// Without JS it is one page: every step in order, every variant labelled ("iPhone: ...").
+// With JS it asks one item at a time. Each item has its own #hash, so the phone's back
+// button works. Answers live in sessionStorage: they survive a reload but are gone when
+// the tab closes, so nothing is left on a borrowed device.
+import Picto from './Picto.astro';
+import AfterLinks from './AfterLinks.astro';
+import { ui } from '../i18n/en';
+import { getChecklist, steps, lineText, variantLabel, type When } from '../lib/checklist';
+
+const list = getChecklist(ui.lang);
+const stepList = steps(list);
+const total = stepList.length;
+const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : undefined);
+---
+
+<div class="checklist" lang={list.lang} dir={list.dir}>
+  <nav class="bar" aria-label={ui.nav.home} hidden>
+    <a class="back btn" href="/">{ui.back}</a>
+    <div class="track" aria-hidden="true">
+      {stepList.map((step) => <span class="seg" data-for={step.id} />)}
+    </div>
+  </nav>
+
+  {
+    list.items.map((item) =>
+      item.type === 'choice' ? (
+        <section class="item" id={item.id} data-type="choice" aria-labelledby={`${item.id}-title`} hidden>
+          <p class="meta label">{ui.beforeYouStart}</p>
+          <h2 class="item-title" id={`${item.id}-title`} tabindex="-1">
+            <Picto name={item.picto} size="lg" />
+            <span>{item.question}</span>
+          </h2>
+          <div class="actions">
+            {item.options.map((option) => (
+              <button class="btn option" type="button" data-value={option.id}>
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <section class="item" id={item.id} data-type={item.type} data-state="todo" aria-labelledby={`${item.id}-title`}>
+          {item.type === 'check' ? (
+            <p class="meta label">{ui.beforeYouStart}</p>
+          ) : (
+            <p class="meta label">
+              <span>{ui.stepOf(stepList.indexOf(item) + 1, total)}</span>
+              <span class="state" data-for="done">{ui.status.done}</span>
+              <span class="state" data-for="skipped">{ui.status.skipped}</span>
+            </p>
+          )}
+          <h2 class="item-title" id={`${item.id}-title`} tabindex="-1">
+            <Picto name={item.picto} size="lg" />
+            <span>{item.title}</span>
+          </h2>
+          {item.type === 'step' && <p class="time">{item.time}</p>}
+          <div class="detail">
+            {item.lines.map((line) => {
+              const label = typeof line === 'string' ? undefined : variantLabel(list, line.when);
+              return (
+                <p data-when={typeof line === 'string' ? undefined : whenAttr(line.when)}>
+                  {label && <strong class="variant">{label}: </strong>}
+                  {lineText(line)}
+                </p>
+              );
+            })}
+          </div>
+          {item.links && (
+            <ul class="links">
+              {item.links.map((link) => (
+                <li data-when={whenAttr(link.when)}>
+                  <a class="btn" href={link.href} target="_blank" rel="noopener noreferrer">
+                    {link.label}
+                    {link.detail ? (
+                      <span class="link-detail">{link.detail}</span>
+                    ) : (
+                      <code>{link.href.replace(/^https:\/\/(www\.)?/, '')}</code>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div class="actions" hidden>
+            {item.type === 'check' ? (
+              <button class="btn btn-primary answer" type="button" data-value="done">
+                {item.continue}
+              </button>
+            ) : (
+              <>
+                <button class="btn btn-primary answer" type="button" data-value="done">
+                  <Picto name="check" />
+                  {ui.done}
+                </button>
+                <button class="btn answer" type="button" data-value="skipped">
+                  {ui.skipStep}
+                </button>
+              </>
+            )}
+          </div>
+        </section>
+      )
+    )
+  }
+
+  <section class="item" id="summary" data-type="summary" aria-labelledby="summary-title" hidden>
+    <h2
+      class="item-title display"
+      id="summary-title"
+      tabindex="-1"
+      data-all-done={list.allDone}
+      data-template={ui.progress('{done}', total)}
+    >
+      {list.allDone}
+    </h2>
+    <p class="hint">{ui.goBack}</p>
+    <ol class="summary">
+      {
+        stepList.map((step, i) => (
+          <li data-for={step.id} data-state="todo">
+            <a href={`#${step.id}`}>
+              <span class="num" aria-hidden="true">
+                {i + 1}
+              </span>
+              <span class="summary-title">{step.title}</span>
+              <span class="label">
+                <span class="state" data-for="done">{ui.status.done}</span>
+                <span class="state" data-for="skipped">{ui.status.skipped}</span>
+                <span class="state" data-for="todo">{ui.status.todo}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <button class="btn reset" type="button">{ui.startOver}</button>
+    <div class="after">
+      <AfterLinks />
+    </div>
+  </section>
+</div>
+
+<script>
+  const KEY = 'ptfa-answers';
+  const root = document.querySelector<HTMLElement>('.checklist')!;
+  const bar = root.querySelector<HTMLElement>('.bar')!;
+  const back = bar.querySelector<HTMLAnchorElement>('.back')!;
+  const items = [...root.querySelectorAll<HTMLElement>('.item')];
+  const order = items.map((item) => item.id);
+  const variants = [...root.querySelectorAll<HTMLElement>('[data-when]')];
+  const summaryTitle = root.querySelector<HTMLElement>('#summary-title')!;
+  const summaryRows = [...root.querySelectorAll<HTMLElement>('.summary li')];
+  const segs = [...bar.querySelectorAll<HTMLElement>('.seg')];
+
+  // Option ids that some line or link depends on, per question. Any other answer
+  // (such as "Not sure") shows every variant with its label.
+  const filtering: Record<string, Set<string>> = {};
+  for (const el of variants) {
+    const [key, value] = el.dataset.when!.split('=');
+    (filtering[key] ??= new Set()).add(value);
+  }
+
+  let answers: Record<string, string> = {};
+  try {
+    answers = JSON.parse(sessionStorage.getItem(KEY) ?? '{}');
+  } catch {}
+
+  function save() {
+    try {
+      sessionStorage.setItem(KEY, JSON.stringify(answers));
+    } catch {}
+  }
+
+  // Everything answered means the overview has been reached: from then on, answering
+  // a reopened card or pressing Back returns to the overview.
+  function reviewing() {
+    return order.every((id) => id === 'summary' || id in answers);
+  }
+
+  function show(id: string) {
+    const index = Math.max(0, order.indexOf(id));
+    items.forEach((item, i) => (item.hidden = i !== index));
+    back.href = reviewing() && order[index] !== 'summary' ? '#summary' : index === 0 ? '/' : `#${order[index - 1]}`;
+
+    for (const el of variants) {
+      const [key, value] = el.dataset.when!.split('=');
+      const narrowed = filtering[key].has(answers[key]);
+      el.hidden = narrowed && answers[key] !== value;
+      el.querySelector('.variant')?.toggleAttribute('hidden', narrowed);
+    }
+
+    for (const item of items) {
+      if (item.dataset.type === 'step') item.dataset.state = answers[item.id] ?? 'todo';
+    }
+    for (const el of [...summaryRows, ...segs]) {
+      el.dataset.state = answers[el.dataset.for!] ?? 'todo';
+    }
+    segs.forEach((seg) => seg.classList.toggle('current', seg.dataset.for === order[index]));
+
+    const done = summaryRows.filter((row) => row.dataset.state === 'done').length;
+    const allDone = done === summaryRows.length;
+    summaryTitle.textContent = allDone
+      ? summaryTitle.dataset.allDone!
+      : summaryTitle.dataset.template!.replace('{done}', String(done));
+    root.querySelector<HTMLElement>('.hint')!.hidden = allDone;
+
+    scrollTo(0, 0);
+    items[index].querySelector<HTMLElement>('.item-title')!.focus({ preventScroll: true });
+  }
+
+  root.querySelectorAll<HTMLButtonElement>('.option, .answer').forEach((button) =>
+    button.addEventListener('click', () => {
+      const item = button.closest<HTMLElement>('.item')!;
+      answers[item.id] = button.dataset.value!;
+      save();
+      location.hash = reviewing() ? 'summary' : order[order.indexOf(item.id) + 1];
+    }),
+  );
+
+  root.querySelector('.reset')!.addEventListener('click', () => {
+    answers = {};
+    save();
+    location.hash = order[0];
+  });
+
+  addEventListener('hashchange', () => show(location.hash.slice(1)));
+  // On a reload or a shared #link the browser jumps to the card after this script runs.
+  addEventListener('load', () => scrollTo(0, 0), { once: true });
+
+  root.classList.add('wizard');
+  bar.hidden = false;
+  root.querySelectorAll<HTMLElement>('.actions').forEach((el) => (el.hidden = false));
+  show(location.hash.slice(1));
+</script>
+
+<style>
+  /* Mobile first: one column, answer buttons stuck to the bottom in reach of the thumb. */
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+  .back {
+    min-height: var(--tap-min);
+    padding-inline: var(--space-3);
+    font-size: 17px;
+    box-shadow: none;
+  }
+  .track {
+    flex: 1;
+    display: flex;
+    gap: var(--space-1);
+    padding: var(--space-1);
+    background: var(--surface-sunken);
+    border: 2px solid var(--line-strong);
+  }
+  .seg {
+    flex: 1;
+    height: var(--space-3);
+  }
+  .seg[data-state='done'] {
+    background: var(--done);
+  }
+  .seg.current {
+    background: var(--tape);
+  }
+
+  .item {
+    padding-block: var(--space-5);
+    border-block-end: 2px solid var(--line);
+  }
+  /* One card at a time, centred in the space below the bar. */
+  .wizard {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .wizard .item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block-start: var(--space-3);
+    border: 0;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+    color: var(--ink-muted);
+  }
+  .state {
+    display: none;
+  }
+  [data-state='done'] [data-for='done'],
+  [data-state='skipped'] [data-for='skipped'],
+  [data-state='todo'] [data-for='todo'] {
+    display: inline;
+    color: var(--ink);
+  }
+
+  .item-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-block: var(--space-3) var(--space-2);
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  .item-title:focus {
+    outline: none;
+  }
+  .item-title.display {
+    font-size: 44px;
+    line-height: 44px;
+    font-weight: 900;
+  }
+
+  .time {
+    color: var(--ink-muted);
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+  }
+
+  .detail {
+    margin-block-start: var(--space-4);
+    font-size: 18px;
+    line-height: 29px;
+  }
+  .detail p + p {
+    margin-block-start: var(--space-3);
+  }
+
+  .links {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+  .links .btn {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .link-detail {
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .links code {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  .actions {
+    position: sticky;
+    inset-block-end: 0;
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: var(--space-6);
+    padding-block: var(--space-4);
+    background: var(--paper);
+    border-block-start: 2px solid var(--line);
+  }
+  .actions .btn {
+    width: 100%;
+  }
+  .option {
+    min-height: var(--tap-primary);
+  }
+  .answer[data-value='skipped'] {
+    box-shadow: none;
+  }
+
+  .after {
+    margin-block-start: var(--space-7);
+  }
+
+  .hint {
+    margin-block-start: var(--space-3);
+  }
+  .summary {
+    display: grid;
+    gap: var(--space-2);
+    margin-block: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+  .summary a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--tap-primary);
+    padding: var(--space-3);
+    border: 2px solid var(--line-strong);
+    background: var(--surface-raised);
+    text-decoration: none;
+  }
+  .summary [data-state='done'] a {
+    border-color: var(--done);
+    background: var(--done-soft);
+  }
+  .summary [data-state='done'] .summary-title {
+    text-decoration: line-through;
+  }
+  .num {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border: var(--border-hard) solid var(--ink);
+    border-radius: var(--radius-round);
+    font-weight: 900;
+  }
+  .summary-title {
+    flex: 1;
+    font-weight: 700;
+  }
+</style>
