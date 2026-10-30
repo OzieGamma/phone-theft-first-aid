@@ -5,41 +5,72 @@ import Picto, { type PictoName } from '../components/Picto.astro';
 const items: { picto: PictoName; title: string; lines: string[] }[] = [
   {
     picto: 'imei',
-    title: 'Write down your IMEI.',
+    title: 'Write down your IMEI',
     lines: ['Type *#06# in the phone app. The number appears.', 'Write it on paper. Keep it at home.'],
   },
   {
     picto: 'sim-block',
-    title: 'Set a SIM PIN.',
+    title: 'Set a SIM PIN',
     lines: ['Then a thief cannot move your SIM to another phone to get your login codes.'],
   },
   {
     picto: 'locate',
-    title: 'Turn on Find My.',
+    title: 'Turn on Find My',
     lines: ['iPhone: Find My iPhone. Android: Find My Device.', 'Check that you know the password for that account.'],
   },
   {
     picto: 'lock',
-    title: 'Turn on theft protection.',
+    title: 'Turn on theft protection',
     lines: ['iPhone: Stolen Device Protection. Android: Theft protection.', 'It asks for your face or fingerprint before big changes.'],
   },
   {
     picto: 'password',
-    title: 'Write your recovery codes on paper.',
-    lines: ['Do this for your email first.', 'Keep the paper at home, not in your wallet.'],
+    title: 'Print your backup codes',
+    lines: [
+      'Make them in the security settings of your email account. Do this for email first.',
+      'Keep the paper at home, not in your wallet or phone case.',
+    ],
+  },
+  {
+    picto: 'borrowed-device',
+    title: 'Add a second way to sign in',
+    lines: [
+      'Add a recovery email address.',
+      'Add a second phone number that is not in this phone, such as a family member.',
+      'A security key or a passkey on a laptop also works.',
+      'iPhone: add a Recovery Contact, someone you trust.',
+    ],
   },
   {
     picto: 'backup',
-    title: 'Back up your phone.',
+    title: 'Do not keep your login codes only on the phone',
+    lines: ['Turn on backup in your code app.', 'Or set it up on a second device too.'],
+  },
+  {
+    picto: 'check',
+    title: 'Test it',
+    lines: ['Sign in to your email on a computer without your phone.', 'If it does not work, fix it now, not after a theft.'],
+  },
+  {
+    picto: 'info',
+    title: 'Phone already stolen once?',
+    lines: [
+      'Once you are back in your accounts, make new backup codes.',
+      'The old ones may have been stolen with the phone.',
+    ],
+  },
+  {
+    picto: 'backup',
+    title: 'Back up your phone',
     lines: ['Photos and contacts are what people miss most.'],
   },
 ];
 ---
 
-<Base title="Do this tonight" description="So the next thief gets less. Six things to set up on your phone tonight.">
+<Base title="Prevention" description="So the next thief gets less. What to set up on your phone and accounts before a theft.">
   <div class="wrap">
     <header class="page-head">
-      <h1 class="display">Do this tonight</h1>
+      <h1 class="display">Prevention</h1>
       <p>So the next thief gets less.</p>
     </header>
 

@@ -12,8 +12,8 @@ export const ui = {
   skip: 'Skip to content',
   nav: {
     home: 'Checklist',
-    rights: 'Your rights',
-    prevention: 'Do this tonight',
+    recovery: 'Recovery',
+    prevention: 'Prevention',
     about: 'About us',
     privacy: 'Privacy',
   },
@@ -34,15 +34,15 @@ export const home = {
   nextTitle: 'After the first hour',
   next: [
     {
-      href: '/rights/',
+      href: '/recovery/',
       picto: 'insurance',
-      title: 'Your rights',
+      title: 'Recovery',
       text: 'Police report, insurance, IMEI block, getting your money back.',
     },
     {
       href: '/prevention/',
       picto: 'backup',
-      title: 'Do this tonight',
+      title: 'Prevention',
       text: 'So the next thief gets less.',
     },
   ] satisfies { href: string; picto: PictoName; title: string; text: string }[],

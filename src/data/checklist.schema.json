@@ -68,12 +68,23 @@
       ]
     },
     "when": {
-      "description": "Show only when the answer to choice <key> is <option id>. If that choice was answered with an option no line refers to (e.g. \"Not sure\"), every variant shows with its label.",
+      "description": "Show only when the answer to choice <key> is <option id>, or one of a list of option ids. An option with showAll (e.g. \"Not sure\") shows every variant with its label, as does a printed copy.",
       "type": "object",
       "minProperties": 1,
       "maxProperties": 1,
       "additionalProperties": {
-        "type": "string"
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        ]
       }
     },
     "line": {
@@ -138,9 +149,26 @@
               },
               "label": {
                 "type": "string"
+              },
+              "showAll": {
+                "type": "boolean",
+                "description": "Answering this keeps every variant visible, each with its label."
               }
             }
           }
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          },
+          "description": "Shown above the options, e.g. where to do what the question asks."
         }
       }
     },
@@ -205,6 +233,10 @@
           "type": "string",
           "format": "uri"
         },
+        "primary": {
+          "type": "boolean",
+          "description": "The main thing to do on the card: a tape button showing the label only."
+        },
         "when": {
           "$ref": "#/$defs/when"
         }
@@ -216,7 +248,6 @@
       "required": [
         "id",
         "type",
-        "picto",
         "title",
         "lines",
         "continue"
@@ -250,6 +281,17 @@
         "continue": {
           "type": "string",
           "description": "Label of the button that moves on."
+        },
+        "style": {
+          "enum": [
+            "poster"
+          ],
+          "description": "poster: shows the Keep Calm poster image; the title is its text (one line per \\n), for screen readers and print. Needs no picto."
+        },
+        "wait": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Seconds before the continue button works, so the person takes the time. The button counts down."
         }
       }
     }

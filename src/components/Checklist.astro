@@ -6,13 +6,22 @@
 // the tab closes, so nothing is left on a borrowed device.
 import Picto from './Picto.astro';
 import AfterLinks from './AfterLinks.astro';
+import Links from './Links.astro';
+import keepCalmSvg from '../assets/keep-calm.svg?raw';
 import { ui } from '../i18n/en';
-import { getChecklist, steps, lineText, variantLabel, type When } from '../lib/checklist';
+import { getChecklist, steps, lineText, variantLabel, whenAttr } from '../lib/checklist';
 
 const list = getChecklist(ui.lang);
 const stepList = steps(list);
 const total = stepList.length;
-const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : undefined);
+// Drawn for this site after the public-domain 1939 poster. Inlined so its text uses the page's Noto Sans.
+const keepCalm = keepCalmSvg.replace(/ role="img" aria-label="[^"]*"/, '');
+
+// A choice or check met after the steps have started belongs to the step that follows it.
+const stepFor = (index: number) =>
+  list.items.slice(0, index).some((item) => item.type === 'step')
+    ? stepList.find((step) => list.items.indexOf(step) > index)
+    : undefined;
 ---
 
 <div class="checklist" lang={list.lang} dir={list.dir}>
@@ -24,37 +33,72 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
   </nav>
 
   {
-    list.items.map((item) =>
+    list.items.map((item, index) =>
       item.type === 'choice' ? (
-        <section class="item" id={item.id} data-type="choice" aria-labelledby={`${item.id}-title`} hidden>
-          <p class="meta label">{ui.beforeYouStart}</p>
+        <section
+          class="item"
+          id={item.id}
+          data-type="choice"
+          data-step={stepFor(index)?.id}
+          aria-labelledby={`${item.id}-title`}
+          hidden
+        >
+          <p class="meta label">
+            {stepFor(index) ? ui.stepOf(stepList.indexOf(stepFor(index)!) + 1, total) : ui.beforeYouStart}
+          </p>
           <h2 class="item-title" id={`${item.id}-title`} tabindex="-1">
             <Picto name={item.picto} size="lg" />
             <span>{item.question}</span>
           </h2>
+          {item.lines && (
+            <div class="detail">
+              {item.lines.map((line) => <p>{line}</p>)}
+            </div>
+          )}
+          {item.links && <Links links={item.links} />}
           <div class="actions">
             {item.options.map((option) => (
-              <button class="btn option" type="button" data-value={option.id}>
+              <button class="btn option" type="button" data-value={option.id} data-show-all={option.showAll ? '' : undefined}>
                 {option.label}
               </button>
             ))}
           </div>
         </section>
       ) : (
-        <section class="item" id={item.id} data-type={item.type} data-state="todo" aria-labelledby={`${item.id}-title`}>
-          {item.type === 'check' ? (
-            <p class="meta label">{ui.beforeYouStart}</p>
+        <section
+          class="item"
+          id={item.id}
+          data-type={item.type}
+          data-state="todo"
+          data-step={item.type === 'check' ? stepFor(index)?.id : undefined}
+          aria-labelledby={`${item.id}-title`}
+        >
+          {item.type === 'check' && item.style === 'poster' ? (
+            <>
+              <h2 class="item-title visually-hidden" id={`${item.id}-title`} tabindex="-1">
+                {item.title}
+              </h2>
+              <div class="poster" aria-hidden="true" set:html={keepCalm} />
+            </>
           ) : (
-            <p class="meta label">
-              <span>{ui.stepOf(stepList.indexOf(item) + 1, total)}</span>
-              <span class="state" data-for="done">{ui.status.done}</span>
-              <span class="state" data-for="skipped">{ui.status.skipped}</span>
-            </p>
+            <>
+              {item.type === 'check' ? (
+                <p class="meta label">
+                  {stepFor(index) ? ui.stepOf(stepList.indexOf(stepFor(index)!) + 1, total) : ui.beforeYouStart}
+                </p>
+              ) : (
+                <p class="meta label">
+                  <span>{ui.stepOf(stepList.indexOf(item) + 1, total)}</span>
+                  <span class="state" data-for="done">{ui.status.done}</span>
+                  <span class="state" data-for="skipped">{ui.status.skipped}</span>
+                </p>
+              )}
+              <h2 class="item-title" id={`${item.id}-title`} tabindex="-1">
+                <Picto name={item.picto!} size="lg" />
+                <span>{item.title}</span>
+              </h2>
+            </>
           )}
-          <h2 class="item-title" id={`${item.id}-title`} tabindex="-1">
-            <Picto name={item.picto} size="lg" />
-            <span>{item.title}</span>
-          </h2>
           {item.type === 'step' && <p class="time">{item.time}</p>}
           <div class="detail">
             {item.lines.map((line) => {
@@ -67,30 +111,16 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
               );
             })}
           </div>
-          {item.links && (
-            <ul class="links">
-              {item.links.map((link) => (
-                <li data-when={whenAttr(link.when)}>
-                  <a class="btn" href={link.href} target="_blank" rel="noopener noreferrer">
-                    {link.label}
-                    {link.detail ? (
-                      <span class="link-detail">{link.detail}</span>
-                    ) : (
-                      <code>{link.href.replace(/^https:\/\/(www\.)?/, '')}</code>
-                    )}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
+          {item.links && <Links links={item.links} />}
           <div class="actions" hidden>
             {item.type === 'check' ? (
-              <button class="btn btn-primary answer" type="button" data-value="done">
+              <button class="btn answer" type="button" data-value="done" data-wait={item.wait}>
                 {item.continue}
+                {item.wait && <span class="wait" aria-hidden="true" />}
               </button>
             ) : (
               <>
-                <button class="btn btn-primary answer" type="button" data-value="done">
+                <button class="btn answer" type="button" data-value="done">
                   <Picto name="check" />
                   {ui.done}
                 </button>
@@ -154,13 +184,12 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
   const summaryRows = [...root.querySelectorAll<HTMLElement>('.summary li')];
   const segs = [...bar.querySelectorAll<HTMLElement>('.seg')];
 
-  // Option ids that some line or link depends on, per question. Any other answer
-  // (such as "Not sure") shows every variant with its label.
-  const filtering: Record<string, Set<string>> = {};
-  for (const el of variants) {
-    const [key, value] = el.dataset.when!.split('=');
-    (filtering[key] ??= new Set()).add(value);
-  }
+  // Answers such as "Not sure" (showAll in the JSON) keep every variant, each with its label.
+  const showAll = new Set(
+    [...root.querySelectorAll<HTMLElement>('.option[data-show-all]')].map(
+      (option) => `${option.closest('.item')!.id}=${option.dataset.value}`,
+    ),
+  );
 
   let answers: Record<string, string> = {};
   try {
@@ -179,15 +208,35 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
     return order.every((id) => id === 'summary' || id in answers);
   }
 
+  // A button with data-wait stays off for that many seconds each time its card opens,
+  // counting down, so "I am ready" cannot be tapped straight through.
+  let timer: number | undefined;
+  function wait(item: HTMLElement) {
+    clearInterval(timer);
+    const button = item.querySelector<HTMLButtonElement>('[data-wait]');
+    if (!button) return;
+    const count = button.querySelector<HTMLElement>('.wait')!;
+    let left = Number(button.dataset.wait);
+    const tick = () => {
+      count.textContent = left > 0 ? String(left) : '';
+      button.disabled = left > 0;
+      if (left-- <= 0) clearInterval(timer);
+    };
+    tick();
+    timer = setInterval(tick, 1000);
+  }
+
   function show(id: string) {
     const index = Math.max(0, order.indexOf(id));
+    wait(items[index]);
     items.forEach((item, i) => (item.hidden = i !== index));
     back.href = reviewing() && order[index] !== 'summary' ? '#summary' : index === 0 ? '/' : `#${order[index - 1]}`;
 
     for (const el of variants) {
-      const [key, value] = el.dataset.when!.split('=');
-      const narrowed = filtering[key].has(answers[key]);
-      el.hidden = narrowed && answers[key] !== value;
+      const [key, values] = el.dataset.when!.split('=');
+      const answer = answers[key];
+      const narrowed = answer !== undefined && !showAll.has(`${key}=${answer}`);
+      el.hidden = narrowed && !values.split('|').includes(answer);
       el.querySelector('.variant')?.toggleAttribute('hidden', narrowed);
     }
 
@@ -197,7 +246,8 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
     for (const el of [...summaryRows, ...segs]) {
       el.dataset.state = answers[el.dataset.for!] ?? 'todo';
     }
-    segs.forEach((seg) => seg.classList.toggle('current', seg.dataset.for === order[index]));
+    const current = items[index].dataset.step ?? order[index];
+    segs.forEach((seg) => seg.classList.toggle('current', seg.dataset.for === current));
 
     const done = summaryRows.filter((row) => row.dataset.state === 'done').length;
     const allDone = done === summaryRows.length;
@@ -207,6 +257,8 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
     root.querySelector<HTMLElement>('.hint')!.hidden = allDone;
 
     scrollTo(0, 0);
+    // Typing a #hash in the address bar scrolls to the card after this runs.
+    requestAnimationFrame(() => scrollTo(0, 0));
     items[index].querySelector<HTMLElement>('.item-title')!.focus({ preventScroll: true });
   }
 
@@ -321,6 +373,27 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
     font-weight: 900;
   }
 
+  /* The Keep Calm poster: the one place the checklist steps outside the brand's look. */
+  .poster {
+    width: min(100%, 240px);
+    margin-inline: auto;
+  }
+  .poster :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (min-width: 40rem) {
+    .poster {
+      width: 320px;
+    }
+  }
+  .poster + .detail {
+    margin-block-start: var(--space-5);
+    font-size: 20px;
+    line-height: 30px;
+  }
+
   .time {
     color: var(--ink-muted);
     font-size: 14px;
@@ -335,27 +408,6 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
   }
   .detail p + p {
     margin-block-start: var(--space-3);
-  }
-
-  .links {
-    display: grid;
-    gap: var(--space-3);
-    margin-block-start: var(--space-5);
-    padding: 0;
-    list-style: none;
-  }
-  .links .btn {
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-  .link-detail {
-    font-size: 17px;
-    font-weight: 400;
-  }
-  .links code {
-    font-size: 16px;
-    overflow-wrap: anywhere;
   }
 
   .actions {
@@ -376,6 +428,27 @@ const whenAttr = (when?: When) => (when ? Object.entries(when)[0].join('=') : un
   }
   .answer[data-value='skipped'] {
     box-shadow: none;
+  }
+  /* Waiting: an untaped outline with the seconds left, not a primary button yet. */
+  .answer:disabled {
+    border-color: var(--line-strong);
+    background: transparent;
+    color: var(--ink-muted);
+    box-shadow: none;
+    cursor: default;
+    translate: none;
+  }
+  .wait:empty {
+    display: none;
+  }
+  .wait {
+    display: grid;
+    place-items: center;
+    min-width: 36px;
+    height: 36px;
+    border: 2px solid currentColor;
+    border-radius: var(--radius-round);
+    font-variant-numeric: tabular-nums;
   }
 
   .after {

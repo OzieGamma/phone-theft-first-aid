@@ -1,13 +1,11 @@
 ---
 // Live logo: the mark from brandkit/assets/Logos/mark.svg plus the name set as text,
 // so it follows the theme and stays sharp. The name is always English, in full.
-import mark from '../../brandkit/assets/Logos/mark.svg?raw';
-
-const markInner = mark.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>[\s\S]*$/, '');
+import Mark from './Mark.astro';
 ---
 
 <a class="logo" href="/" lang="en" dir="ltr">
-  <svg class="mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false" set:html={markInner} />
+  <Mark class="mark" />
   <span class="name">Phone Theft<br />First Aid</span>
 </a>
 
@@ -20,7 +18,7 @@ const markInner = mark.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>[\s\S]
     color: var(--ink);
     text-decoration: none;
   }
-  .mark {
+  .logo :global(.mark) {
     width: 44px;
     height: 44px;
     flex: none;

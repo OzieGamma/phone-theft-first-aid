@@ -4,40 +4,45 @@ import RightsCallout from '../components/RightsCallout.astro';
 import Notice from '../components/Notice.astro';
 ---
 
-<Base title="Your rights" description="Police report, insurance, IMEI block, bank refunds, getting your accounts back.">
+<Base title="Recovery" description="Police report, insurance, IMEI block, bank refunds, getting your accounts back.">
   <div class="wrap">
     <header class="page-head">
-      <h1 class="display">Your rights</h1>
+      <h1 class="display">Recovery</h1>
       <p>What you are owed after a theft. Insist on it.</p>
     </header>
 
     <div class="stack">
-      <RightsCallout picto="police-report" title="The police have to take your report.">
+      <RightsCallout picto="police-report" title="The police have to take your report">
         <p>Do not leave without a copy and a reference number.</p>
         <p>Your insurer, your bank and your operator will ask for them.</p>
       </RightsCallout>
 
-      <RightsCallout picto="imei" title="Your operator can block the phone by its IMEI.">
+      <RightsCallout picto="imei" title="Your operator can block the phone by its IMEI">
         <p>Ask. If they stall, ask again.</p>
         <p>A blocked IMEI stops the phone working on networks that check the list.</p>
       </RightsCallout>
 
-      <RightsCallout picto="card" title="Your bank should refund fraud you reported quickly.">
+      <RightsCallout picto="sim-block" title="Get a new SIM with the same number">
+        <p>Your number stays yours. Your operator can put it on a new SIM or eSIM.</p>
+        <p>Bring ID to a shop, or ask for the SIM by post.</p>
+      </RightsCallout>
+
+      <RightsCallout picto="card" title="Your bank should refund fraud you reported quickly">
         <p>Report every payment you did not make.</p>
         <p>Get the answer in writing.</p>
       </RightsCallout>
 
-      <RightsCallout picto="insurance" title="Check every insurance you have.">
+      <RightsCallout picto="insurance" title="Check every insurance you have">
         <p>Home, travel, bank card and phone contract insurance can each cover theft.</p>
         <p>Send the police reference number with your claim.</p>
       </RightsCallout>
 
-      <RightsCallout picto="password" title="Get your accounts back the official way.">
+      <RightsCallout picto="password" title="Get your accounts back the official way">
         <p>Use the recovery page of the service itself.</p>
         <p>Never pay anyone who offers to recover an account for you.</p>
       </RightsCallout>
 
-      <Notice title="Rules are different in every country.">
+      <Notice title="Rules are different in every country">
         <p>Pages for each country are coming.</p>
       </Notice>
     </div>

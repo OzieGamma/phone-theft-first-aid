@@ -14,4 +14,8 @@ export default defineConfig({
     defaultLocale: 'en',
     locales: ['en'],
   },
+  // Dev and preview only: lets a cloudflared quick tunnel reach the local server for phone testing.
+  server: {
+    allowedHosts: ['.trycloudflare.com'],
+  },
 });

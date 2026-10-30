@@ -1,0 +1,81 @@
+---
+// Link buttons under a checklist card. tel: links are emergency numbers: where on the
+// left, the number big on the right. Primary links are the main thing to do: label only.
+import { whenAttr, type Link } from '../lib/checklist';
+
+interface Props {
+  links: Link[];
+}
+
+const { links } = Astro.props;
+---
+
+<ul class="links">
+  {
+    links.map((link) => (
+      <li data-when={whenAttr(link.when)}>
+        <a
+          class:list={['btn', { 'btn-primary call': link.href.startsWith('tel:'), 'btn-primary main': link.primary }]}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {link.href.startsWith('tel:') ? (
+            <>
+              <span class="link-detail">{link.detail}</span>
+              <span class="tel">{link.label}</span>
+            </>
+          ) : link.primary ? (
+            link.label
+          ) : (
+            <>
+              {link.label}
+              {link.detail ? (
+                <span class="link-detail">{link.detail}</span>
+              ) : (
+                <code>{link.href.replace(/^https:\/\/(www\.)?/, '')}</code>
+              )}
+            </>
+          )}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .links {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+  .btn {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .link-detail {
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .main {
+    justify-content: center;
+  }
+  .call {
+    flex-wrap: nowrap;
+    gap: var(--space-4);
+    text-align: start;
+  }
+  .tel {
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+  }
+  code {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+</style>

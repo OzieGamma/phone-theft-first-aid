@@ -1,0 +1,12 @@
+---
+// The symbol from brandkit/assets/Logos/mark.svg, inlined. Decorative.
+import mark from '../../brandkit/assets/Logos/mark.svg?raw';
+
+interface Props {
+  class?: string;
+}
+
+const markInner = mark.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>[\s\S]*$/, '');
+---
+
+<svg class={Astro.props.class} viewBox="0 0 48 48" aria-hidden="true" focusable="false" set:html={markInner} />

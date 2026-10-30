@@ -23,7 +23,7 @@ npm run preview   # serve dist/ locally
 | `src/i18n/en.ts` | UI strings. Translate by copying this file and the checklist JSON. |
 | `src/components/` | `Checklist`, `Picto`, `Logo`, `Notice`, `RightsCallout`, `AfterLinks` |
 | `src/layouts/Base.astro` | Page shell, footer nav |
-| `src/pages/` | `/` start button, `/checklist/`, `/rights/`, `/prevention/`, `/about/`, `/privacy/`, 404 |
+| `src/pages/` | `/` start button, `/checklist/`, `/recovery/`, `/prevention/`, `/about/`, `/privacy/`, 404 |
 | `src/styles/fonts.css` | Self-hosted Noto Sans (with width axis) and Noto Sans Mono, generated from `@fontsource-variable` |
 
 ## Principles
@@ -31,7 +31,7 @@ npm run preview   # serve dist/ locally
 - The home page has one action: a start button linking to `/checklist/`.
 - `/checklist/` asks one item at a time (mobile first; answer buttons stick to the bottom). Each item has its own `#hash`, so the browser back button works. Without JavaScript it shows every step on one page with each variant labelled, which is also how the PDF should render it.
 - Item types: `check` (a card confirmed with one button, e.g. "Are you safe?"), `choice` (a question) and `step` (a numbered action).
-- A `choice` item (e.g. "Which phone was stolen?") tailors later lines and links via `when`. An answer no line refers to ("Not sure") shows every variant.
+- A `choice` item ("Which phone was stolen?", "Lock your email") tailors later lines and links via `when`, e.g. `{ "phone": ["iphone", "android"] }`. A choice can carry `links` too. A choice placed among the steps is shown as part of the step after it. An option marked `showAll` shows every variant with its label, as the no-JS page and a printed copy do.
 - Night theme only (`data-theme="dark"` on `<html>`).
 - Checklist progress goes in `sessionStorage` only, so nothing stays behind on a borrowed device.
 - No third-party requests: no analytics, no font CDN.

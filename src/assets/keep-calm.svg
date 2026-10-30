@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700" role="img" aria-label="Keep calm and carry on">
+  <rect width="500" height="700" fill="#C4170F"/>
+  <g fill="#FFFFFF">
+    <!-- Crown: cross, orb, arches, rim, jewelled band -->
+    <path d="M245 30h10v9h9v10h-9v9h-10v-9h-9v-10h9z"/>
+    <circle cx="250" cy="68" r="10"/>
+    <path fill-rule="evenodd" d="M186 130C184 96 204 76 224 78C238 79 245 85 250 90C255 85 262 79 276 78C296 76 316 96 314 130Z
+             M198 125C197 102 210 89 224 89C233 89 238 92 241 96V125Z
+             M302 125C303 102 290 89 276 89C267 89 262 92 259 96V125Z"/>
+    <rect x="180" y="128" width="140" height="9" rx="3"/>
+    <path fill-rule="evenodd" d="M184 140H316V162H184Z
+             M199 151a5 5 0 1 0 10 0a5 5 0 1 0-10 0Z
+             M291 151a5 5 0 1 0 10 0a5 5 0 1 0-10 0Z
+             M227 145l6 6-6 6-6-6Z
+             M273 145l6 6-6 6-6-6Z
+             M242 151a8 6 0 1 0 16 0a8 6 0 1 0-16 0Z"/>
+  </g>
+  <g fill="#FFFFFF" font-family="'Noto Sans', system-ui, sans-serif" font-weight="700" text-anchor="middle">
+    <text x="250" y="281" font-size="100">KEEP</text>
+    <text x="250" y="386" font-size="100">CALM</text>
+    <text x="250" y="456" font-size="56">AND</text>
+    <text x="250" y="561" font-size="100">CARRY</text>
+    <text x="250" y="666" font-size="100">ON</text>
+  </g>
+</svg>
