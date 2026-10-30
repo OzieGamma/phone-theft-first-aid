@@ -1,5 +1,7 @@
 # Phone Theft First Aid
 
+⚠️ 100% vibe-coded ⚠️
+
 What to do in the first minutes after your phone is stolen. Source for phone-theft-first-aid.org.
 
 A static site built with [Astro](https://astro.build). `npm run build` writes plain HTML to `dist/`. There is no server or backend, so any static host works. Pages ship almost no JavaScript, and what they do ship is inlined.
