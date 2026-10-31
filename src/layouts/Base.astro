@@ -11,7 +11,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'What to do in the first minutes after your phone is stolen. Free, no ads.' } = Astro.props;
+const { title, description = 'What to do in the first minutes after your phone is stolen.' } = Astro.props;
 const fullTitle = title ? `${title} | ${ui.name}` : ui.name;
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 const nav = [

@@ -19,7 +19,7 @@ export const ui = {
     contribute: 'Contribute',
     privacy: 'Privacy',
   },
-  footer: 'Free. No ads. Made by',
+  footer: 'Vibe-coded by',
   start: 'Start the checklist',
   back: 'Back',
   done: 'Done',

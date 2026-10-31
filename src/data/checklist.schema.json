@@ -200,6 +200,31 @@
         "time": {
           "type": "string"
         },
+        "alert": {
+          "description": "A bold warning above the step: why it matters. Use sparingly",
+          "type": "object",
+          "required": [
+            "title"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "stat": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "lines": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
         "lines": {
           "type": "array",
           "items": {

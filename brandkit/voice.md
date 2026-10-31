@@ -29,7 +29,7 @@ The checklist is the calm part. Anger goes into advocacy, never into instruction
 
 ## About-page voice
 
-> Our phones were stolen. We spent the next hour on hold, searching on borrowed phones, and finding out too late what we should have done first. So we wrote it down. Here's what to do, in order. It's free. It always will be.
+> Our phones were stolen. We spent the next hour on hold, searching on borrowed phones, and finding out too late what we should have done first. So we wrote it down. Here's what to do, in order.
 
 ## Use and avoid
 

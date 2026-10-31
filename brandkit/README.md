@@ -1,4 +1,4 @@
-Phone Theft First Aid is what to do in the first minutes after your phone is stolen. Somebody it happened to built it, angry at how hard it was to find this out in time. It's for anyone, at their worst moment, on whatever phone or computer they can borrow, in any language. It's free and there's no catch.
+Phone Theft First Aid is what to do in the first minutes after your phone is stolen. Somebody it happened to built it, angry at how hard it was to find this out in time. It's for anyone, at their worst moment, on whatever phone or computer they can borrow, in any language.
 
 ## Who we are
 

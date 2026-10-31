@@ -101,6 +101,18 @@ const stepFor = (index: number) =>
             </>
           )}
           {item.type === 'step' && <p class="time">{item.time}</p>}
+          {item.type === 'step' && item.alert && (
+            <div class="alert">
+              <p class="alert-title">{item.alert.title}</p>
+              {item.alert.stat && (
+                <p class="alert-stat">
+                  <strong>{item.alert.stat}</strong>
+                  <span>{item.alert.text}</span>
+                </p>
+              )}
+              {item.alert.lines?.map((line) => <p>{line}</p>)}
+            </div>
+          )}
           <div class="detail">
             {item.lines.map((line) => {
               const label = typeof line === 'string' ? undefined : variantLabel(list, line.when);
@@ -400,6 +412,42 @@ const stepFor = (index: number) =>
     font-size: 14px;
     line-height: 21px;
     font-weight: 500;
+  }
+
+  /* Not a tape fill: the step's primary button is already yellow. */
+  .alert {
+    margin-block-start: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-hard) solid var(--tape);
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+  }
+  .alert-title {
+    font-family: var(--font-condensed);
+    font-stretch: 75%;
+    font-size: 26px;
+    line-height: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  .alert-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-block-start: var(--space-2);
+  }
+  .alert-stat strong {
+    flex: none;
+    color: var(--tape);
+    font-family: var(--font-condensed);
+    font-stretch: 75%;
+    font-size: 56px;
+    line-height: 56px;
+    font-weight: 900;
+  }
+  .alert p + p {
+    margin-block-start: var(--space-2);
   }
 
   .detail {

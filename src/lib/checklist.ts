@@ -50,6 +50,8 @@ export interface Step {
   picto: PictoName;
   title: string;
   time: string;
+  /** A bold warning above the step: why it matters. stat is a big number, text says what it counts. */
+  alert?: { title: string; stat?: string; text?: string; lines?: string[] };
   lines: Line[];
   links?: Link[];
 }

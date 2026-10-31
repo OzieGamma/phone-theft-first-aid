@@ -82,6 +82,14 @@
       "picto": "card",
       "title": "Block payments",
       "time": "About 5 minutes per bank",
+      "alert": {
+        "title": "They are after your bank, not your phone",
+        "stat": "44%",
+        "text": "of identity fraud victims had money taken from their bank account",
+        "lines": [
+          "Your phone PIN will not stop them. Thieves watch you type it"
+        ]
+      },
       "lines": [
         "Call your bank. The number is on the back of your card and on the bank website",
         {
