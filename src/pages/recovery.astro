@@ -5,6 +5,7 @@ import Links from '../components/Links.astro';
 import AfterLinks from '../components/AfterLinks.astro';
 import { home, ui } from '../i18n/en';
 import official from '../data/official.en.json';
+import { url } from '../lib/site';
 ---
 
 <Base title="Recovery" description="What to do in the days after a phone theft: money back, insurance, police report, IMEI block, new SIM.">
@@ -75,7 +76,7 @@ import official from '../data/official.en.json';
             ))
           }
         </div>
-        <a class="all" href="/sources/">All countries and sources</a>
+        <a class="all" href={url('/sources/')}>All countries and sources</a>
       </section>
 
       <AfterLinks

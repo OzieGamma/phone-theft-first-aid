@@ -10,6 +10,7 @@ import Links from './Links.astro';
 import keepCalmSvg from '../assets/keep-calm.svg?raw';
 import { ui } from '../i18n/en';
 import { getChecklist, steps, lineText, variantLabel, whenAttr } from '../lib/checklist';
+import { url } from '../lib/site';
 
 const list = getChecklist(ui.lang);
 const stepList = steps(list);
@@ -26,7 +27,7 @@ const stepFor = (index: number) =>
 
 <div class="checklist" lang={list.lang} dir={list.dir}>
   <nav class="bar" aria-label={ui.nav.home} hidden>
-    <a class="back btn" href="/">{ui.back}</a>
+    <a class="back btn" href={url('/')}>{ui.back}</a>
     <div class="track" aria-hidden="true">
       {stepList.map((step) => <span class="seg" data-for={step.id} />)}
     </div>

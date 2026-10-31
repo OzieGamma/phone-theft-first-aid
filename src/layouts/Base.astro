@@ -4,7 +4,7 @@ import '../../brandkit/tokens.css';
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import { ui } from '../i18n/en';
-import { author, repo } from '../lib/site';
+import { author, repo, url } from '../lib/site';
 
 interface Props {
   title?: string;
@@ -15,12 +15,12 @@ const { title, description = 'What to do in the first minutes after your phone i
 const fullTitle = title ? `${title} | ${ui.name}` : ui.name;
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 const nav = [
-  { href: '/', label: ui.nav.home },
-  { href: '/recovery/', label: ui.nav.recovery },
-  { href: '/prevention/', label: ui.nav.prevention },
-  { href: '/sources/', label: ui.nav.sources },
-  { href: '/about/', label: ui.nav.about },
-  { href: '/privacy/', label: ui.nav.privacy },
+  { href: url('/'), label: ui.nav.home },
+  { href: url('/recovery/'), label: ui.nav.recovery },
+  { href: url('/prevention/'), label: ui.nav.prevention },
+  { href: url('/sources/'), label: ui.nav.sources },
+  { href: url('/about/'), label: ui.nav.about },
+  { href: url('/privacy/'), label: ui.nav.privacy },
   { href: repo, label: ui.nav.contribute },
 ];
 ---
@@ -32,7 +32,7 @@ const nav = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta name="theme-color" content="#FFD400" />
   </head>

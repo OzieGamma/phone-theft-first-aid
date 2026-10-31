@@ -4,6 +4,7 @@ import Picto from '../components/Picto.astro';
 import AfterLinks from '../components/AfterLinks.astro';
 import { ui } from '../i18n/en';
 import { getChecklist } from '../lib/checklist';
+import { url } from '../lib/site';
 
 const list = getChecklist(ui.lang);
 ---
@@ -13,7 +14,7 @@ const list = getChecklist(ui.lang);
     <div class="hero">
       <section class="start" aria-labelledby="start-title">
         <h1 id="start-title" class="display">{list.title}</h1>
-        <a class="btn go" href="/checklist/">
+        <a class="btn go" href={url('/checklist/')}>
           {ui.start}
           <Picto name="arrow" />
         </a>

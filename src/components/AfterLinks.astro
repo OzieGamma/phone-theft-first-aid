@@ -3,6 +3,7 @@
 // at the bottom of another page, without the heading.
 import Picto from './Picto.astro';
 import { home } from '../i18n/en';
+import { url } from '../lib/site';
 
 interface Props {
   items?: typeof home.next;
@@ -17,7 +18,7 @@ const { items } = Astro.props;
     {
       (items ?? home.next).map((item) => (
         <li>
-          <a href={item.href}>
+          <a href={url(item.href)}>
             <Picto name={item.picto} size="lg" />
             <span>
               <strong>{item.title}</strong>

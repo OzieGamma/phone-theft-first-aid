@@ -2,9 +2,10 @@
 // Live logo: the mark from brandkit/assets/Logos/mark.svg plus the name set as text,
 // so it follows the theme and stays sharp. The name is always English, in full.
 import Mark from './Mark.astro';
+import { url } from '../lib/site';
 ---
 
-<a class="logo" href="/" lang="en" dir="ltr">
+<a class="logo" href={url('/')} lang="en" dir="ltr">
   <Mark class="mark" />
   <span class="name">Phone Theft<br />First Aid</span>
 </a>
