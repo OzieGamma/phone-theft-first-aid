@@ -14,6 +14,7 @@ const { title, picto } = Astro.props;
   <summary>
     {picto && <Picto name={picto} size="lg" />}
     <span>{title}</span>
+    <slot name="status" />
     <Picto name="arrow" />
   </summary>
   <div class="expander-body"><slot /></div>

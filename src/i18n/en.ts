@@ -25,6 +25,7 @@ export const ui = {
   done: 'Done',
   skipStep: 'Skip for now',
   status: { done: 'Done', skipped: 'Skipped', todo: 'Not done' },
+  markDone: 'Mark as done',
   stepOf: (n: number | string, total: number) => `Step ${n} of ${total}`,
   beforeYouStart: 'Before you start',
   progress: (done: number | string, total: number) => `${done} of ${total} done`,

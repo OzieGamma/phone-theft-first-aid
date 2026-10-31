@@ -190,6 +190,7 @@ const stepFor = (index: number) =>
   const root = document.querySelector<HTMLElement>('.checklist')!;
   const bar = root.querySelector<HTMLElement>('.bar')!;
   const back = bar.querySelector<HTMLAnchorElement>('.back')!;
+  const home = back.getAttribute('href')!;
   const items = [...root.querySelectorAll<HTMLElement>('.item')];
   const order = items.map((item) => item.id);
   const variants = [...root.querySelectorAll<HTMLElement>('[data-when]')];
@@ -243,7 +244,7 @@ const stepFor = (index: number) =>
     const index = Math.max(0, order.indexOf(id));
     wait(items[index]);
     items.forEach((item, i) => (item.hidden = i !== index));
-    back.href = reviewing() && order[index] !== 'summary' ? '#summary' : index === 0 ? '/' : `#${order[index - 1]}`;
+    back.href = reviewing() && order[index] !== 'summary' ? '#summary' : index === 0 ? home : `#${order[index - 1]}`;
 
     for (const el of variants) {
       const [key, values] = el.dataset.when!.split('=');
