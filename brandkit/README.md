@@ -5,7 +5,6 @@ Phone Theft First Aid is what to do in the first minutes after your phone is sto
 - **By victims, for victims.** We aren't a security company or an agency. We had our phones stolen, lost money and accounts, and wrote down what we wish we'd known.
 - **Angry at the right people.** Thieves. Phone makers that make stolen phones easy to resell. Operators that make you queue to block a SIM. Never the person it happened to.
 - **Plain and useful.** It's a notice taped to a lamppost, not an app store listing. Blunt type, hard edges, two inks, big numbers.
-- **Trustworthy.** We have no ads, no tracking unless you switch it on, and we never sell to anyone while they panic.
 
 ## Priority layers
 
