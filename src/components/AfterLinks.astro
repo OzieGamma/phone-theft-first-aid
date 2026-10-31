@@ -1,14 +1,21 @@
 ---
-// Layers 2 and 3, linked after the checklist.
+// Layers 2 and 3, linked after the checklist. Pass items to link a single next page
+// at the bottom of another page, without the heading.
 import Picto from './Picto.astro';
 import { home } from '../i18n/en';
+
+interface Props {
+  items?: typeof home.next;
+}
+
+const { items } = Astro.props;
 ---
 
-<section class="after" aria-labelledby="after-title">
-  <h2 id="after-title" class="title">{home.nextTitle}</h2>
+<section class="after" aria-labelledby={items ? undefined : 'after-title'}>
+  {!items && <h2 id="after-title" class="title">{home.nextTitle}</h2>}
   <ul>
     {
-      home.next.map((item) => (
+      (items ?? home.next).map((item) => (
         <li>
           <a href={item.href}>
             <Picto name={item.picto} size="lg" />

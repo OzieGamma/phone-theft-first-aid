@@ -1,0 +1,18 @@
+{
+  "updated": "2026-10-30",
+  "dataTo": "2026-09",
+  "measure": "Phone thefts and phone robberies recorded by the Metropolitan Police, per year",
+  "source": {
+    "label": "Metropolitan Police",
+    "href": "https://www.met.police.uk/police-forces/metropolitan-police/areas/stats-and-data/stats-and-data/met/crime-data-dashboard/"
+  },
+  "years": [
+    { "year": "2019", "value": 41751 },
+    { "year": "2020", "value": 28753 },
+    { "year": "2021", "value": 34127 },
+    { "year": "2022", "value": 49244 },
+    { "year": "2023", "value": 67082 },
+    { "year": "2024", "value": 81439 },
+    { "year": "2025", "value": 71872 }
+  ]
+}

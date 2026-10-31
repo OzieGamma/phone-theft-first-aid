@@ -1,68 +1,106 @@
 ---
 import Base from '../layouts/Base.astro';
-import Picto, { type PictoName } from '../components/Picto.astro';
+import Expander from '../components/Expander.astro';
+import type { PictoName } from '../components/Picto.astro';
+import thefts from '../data/london-thefts.json';
+
+const number = (n: number) => n.toLocaleString('en-GB');
+const date = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const lastFull = thefts.years.at(-1)!;
+const minutes = Math.round((365 * 24 * 60) / lastFull.value);
+
+// Line chart, drawn at build time as inline SVG: no script, no third-party request.
+const chart = { width: 320, height: 220, left: 24, right: 296, top: 34, bottom: 180 };
+const step = 20000;
+const top = Math.ceil(Math.max(...thefts.years.map((row) => row.value)) / step) * step;
+const ticks = Array.from({ length: top / step + 1 }, (_, i) => i * step);
+const x = (i: number) => chart.left + (i * (chart.right - chart.left)) / (thefts.years.length - 1);
+const y = (value: number) => chart.bottom - (value / top) * (chart.bottom - chart.top);
+const points = thefts.years.map((row, i) => ({ ...row, x: x(i), y: y(row.value) }));
+const peak = points.reduce((a, b) => (b.value > a.value ? b : a));
+// Label only the first, lowest, highest and latest years, not every point.
+const labelled = new Set([points[0], points.reduce((a, b) => (b.value < a.value ? b : a)), peak, points.at(-1)!]);
 
 const items: { picto: PictoName; title: string; lines: string[] }[] = [
   {
     picto: 'imei',
     title: 'Write down your IMEI',
-    lines: ['Type *#06# in the phone app. The number appears.', 'Write it on paper. Keep it at home.'],
+    lines: ['Type *#06# in the phone app. The number appears', 'Write it on paper. Keep it at home'],
   },
   {
     picto: 'sim-block',
     title: 'Set a SIM PIN',
-    lines: ['Then a thief cannot move your SIM to another phone to get your login codes.'],
+    lines: ['Then a thief cannot move your SIM to another phone to get your login codes'],
+  },
+  {
+    picto: 'card',
+    title: 'Do not keep your bank card on the back of your phone',
+    lines: ['A thief who takes the phone gets the card too', 'Keep your cards in a pocket or wallet, away from the phone'],
+  },
+  {
+    picto: 'card',
+    title: 'Do not put all your banking on your phone',
+    lines: [
+      'Keep at least one bank account and card off the phone',
+      'If the phone is stolen, you can still pay and take out money',
+    ],
+  },
+  {
+    picto: 'lock',
+    title: 'Keep a spare ID, cash and card somewhere safe',
+    lines: ['Travelling? Leave them in your hotel room', 'Then a theft does not leave you stuck with nothing'],
   },
   {
     picto: 'locate',
     title: 'Turn on Find My',
-    lines: ['iPhone: Find My iPhone. Android: Find My Device.', 'Check that you know the password for that account.'],
+    lines: ['iPhone: Find My iPhone. Android: Find My Device', 'Check that you know the password for that account'],
   },
   {
     picto: 'lock',
     title: 'Turn on theft protection',
-    lines: ['iPhone: Stolen Device Protection. Android: Theft protection.', 'It asks for your face or fingerprint before big changes.'],
+    lines: ['iPhone: Stolen Device Protection. Android: Theft protection', 'It asks for your face or fingerprint before big changes'],
   },
   {
     picto: 'password',
     title: 'Print your backup codes',
     lines: [
-      'Make them in the security settings of your email account. Do this for email first.',
-      'Keep the paper at home, not in your wallet or phone case.',
+      'Make them in the security settings of your email account. Do this for email first',
+      'Keep the paper at home, not in your wallet or phone case',
     ],
   },
   {
     picto: 'borrowed-device',
     title: 'Add a second way to sign in',
     lines: [
-      'Add a recovery email address.',
-      'Add a second phone number that is not in this phone, such as a family member.',
-      'A security key or a passkey on a laptop also works.',
-      'iPhone: add a Recovery Contact, someone you trust.',
+      'Add a recovery email address',
+      'Add a second phone number that is not in this phone, such as a family member',
+      'A security key or a passkey on a laptop also works',
+      'iPhone: add a Recovery Contact, someone you trust',
     ],
   },
   {
     picto: 'backup',
     title: 'Do not keep your login codes only on the phone',
-    lines: ['Turn on backup in your code app.', 'Or set it up on a second device too.'],
+    lines: ['Turn on backup in your code app', 'Or set it up on a second device too'],
   },
   {
     picto: 'check',
     title: 'Test it',
-    lines: ['Sign in to your email on a computer without your phone.', 'If it does not work, fix it now, not after a theft.'],
+    lines: ['Sign in to your email on a computer without your phone', 'If it does not work, fix it now, not after a theft'],
   },
   {
     picto: 'info',
     title: 'Phone already stolen once?',
     lines: [
-      'Once you are back in your accounts, make new backup codes.',
-      'The old ones may have been stolen with the phone.',
+      'Once you are back in your accounts, make new backup codes',
+      'The old ones may have been stolen with the phone',
     ],
   },
   {
     picto: 'backup',
     title: 'Back up your phone',
-    lines: ['Photos and contacts are what people miss most.'],
+    lines: ['Photos and contacts are what people miss most'],
   },
 ];
 ---
@@ -71,51 +109,216 @@ const items: { picto: PictoName; title: string; lines: string[] }[] = [
   <div class="wrap">
     <header class="page-head">
       <h1 class="display">Prevention</h1>
-      <p>So the next thief gets less.</p>
+      <p>So the next thief gets less</p>
     </header>
 
-    <ul class="cards">
+    <section class="context" aria-labelledby="context-title">
+      <p class="hero"><strong>{number(lastFull.value)}</strong></p>
+      <h2 id="context-title">Phone thefts and robberies in London in {lastFull.year}</h2>
+      <p>About one every {minutes} minutes</p>
+
+      <figure class="chart">
+        <figcaption>{thefts.measure}</figcaption>
+        <svg viewBox={`0 0 ${chart.width} ${chart.height}`} role="img" aria-labelledby="chart-desc">
+          <desc id="chart-desc">
+            {points.map((point) => `${point.year}: ${number(point.value)}`).join(', ')}
+          </desc>
+          {
+            ticks.map((tick) => (
+              <line class:list={['grid', { base: tick === 0 }]} x1={0} x2={chart.width} y1={y(tick)} y2={y(tick)} />
+            ))
+          }
+          <polyline class="line" points={points.map((point) => `${point.x},${point.y}`).join(' ')} />
+          {
+            points.map((point, i) => (
+              <g class="point">
+                <title>{`${point.year}: ${number(point.value)}`}</title>
+                <circle cx={point.x} cy={point.y} r="5" />
+                {labelled.has(point) && (
+                  <text
+                    class="value"
+                    x={point.x}
+                    y={point.y + (point === peak || i === 0 ? -12 : 24)}
+                    text-anchor={i === 0 ? 'start' : i === points.length - 1 ? 'end' : 'middle'}
+                    dx={i === 0 ? -10 : i === points.length - 1 ? 10 : 0}
+                  >
+                    {number(point.value)}
+                  </text>
+                )}
+                <text class="year" x={point.x} y={chart.height - 14} text-anchor="middle">
+                  {point.year}
+                </text>
+              </g>
+            ))
+          }
+        </svg>
+      </figure>
+
+      <p class="source">
+        Updated <time datetime={thefts.updated}>{date(thefts.updated)}</time> · <a href={thefts.source.href}>Source</a>
+      </p>
+    </section>
+
+    <div class="warning">
+      <p class="warning-kicker">The most important thing</p>
+      <p class="warning-text">They are after your bank accounts, not only your phone</p>
+      <p class="warning-stat">
+        <strong>44%</strong>
+        of identity fraud victims had money taken from their bank account
+      </p>
+      <p class="warning-source">
+        <a
+          href="https://www.prnewswire.com/news-releases/more-than-5-5-million-adults-in-the-uk-fell-victim-to-identity-fraud-in-the-last-12-months-301496787.html"
+          title="Not all identity fraud comes from phone theft, but I could not find more precise numbers"
+          >GBG survey, 2022</a
+        >
+      </p>
+    </div>
+
+    <h2 class="list-title">Do this before it happens</h2>
+    <div>
       {
         items.map((item) => (
-          <li>
-            <h2>
-              <Picto name={item.picto} size="lg" />
-              <span>{item.title}</span>
-            </h2>
+          <Expander title={item.title} picto={item.picto}>
             {item.lines.map((line) => (
               <p set:html={line.replace('*#06#', '<code>*#06#</code>')} />
             ))}
-          </li>
+          </Expander>
         ))
       }
-    </ul>
+    </div>
   </div>
 </Base>
 
 <style>
-  .cards {
-    display: grid;
-    gap: var(--space-4);
-    padding: 0;
-    list-style: none;
-  }
-  .cards li {
-    padding: var(--space-5);
-    background: var(--surface-raised);
-    border: 2px solid var(--line-strong);
+  .context {
+    margin-block-end: var(--space-8);
     font-size: 18px;
     line-height: 29px;
   }
-  .cards h2 {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin-block-end: var(--space-2);
+  .hero {
+    font-family: var(--font-condensed);
+    font-stretch: 75%;
+    font-size: 80px;
+    line-height: 72px;
+    font-weight: 900;
+    color: var(--tape);
+    font-variant-numeric: tabular-nums;
+  }
+  .context h2 {
+    margin-block-start: var(--space-2);
     font-size: 22px;
     line-height: 30px;
     font-weight: 800;
   }
-  .cards p + p {
-    margin-block-start: var(--space-2);
+  .chart {
+    margin: var(--space-6) 0 0;
+  }
+  .chart figcaption {
+    margin-block-end: var(--space-2);
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .chart svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .grid {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .grid.base {
+    stroke: var(--line-strong);
+  }
+  .chart text {
+    fill: var(--ink-muted);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .line {
+    fill: none;
+    stroke: var(--tape);
+    stroke-width: 3;
+    stroke-linejoin: round;
+  }
+  .point circle {
+    fill: var(--tape);
+    stroke: var(--paper);
+    stroke-width: 2;
+  }
+  .chart .value {
+    fill: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .warning {
+    margin-block-end: var(--space-8);
+    padding: var(--space-6) var(--space-5);
+    background: var(--tape);
+    color: var(--on-tape);
+    font-family: var(--font-condensed);
+    font-stretch: 75%;
+    font-size: 48px;
+    line-height: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  .warning-kicker {
+    margin-block-end: var(--space-3);
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 800;
+  }
+  .warning-stat {
+    margin-block-start: var(--space-6);
+    padding-block-start: var(--space-5);
+    border-block-start: var(--border-hard) solid var(--on-tape);
+    font-family: var(--font-sans);
+    font-stretch: 100%;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    text-transform: none;
+  }
+  .warning-stat strong {
+    display: block;
+    font-family: var(--font-condensed);
+    font-stretch: 75%;
+    font-size: 80px;
+    line-height: 72px;
+    font-weight: 900;
+  }
+  .warning-source {
+    margin-block-start: var(--space-3);
+    font-family: var(--font-sans);
+    font-stretch: 100%;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    text-transform: none;
+  }
+  .warning-source a {
+    color: var(--on-tape);
+    text-decoration: underline dotted 2px;
+    text-underline-offset: 4px;
+    cursor: help;
+  }
+  .source {
+    margin-block-start: var(--space-4);
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .source a {
+    color: var(--ink);
+  }
+  .list-title {
+    margin-block-end: var(--space-2);
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
   }
 </style>

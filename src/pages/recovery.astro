@@ -1,50 +1,143 @@
 ---
 import Base from '../layouts/Base.astro';
 import RightsCallout from '../components/RightsCallout.astro';
-import Notice from '../components/Notice.astro';
+import Links from '../components/Links.astro';
+import AfterLinks from '../components/AfterLinks.astro';
+import { home, ui } from '../i18n/en';
+import official from '../data/official.en.json';
 ---
 
-<Base title="Recovery" description="Police report, insurance, IMEI block, bank refunds, getting your accounts back.">
+<Base title="Recovery" description="What to do in the days after a phone theft: money back, insurance, police report, IMEI block, new SIM.">
   <div class="wrap">
     <header class="page-head">
       <h1 class="display">Recovery</h1>
-      <p>What you are owed after a theft. Insist on it.</p>
+      <p>What to do in the days after the theft</p>
     </header>
 
     <div class="stack">
-      <RightsCallout picto="police-report" title="The police have to take your report">
-        <p>Do not leave without a copy and a reference number.</p>
-        <p>Your insurer, your bank and your operator will ask for them.</p>
+      <RightsCallout picto="card" title="Ask your bank for your money back">
+        <p>Report every payment you did not make, as soon as you can</p>
+        <p>You may get it back. Many banks refund fraud that is reported quickly</p>
+        <p>Ask for the answer in writing</p>
       </RightsCallout>
 
-      <RightsCallout picto="imei" title="Your operator can block the phone by its IMEI">
-        <p>Ask. If they stall, ask again.</p>
-        <p>A blocked IMEI stops the phone working on networks that check the list.</p>
+      <RightsCallout picto="card" title="Check every app that can pay">
+        <p>Look at payment apps, online shops and your phone bill</p>
+        <p>Report what you did not buy. Some refund it</p>
+        <p>Paid by card? Your bank can also try to reverse the payment</p>
+      </RightsCallout>
+
+      <RightsCallout picto="police-report" title="Get a copy of your police report">
+        <p>Ask for a copy and a reference number</p>
+        <p>Your bank, your insurer and your operator may ask for them</p>
+      </RightsCallout>
+
+      <RightsCallout picto="insurance" title="Claim on your insurance">
+        <p>Home, travel, bank card and phone contract insurance can each cover theft</p>
+        <p>Send the police reference number with your claim</p>
+      </RightsCallout>
+
+      <RightsCallout picto="imei" title="Block the phone by its IMEI">
+        <p>Ask your operator to block it</p>
+        <p>A blocked phone stops working on networks that check the list</p>
       </RightsCallout>
 
       <RightsCallout picto="sim-block" title="Get a new SIM with the same number">
-        <p>Your number stays yours. Your operator can put it on a new SIM or eSIM.</p>
-        <p>Bring ID to a shop, or ask for the SIM by post.</p>
+        <p>Ask your operator to put your number on a new SIM or eSIM</p>
+        <p>Bring ID to a shop, or ask for the SIM by post</p>
       </RightsCallout>
 
-      <RightsCallout picto="card" title="Your bank should refund fraud you reported quickly">
-        <p>Report every payment you did not make.</p>
-        <p>Get the answer in writing.</p>
+      <RightsCallout picto="wipe" title="Erase the phone when you are sure it is gone">
+        <p>Open the page you used to lock it. Choose Erase</p>
+        <p>An erased Android phone no longer shows where it is. An iPhone still does</p>
+        <p>Do not remove the phone from your account. Then it stays locked for the thief</p>
       </RightsCallout>
 
-      <RightsCallout picto="insurance" title="Check every insurance you have">
-        <p>Home, travel, bank card and phone contract insurance can each cover theft.</p>
-        <p>Send the police reference number with your claim.</p>
+      <RightsCallout picto="password" title="Recover your accounts the official way">
+        <p>Use the recovery page of the service itself</p>
+        <p>Never pay anyone who offers to recover an account for you</p>
       </RightsCallout>
 
-      <RightsCallout picto="password" title="Get your accounts back the official way">
-        <p>Use the recovery page of the service itself.</p>
-        <p>Never pay anyone who offers to recover an account for you.</p>
-      </RightsCallout>
+      <section class="official" aria-labelledby="official-title">
+        <h2 id="official-title">Official advice in your country</h2>
+        <p>Rules are different in every country. Some guides are only in the local language</p>
+        <div class="pick" hidden>
+          <label for="country">Your country</label>
+          <select id="country">
+            <option value="">Choose</option>
+            {official.countries.map((group, i) => <option value={i}>{group.country}</option>)}
+          </select>
+          {
+            official.countries.map((group, i) => (
+              <div data-country={i} hidden>
+                <Links links={group.links} />
+              </div>
+            ))
+          }
+        </div>
+        <a class="all" href="/sources/">All countries and sources</a>
+      </section>
 
-      <Notice title="Rules are different in every country">
-        <p>Pages for each country are coming.</p>
-      </Notice>
+      <AfterLinks
+        items={home.next
+          .filter((item) => item.href === '/prevention/')
+          .map((item) => ({ ...item, title: ui.next(item.title) }))}
+      />
     </div>
   </div>
 </Base>
+
+<script>
+  // Without JavaScript the combo box stays hidden; the link to all sources still works.
+  const pick = document.querySelector<HTMLElement>('.pick')!;
+  const select = pick.querySelector('select')!;
+  pick.hidden = false;
+  select.addEventListener('change', () => {
+    for (const group of pick.querySelectorAll<HTMLElement>('[data-country]')) {
+      group.hidden = group.dataset.country !== select.value;
+    }
+  });
+</script>
+
+<style>
+  .official h2 {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  .official p {
+    margin-block: var(--space-2) var(--space-4);
+    font-size: 18px;
+    line-height: 29px;
+  }
+  label {
+    display: block;
+    margin-block-end: var(--space-2);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  select {
+    width: 100%;
+    min-height: var(--tap-min);
+    padding: var(--space-2) var(--space-4);
+    border: var(--border-hard) solid var(--edge);
+    border-radius: 0;
+    background: var(--surface-raised);
+    color: var(--ink);
+    font: inherit;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  select:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+  .all {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    margin-block-start: var(--space-3);
+    color: var(--ink);
+    font-size: 18px;
+  }
+</style>

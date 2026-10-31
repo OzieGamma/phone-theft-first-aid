@@ -1,0 +1,138 @@
+{
+  "countries": [
+    {
+      "country": "Worldwide",
+      "links": [
+        { "label": "Digital First Aid Kit", "detail": "Nonprofit", "href": "https://circl.lu/pub/dfak/DevicesSeized/" }
+      ]
+    },
+    {
+      "country": "Argentina",
+      "links": [
+        { "label": "Ministerio de Justicia", "detail": "Government · Spanish", "href": "https://www.argentina.gob.ar/justicia/derechofacil/aplicalaley/me-robaron-el-celular" }
+      ]
+    },
+    {
+      "country": "Australia",
+      "links": [
+        { "label": "NSW Police", "detail": "Police", "href": "https://www.police.nsw.gov.au/contact_us/enquire/mobile_devices" },
+        { "label": "Victoria Police", "detail": "Police", "href": "https://www.police.vic.gov.au/mobile-phone-security" }
+      ]
+    },
+    {
+      "country": "Austria",
+      "links": [
+        { "label": "oesterreich.gv.at", "detail": "Government · German", "href": "https://www.oesterreich.gv.at/de/themen/notfaelle_unfaelle_und_kriminalitaet/vorbeugung-von-kriminalitaet-(praevention)/Diebstahl/Handydiebstahl" },
+        { "label": "Bundeskriminalamt", "detail": "Police · German · PDF", "href": "https://www.bundeskriminalamt.at/212/service/files/294_2025_infoblatt_handydiebstahl_a4_v20251010_bf.pdf" }
+      ]
+    },
+    {
+      "country": "Belgium",
+      "links": [
+        { "label": "Test Achats / Test Aankoop", "detail": "Consumer group · French, Dutch", "href": "https://www.test-aankoop.be/hightech/gsms-en-smartphones/dossier/gestolen-of-verloren-smartphone" },
+        { "label": "Police Uccle, W-B, Auderghem", "detail": "Local police · French", "href": "https://www.police.be/5342/fr/node/297" }
+      ]
+    },
+    {
+      "country": "Brazil",
+      "links": [
+        { "label": "Anatel", "detail": "Regulator · Portuguese", "href": "https://www.gov.br/anatel/pt-br/assuntos/celular-legal/celular-roubado" },
+        { "label": "Celular Seguro", "detail": "Government · Portuguese · PDF", "href": "https://www.gov.br/mj/pt-br/acesso-a-informacao/acoes-e-programas/celular-seguro/guia-rapido-celular-seguro-1.pdf" }
+      ]
+    },
+    {
+      "country": "Canada",
+      "links": [
+        { "label": "RCMP British Columbia", "detail": "Police", "href": "https://rcmp.ca/en/bc/safety-tips/theft-and-vandalism/warning-about-smartphone-robberies" }
+      ]
+    },
+    {
+      "country": "Chile",
+      "links": [
+        { "label": "ANCI", "detail": "Cyber agency · Spanish · PDF", "href": "https://anci.gob.cl/documents/4729/Ciberconsejos_ANCI_2025_-_Robo.pdf" }
+      ]
+    },
+    {
+      "country": "Colombia",
+      "links": [
+        { "label": "Alcaldía de Bogotá", "detail": "City · Spanish", "href": "https://bogota.gov.co/mi-ciudad/seguridad/bloquear-el-imei-de-un-celular-si-fue-hurtado-en-bogota" }
+      ]
+    },
+    {
+      "country": "France",
+      "links": [
+        { "label": "Service-Public.fr", "detail": "Government · French", "href": "https://www.service-public.gouv.fr/particuliers/vosdroits/F34123" },
+        { "label": "Arcep", "detail": "Regulator · French", "href": "https://www.arcep.fr/mes-demarches-et-services/consommateurs/fiches-pratiques/que-faire-en-cas-de-vol-de-mon-telephone-mobile.html" }
+      ]
+    },
+    {
+      "country": "Germany",
+      "links": [
+        { "label": "Verbraucherzentrale", "detail": "Consumer group · German", "href": "https://www.verbraucherzentrale.de/wissen/digitale-welt/mobilfunk-und-festnetz/handy-verloren-oder-gestohlen-sperren-lassen-anzeige-erstatten-13870" },
+        { "label": "Polizei NRW", "detail": "Police · German · PDF", "href": "https://bochum.polizei.nrw/sites/default/files/2023-09/flyer-smartphone-weg.pdf" }
+      ]
+    },
+    {
+      "country": "India",
+      "links": [
+        { "label": "Sanchar Saathi", "detail": "Government", "href": "https://www.sancharsaathi.gov.in/" },
+        { "label": "Cyber Security CoE West Bengal", "detail": "Cyber agency · PDF", "href": "https://cscoe.itewb.gov.in/upload/advisory-n/Advisory_on_Stolen_Mobile.pdf" }
+      ]
+    },
+    {
+      "country": "Ireland",
+      "links": [
+        { "label": "An Garda Síochána", "detail": "Police · PDF", "href": "https://www.garda.ie/en/crime-prevention/mobile-phone-safety-information.pdf" }
+      ]
+    },
+    {
+      "country": "Mexico",
+      "links": [
+        { "label": "IFT", "detail": "Regulator · Spanish · PDF", "href": "https://www.ift.org.mx/sites/default/files/imei.pdf" }
+      ]
+    },
+    {
+      "country": "New Zealand",
+      "links": [
+        { "label": "Own Your Online", "detail": "Cyber agency", "href": "https://ownyouronline.govt.nz/personal/get-protected/guides/keeping-your-mobile-phone-secure" }
+      ]
+    },
+    {
+      "country": "Nigeria",
+      "links": [
+        { "label": "NCC", "detail": "Regulator", "href": "https://consumer.ncc.gov.ng/articles/28-six-things-to-do-when-your-handset-is-stolen-or-lost" }
+      ]
+    },
+    {
+      "country": "Peru",
+      "links": [
+        { "label": "Observatorio Callao", "detail": "Local government · Spanish · PDF", "href": "https://cdn.www.gob.pe/uploads/document/file/6802236/5889443-infografias-robo-de-celular.pdf" }
+      ]
+    },
+    {
+      "country": "Spain",
+      "links": [
+        { "label": "OCU", "detail": "Consumer group · Spanish · 2018", "href": "https://www.ocu.org/organizacion/prensa/notas-de-prensa/2018/robo-movil-perdida-170118" }
+      ]
+    },
+    {
+      "country": "United Kingdom",
+      "links": [
+        { "label": "Citizens Advice", "detail": "Charity", "href": "https://www.citizensadvice.org.uk/consumer/phone-internet-downloads-or-tv/what-to-do-if-your-mobile-phone-is-lost-or-stolen/" },
+        { "label": "The Cyber Helpline", "detail": "Charity", "href": "https://thecyberhelpline.com/guides/lost-device" },
+        { "label": "Which?", "detail": "Consumer group", "href": "https://www.which.co.uk/news/article/what-to-do-if-your-phone-gets-stolen-aFAHd0j0oXoW" },
+        { "label": "Neighbourhood Watch", "detail": "Charity", "href": "https://www.ourwatch.org.uk/crime-prevention/crime-types/mobile-phone-theft/what-do-if-your-phone-stolen" },
+        { "label": "Ofcom", "detail": "Regulator", "href": "https://www.ofcom.org.uk/phones-telecoms-and-internet/advice-for-consumers/safety-and-security/lost-or-stolen-phone" },
+        { "label": "Lancashire Police", "detail": "Local police", "href": "https://lancashire.police.uk/faqs/mobile-phones/i-have-lost-or-had-my-phone-or-tablet-stolen-what-can-i-do-to-help-find-them" },
+        { "label": "West Yorkshire Police", "detail": "Local police", "href": "https://www.westyorkshire.police.uk/node/117576" }
+      ]
+    },
+    {
+      "country": "United States",
+      "links": [
+        { "label": "FCC", "detail": "Regulator", "href": "https://www.fcc.gov/smart-device-protection" },
+        { "label": "Montgomery County Police", "detail": "Local police", "href": "https://montgomerycountymd.gov/pol/fraud/lost-phone.html" }
+      ]
+    }
+  ]
+}

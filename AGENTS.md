@@ -1,7 +1,7 @@
 ## Design system
 All UI follows the Phone Theft First Aid design system in `brandkit/`.
 - Read `brandkit/README.md` and `brandkit/voice.md` before building any screen or writing copy.
-- No full stop at the end of titles, headings, step names, buttons or link labels ("Lock your phone", not "Lock your phone."). Full stops inside them stay ("All 6 done. Breathe"), and body sentences keep theirs.
+- No dangling full stop: nothing on screen ends with a full stop, not titles, buttons, lines nor paragraphs ("Lock your phone", not "Lock your phone."). Full stops between sentences stay ("All 6 done. Breathe"). Applies to the JSON, `en.ts` and pages.
 - Use tokens from `brandkit/tokens.css` (or `tokens.json`); never hard-code colours, sizes or fonts.
 - Reuse components from `src/components/` (`Picto`, `Logo`, `Checklist`, `Notice`, `RightsCallout`).
 - Logos and pictograms are in `brandkit/assets/`; `Picto` inlines the pictogram SVGs at build time.

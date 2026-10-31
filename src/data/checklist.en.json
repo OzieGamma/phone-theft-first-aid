@@ -3,7 +3,7 @@
   "lang": "en",
   "dir": "ltr",
   "title": "Phone stolen? Do this now",
-  "allDone": "All 6 done. Breathe",
+  "allDone": "All 7 done. Breathe",
   "items": [
     {
       "id": "safe",
@@ -11,9 +11,9 @@
       "picto": "alert",
       "title": "Are you safe?",
       "lines": [
-        "If you are hurt or in danger, call the emergency number first.",
-        "You can call it from any phone, even without a SIM card.",
-        "Somewhere else? Try 112 from a mobile phone. Most networks connect it to the local emergency number."
+        "If you are hurt or in danger, call the emergency number first",
+        "You can call it from any phone, even without a SIM card",
+        "Somewhere else? Try 112 from a mobile phone. Most networks connect it to the local emergency number"
       ],
       "links": [
         {
@@ -41,10 +41,10 @@
       "style": "poster",
       "title": "Keep calm\nand\ncarry on",
       "lines": [
-        "Breathe in slowly through your nose.",
-        "Breathe out slowly through your mouth.",
-        "Do it 3 times.",
-        "It happened to us too. We will go through it one step at a time."
+        "Breathe in slowly through your nose",
+        "Breathe out slowly through your mouth",
+        "Do it 3 times",
+        "It happened to me too. We will go through it one step at a time"
       ],
       "continue": "I am ready",
       "wait": 5
@@ -55,8 +55,8 @@
       "picto": "borrowed-device",
       "title": "On a borrowed phone or computer?",
       "lines": [
-        "Open a private window.",
-        "Sign out of every account when you are done."
+        "Open a private window",
+        "Sign out of every account when you are done"
       ],
       "continue": "Continue"
     },
@@ -83,21 +83,21 @@
       "title": "Block payments",
       "time": "About 5 minutes per bank",
       "lines": [
-        "Call your bank. The number is on the back of your card and on the bank website.",
+        "Call your bank. The number is on the back of your card and on the bank website",
         {
-          "text": "1️⃣ Ask them to block your cards in Apple Pay and their banking app on the stolen phone.",
+          "text": "1️⃣ Ask them to block your cards in Apple Pay and their banking app on the stolen phone",
           "when": {
             "phone": "iphone"
           }
         },
         {
-          "text": "1️⃣ Ask them to block your cards in Google Wallet and their banking app on the stolen phone.",
+          "text": "1️⃣ Ask them to block your cards in Google Wallet and their banking app on the stolen phone",
           "when": {
             "phone": "android"
           }
         },
-        "2️⃣ Wallet stolen too? Ask them to block the cards as well.",
-        "Ask about any payments made since the theft."
+        "2️⃣ Wallet stolen too? Ask them to block the cards as well",
+        "Ask about any payments made since the theft"
       ],
       "links": [
         {
@@ -114,9 +114,9 @@
       "title": "Block your SIM card",
       "time": "About 10 minutes, plus time on hold",
       "lines": [
-        "Call your mobile operator from any phone.",
-        "1️⃣ Ask them to block the SIM.",
-        "➡️ A blocked SIM cannot be used to receive login codes."
+        "Call your mobile operator from any phone",
+        "1️⃣ Ask them to block the SIM",
+        "➡️ A blocked SIM cannot be used to receive login codes"
       ],
       "links": [
         {
@@ -133,26 +133,26 @@
       "title": "Lock your phone",
       "time": "About 2 minutes",
       "lines": [
-        "On any phone or computer, open the page for your phone. Sign in.",
+        "On any phone or computer, open the page for your phone. Sign in",
         {
-          "text": "Choose Mark as lost.",
+          "text": "Choose Mark as lost",
           "when": {
             "phone": "iphone"
           }
         },
         {
-          "text": "Choose Secure device.",
+          "text": "Choose Secure device",
           "when": {
             "phone": "android"
           }
         },
         {
-          "text": "Asked for a code you cannot get? Try android.com/lock. It needs only your phone number.",
+          "text": "Asked for a code you cannot get? Try android.com/lock. It needs only your phone number",
           "when": {
             "phone": "android"
           }
         },
-        "The same page shows where the phone is. Do not go there yourself. Give the location to the police."
+        "The same page shows where the phone is. Do not go there yourself. Give the location to the police"
       ],
       "links": [
         {
@@ -186,7 +186,7 @@
       "picto": "password",
       "question": "Lock your email",
       "lines": [
-        "Open your email in a new tab. Go to the security settings.",
+        "Open your email in a new tab. Go to the security settings",
         "Can you get in?"
       ],
       "options": [
@@ -225,19 +225,19 @@
       "time": "About 3 minutes",
       "lines": [
         {
-          "text": "➡️ Forgot your password? Choose Forgot password.",
+          "text": "➡️ Forgot your password? Choose Forgot password",
           "when": {
             "signin": "out"
           }
         },
         {
-          "text": "➡️ Asked for a code by SMS or on an authenticator? On the sign-in page, choose Try another way. A backup code or a security key works too.",
+          "text": "➡️ Asked for a code by SMS or on an authenticator? On the sign-in page, choose Try another way. A backup code or a security key works too",
           "when": {
             "signin": "out"
           }
         },
         {
-          "text": "➡️ Still signed in on a laptop or tablet? Use that. It may not ask for a code.",
+          "text": "➡️ Still signed in on a laptop or tablet? Use that. It may not ask for a code",
           "when": {
             "signin": "out"
           }
@@ -249,14 +249,14 @@
           }
         },
         {
-          "text": "Once you are in, go to the security settings.",
+          "text": "Once you are in, go to the security settings",
           "when": {
             "signin": "out"
           }
         },
-        "Remove the stolen phone from your devices and sign-in methods.",
-        "1️⃣ Choose Sign out of all other devices.",
-        "2️⃣ Change the password.",
+        "Remove the stolen phone from your devices and sign-in methods",
+        "1️⃣ Choose Sign out of all other devices",
+        "2️⃣ Change the password",
         "Next, do the same for your other accounts (social media, banks, paypal ...)"
       ],
       "links": [
@@ -287,38 +287,51 @@
       ]
     },
     {
+      "id": "contacts",
+      "type": "step",
+      "picto": "borrowed-device",
+      "title": "Warn your contacts",
+      "time": "About 2 minutes",
+      "lines": [
+        "From another phone or your email, message family and close friends",
+        "Tell them your phone was stolen. A message from your number asking for money or codes is not you",
+        "⚠️ Warn them that your identity might be stolen and to be careful with messages from you"
+      ]
+    },
+    {
+      "id": "found",
+      "type": "step",
+      "picto": "alert",
+      "title": "Watch for physhing",
+      "time": "For the next weeks",
+      "lines": [
+        "⚠️ Given recent theft, you are in a vulnerable state. Be extra careful",
+        "⚠️ Do not click on random links in your mailbox",
+        "⚠️ If the bank calls you, ask them for a name and call them back",
+        "⚠️ Companies will never ask your passwords or codes. If they do, it is a scam"
+      ]
+    },
+    {
       "id": "police",
       "type": "step",
       "picto": "police-report",
       "title": "Report the theft to the police",
       "time": "Today",
       "lines": [
-        "⚠️ Get a copy of the report and a reference number.",
-        "Your insurer and your operator will ask for them.",
+        "⚠️ Get a copy of the report and a reference number",
+        "Your insurer and your operator will ask for them",
         {
-          "text": "Bring the IMEI number if you can find it. It is on the phone box, and in your Apple account.",
+          "text": "Bring the IMEI number if you can find it. It is on the phone box, and in your Apple account",
           "when": {
             "phone": "iphone"
           }
         },
         {
-          "text": "Bring the IMEI number if you can find it. It is on the phone box, and in your Google account.",
+          "text": "Bring the IMEI number if you can find it. It is on the phone box, and in your Google account",
           "when": {
             "phone": "android"
           }
         }
-      ]
-    },
-    {
-      "id": "erase",
-      "type": "step",
-      "picto": "wipe",
-      "title": "Erase your phone",
-      "time": "When you are sure it is gone",
-      "lines": [
-        "Use the same page you used to lock it. Choose Erase.",
-        "After you erase it, you may not see where it is.",
-        "Do not remove the phone from your account. Then it stays locked for the thief."
       ]
     }
   ]

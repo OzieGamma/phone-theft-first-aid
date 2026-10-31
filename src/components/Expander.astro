@@ -1,0 +1,62 @@
+---
+// A row that opens to show more. Native <details>: works without JavaScript.
+import Picto, { type PictoName } from './Picto.astro';
+
+interface Props {
+  title: string;
+  picto?: PictoName;
+}
+
+const { title, picto } = Astro.props;
+---
+
+<details class="expander">
+  <summary>
+    {picto && <Picto name={picto} size="lg" />}
+    <span>{title}</span>
+    <Picto name="arrow" />
+  </summary>
+  <div class="expander-body"><slot /></div>
+</details>
+
+<style>
+  .expander {
+    border-block-end: 1px solid var(--line);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--tap-min);
+    padding-block: var(--space-3);
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary > span {
+    flex: 1;
+  }
+  summary > :global(svg:last-child) {
+    flex: none;
+    transform: rotate(90deg);
+  }
+  .expander[open] summary > :global(svg:last-child) {
+    transform: rotate(-90deg);
+  }
+  .expander-body {
+    padding-block-end: var(--space-4);
+    font-size: 18px;
+    line-height: 29px;
+  }
+  .expander-body :global(p + p) {
+    margin-block-start: var(--space-2);
+  }
+  .expander-body :global(.links) {
+    margin-block-start: 0;
+  }
+</style>

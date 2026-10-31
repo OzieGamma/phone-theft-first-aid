@@ -14,10 +14,12 @@ export const ui = {
     home: 'Checklist',
     recovery: 'Recovery',
     prevention: 'Prevention',
-    about: 'About us',
+    sources: 'Data sources',
+    about: 'About',
+    contribute: 'Contribute',
     privacy: 'Privacy',
   },
-  footer: 'Free. No ads. No tracking. Made by people whose phones were stolen.',
+  footer: 'Free. No ads. No tracking. Made by',
   start: 'Start the checklist',
   back: 'Back',
   done: 'Done',
@@ -26,8 +28,9 @@ export const ui = {
   stepOf: (n: number | string, total: number) => `Step ${n} of ${total}`,
   beforeYouStart: 'Before you start',
   progress: (done: number | string, total: number) => `${done} of ${total} done`,
-  goBack: 'Go back to the skipped steps.',
+  goBack: 'Go back to the skipped steps',
   startOver: 'Start over',
+  next: (title: string) => `Next: ${title}`,
 };
 
 export const home = {
@@ -37,13 +40,13 @@ export const home = {
       href: '/recovery/',
       picto: 'insurance',
       title: 'Recovery',
-      text: 'Police report, insurance, IMEI block, getting your money back.',
+      text: 'Money back, insurance, police report, new SIM',
     },
     {
       href: '/prevention/',
       picto: 'backup',
       title: 'Prevention',
-      text: 'So the next thief gets less.',
+      text: 'So the next thief gets less',
     },
   ] satisfies { href: string; picto: PictoName; title: string; text: string }[],
 };
