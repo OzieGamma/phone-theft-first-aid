@@ -1,14 +1,130 @@
 ---
 import Base from '../layouts/Base.astro';
-import RightsCallout from '../components/RightsCallout.astro';
+import TodoList, { type TodoItem } from '../components/TodoList.astro';
 import Links from '../components/Links.astro';
+import Notice from '../components/Notice.astro';
 import AfterLinks from '../components/AfterLinks.astro';
 import { home, ui } from '../i18n/en';
-import official from '../data/official.en.json';
-import { url } from '../lib/site';
+import { countries } from '../lib/sources';
+import { repo, url } from '../lib/site';
+
+// In the order most people need them over the days after a theft. Drawn from the official sources below.
+const items: TodoItem[] = [
+  {
+    picto: 'sim-block',
+    title: 'Get your number back on a new SIM',
+    lines: [
+      'Ask your operator for a new SIM or eSIM with the same number',
+      'Bring ID. Most operators give it only to the account holder',
+      'Do it this week. After 30 days some operators give your number to someone else',
+      'Abroad? Ask for an eSIM',
+      'Restart the phone. Test a call, a text and mobile data',
+      'Ask for proof in writing that the SIM and the phone are blocked. Keep the reference number',
+    ],
+  },
+  {
+    picto: 'card',
+    title: 'Ask your bank for your money back',
+    lines: [
+      'Report every payment you did not make, as soon as you can',
+      'You may get it back. Many banks refund fraud that is reported quickly',
+      'Ask for the answer in writing',
+      'Check for loans or credit opened in your name',
+      'Bank says no? Complain to the financial ombudsman',
+    ],
+  },
+  {
+    picto: 'card',
+    title: 'Check every app that can pay',
+    lines: [
+      'Look at payment apps, online shops and your phone bill',
+      'Report what you did not buy. Some refund it',
+      'Paid by card? Your bank can also try to reverse the payment',
+    ],
+  },
+  {
+    picto: 'sim-block',
+    title: 'Check your phone bill',
+    lines: [
+      'A block does not end your contract. Keep paying the plan and the phone',
+      'Look for calls, data and payments the thief made',
+      'Dispute every charge made after you reported the theft',
+      'Operator will not fix it? Complain to the telecom regulator or ombudsman',
+      'Read your contract before you cancel or upgrade. There can be fees',
+    ],
+  },
+  {
+    picto: 'insurance',
+    title: 'Claim on your insurance',
+    lines: [
+      'Claim before the deadline in your policy. Some give only 30 days',
+      'Home, travel, bank card and phone contract insurance can each cover theft',
+      'Send the police reference, the receipt and the proof that the phone is blocked',
+      'Claim before you remove the phone from your account',
+      'Phone comes back after you claim? Tell your insurer',
+    ],
+  },
+  {
+    picto: 'password',
+    title: 'Recover your accounts the official way',
+    lines: [
+      'Use the recovery page of the service itself',
+      'Never pay anyone who offers to recover an account for you',
+      'Change sign-in methods one at a time. Changing them all at once can lock an account for 30 days',
+    ],
+  },
+  {
+    picto: 'lock',
+    title: 'Watch your accounts for a month',
+    lines: [
+      'Check your email and bank for new sign-ins every week',
+      'Remove devices and apps you do not know',
+      'Check email forwarding, and your recovery email and phone number',
+      'Change every password you also use on other sites',
+    ],
+  },
+  {
+    picto: 'alert',
+    title: 'A message says your phone was found? It is a scam',
+    lines: [
+      'Thieves send fake messages and links to get your passcode or account password',
+      'With it they can unlock the phone and sell it',
+      'Never give your passcode to anyone',
+    ],
+  },
+  {
+    picto: 'wipe',
+    title: 'Erase the phone when you are sure it is gone',
+    lines: [
+      'Open the page you used to lock it. Choose Erase',
+      'An erased Android phone no longer shows where it is. An iPhone still does',
+      'Do not remove the phone from your account. Then it stays locked for the thief',
+    ],
+  },
+  {
+    picto: 'backup',
+    title: 'Set up your new phone',
+    lines: [
+      'Restore your data from your backup',
+      'Sign in again to your banking and mobile money apps',
+      'Set up your digital ID again',
+      'Sign in to your messaging apps. End the session on the old phone',
+      'New number? Update it at your bank, email and government accounts',
+    ],
+  },
+  {
+    picto: 'check',
+    title: 'Got your phone back?',
+    lines: [
+      'Tell the police and your insurer',
+      'Ask your operator to lift the block. Only you can, with ID or the block reference',
+      'Erase it before you use it again. A thief may have installed something',
+    ],
+  },
+];
 ---
 
-<Base title="Recovery" description="What to do in the days after a phone theft: money back, insurance, police report, IMEI block, new SIM.">
+<Base title="Recovery" description="What to do in the days after a phone theft: new SIM, money back, phone bill, insurance, accounts, new phone.">
   <div class="wrap">
     <header class="page-head">
       <h1 class="display">Recovery</h1>
@@ -16,60 +132,26 @@ import { url } from '../lib/site';
     </header>
 
     <div class="stack">
-      <RightsCallout picto="card" title="Ask your bank for your money back">
-        <p>Report every payment you did not make, as soon as you can</p>
-        <p>You may get it back. Many banks refund fraud that is reported quickly</p>
-        <p>Ask for the answer in writing</p>
-      </RightsCallout>
-
-      <RightsCallout picto="card" title="Check every app that can pay">
-        <p>Look at payment apps, online shops and your phone bill</p>
-        <p>Report what you did not buy. Some refund it</p>
-        <p>Paid by card? Your bank can also try to reverse the payment</p>
-      </RightsCallout>
-
-      <RightsCallout picto="police-report" title="Get a copy of your police report">
-        <p>Ask for a copy and a reference number</p>
-        <p>Your bank, your insurer and your operator may ask for them</p>
-      </RightsCallout>
-
-      <RightsCallout picto="insurance" title="Claim on your insurance">
-        <p>Home, travel, bank card and phone contract insurance can each cover theft</p>
-        <p>Send the police reference number with your claim</p>
-      </RightsCallout>
-
-      <RightsCallout picto="imei" title="Block the phone by its IMEI">
-        <p>Ask your operator to block it</p>
-        <p>A blocked phone stops working on networks that check the list</p>
-      </RightsCallout>
-
-      <RightsCallout picto="sim-block" title="Get a new SIM with the same number">
-        <p>Ask your operator to put your number on a new SIM or eSIM</p>
-        <p>Bring ID to a shop, or ask for the SIM by post</p>
-      </RightsCallout>
-
-      <RightsCallout picto="wipe" title="Erase the phone when you are sure it is gone">
-        <p>Open the page you used to lock it. Choose Erase</p>
-        <p>An erased Android phone no longer shows where it is. An iPhone still does</p>
-        <p>Do not remove the phone from your account. Then it stays locked for the thief</p>
-      </RightsCallout>
-
-      <RightsCallout picto="password" title="Recover your accounts the official way">
-        <p>Use the recovery page of the service itself</p>
-        <p>Never pay anyone who offers to recover an account for you</p>
-      </RightsCallout>
+      <section aria-labelledby="todo-title">
+        <h2 class="list-title" id="todo-title">Do this in the next days</h2>
+        <TodoList items={items} storageKey="ptfa-recovery" />
+      </section>
 
       <section class="official" aria-labelledby="official-title">
         <h2 id="official-title">Official advice in your country</h2>
         <p>Rules are different in every country. Some guides are only in the local language</p>
+        <Notice tone="warn" title="This list was compiled with AI. No person has checked it yet">
+          <p>Links can be wrong or out of date. Check each page before you rely on it</p>
+          <p><a href={repo}>Report a mistake</a></p>
+        </Notice>
         <div class="pick" hidden>
           <label for="country">Your country</label>
           <select id="country">
             <option value="">Choose</option>
-            {official.countries.map((group, i) => <option value={i}>{group.country}</option>)}
+            {countries.map((group, i) => <option value={i}>{group.country}</option>)}
           </select>
           {
-            official.countries.map((group, i) => (
+            countries.map((group, i) => (
               <div data-country={i} hidden>
                 <Links links={group.links} />
               </div>
@@ -101,17 +183,21 @@ import { url } from '../lib/site';
 </script>
 
 <style>
+  .list-title,
   .official h2 {
     font-size: 22px;
     line-height: 30px;
     font-weight: 800;
   }
-  .official p {
+  .official > p {
     margin-block: var(--space-2) var(--space-4);
     font-size: 18px;
     line-height: 29px;
   }
-  label {
+  .official :global(.notice) {
+    margin-block-end: var(--space-6);
+  }
+  .pick label {
     display: block;
     margin-block-end: var(--space-2);
     font-size: 18px;
@@ -127,6 +213,7 @@ import { url } from '../lib/site';
     color: var(--ink);
     font: inherit;
     font-size: 20px;
+    line-height: 26px;
     font-weight: 700;
   }
   select:focus-visible {

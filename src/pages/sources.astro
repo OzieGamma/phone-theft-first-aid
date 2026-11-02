@@ -3,11 +3,11 @@ import Base from '../layouts/Base.astro';
 import Links from '../components/Links.astro';
 import Expander from '../components/Expander.astro';
 import Notice from '../components/Notice.astro';
-import official from '../data/official.en.json';
+import { countries } from '../lib/sources';
 import { repo } from '../lib/site';
 ---
 
-<Base title="Data sources" description="Official stolen-phone guides by country: government, police, regulators and consumer groups.">
+<Base title="Data sources" description="Official stolen-phone guides by country: government, police, regulators, consumer groups, operators and phone makers.">
   <div class="wrap">
     <header class="page-head">
       <h1 class="display">Data sources</h1>
@@ -22,7 +22,7 @@ import { repo } from '../lib/site';
     </div>
 
     {
-      official.countries.map((group) => (
+      countries.map((group) => (
         <Expander title={group.country}>
           <Links links={group.links} />
         </Expander>

@@ -15,6 +15,7 @@ import { url } from '../lib/site';
 const list = getChecklist(ui.lang);
 const stepList = steps(list);
 const total = stepList.length;
+const allDone = list.allDone.replace('{total}', String(total));
 // Drawn for this site after the public-domain 1939 poster. Inlined so its text uses the page's Noto Sans.
 const keepCalm = keepCalmSvg.replace(/ role="img" aria-label="[^"]*"/, '');
 
@@ -153,10 +154,10 @@ const stepFor = (index: number) =>
       class="item-title display"
       id="summary-title"
       tabindex="-1"
-      data-all-done={list.allDone}
+      data-all-done={allDone}
       data-template={ui.progress('{done}', total)}
     >
-      {list.allDone}
+      {allDone}
     </h2>
     <p class="hint">{ui.goBack}</p>
     <ol class="summary">

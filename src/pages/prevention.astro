@@ -1,9 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import Expander from '../components/Expander.astro';
-import type { PictoName } from '../components/Picto.astro';
+import TodoList, { type TodoItem } from '../components/TodoList.astro';
 import thefts from '../data/london-thefts.json';
-import { ui } from '../i18n/en';
 
 const number = (n: number) => n.toLocaleString('en-GB');
 const date = (iso: string) =>
@@ -23,7 +21,7 @@ const peak = points.reduce((a, b) => (b.value > a.value ? b : a));
 // Label only the first, lowest, highest and latest years, not every point.
 const labelled = new Set([points[0], points.reduce((a, b) => (b.value < a.value ? b : a)), peak, points.at(-1)!]);
 
-const items: { picto: PictoName; title: string; lines: string[] }[] = [
+const items: TodoItem[] = [
   {
     picto: 'imei',
     title: 'Write down your IMEI',
@@ -177,53 +175,9 @@ const items: { picto: PictoName; title: string; lines: string[] }[] = [
     </div>
 
     <h2 class="list-title">Do this before it happens</h2>
-    <p class="count" data-template={ui.progress('{done}', items.length)}>{ui.progress(0, items.length)}</p>
-    <ul class="todo">
-      {
-        items.map((item, i) => (
-          <li>
-            <Expander title={item.title} picto={item.picto}>
-              <span slot="status" class="badge label">
-                {ui.status.done}
-              </span>
-              {item.lines.map((line) => (
-                <p set:html={line.replace('*#06#', '<code>*#06#</code>')} />
-              ))}
-              <label class="btn mark">
-                <input type="checkbox" id={`todo-${i}`} />
-                {ui.markDone}
-              </label>
-            </Expander>
-          </li>
-        ))
-      }
-    </ul>
+    <TodoList items={items} storageKey="ptfa-prevention" />
   </div>
 </Base>
-
-<script>
-  // Any order, no steps. Ticks live in sessionStorage, like the checklist: gone when the tab closes.
-  const KEY = 'ptfa-prevention';
-  const boxes = [...document.querySelectorAll<HTMLInputElement>('.todo input')];
-  const count = document.querySelector<HTMLElement>('.count')!;
-  let ticked: string[] = [];
-  try {
-    ticked = JSON.parse(sessionStorage.getItem(KEY) ?? '[]');
-  } catch {}
-  const update = () => {
-    count.textContent = count.dataset.template!.replace('{done}', String(boxes.filter((box) => box.checked).length));
-  };
-  for (const box of boxes) {
-    box.checked = ticked.includes(box.id);
-    box.addEventListener('change', () => {
-      update();
-      try {
-        sessionStorage.setItem(KEY, JSON.stringify(boxes.filter((b) => b.checked).map((b) => b.id)));
-      } catch {}
-    });
-  }
-  update();
-</script>
 
 <style>
   .context {
@@ -354,72 +308,5 @@ const items: { picto: PictoName; title: string; lines: string[] }[] = [
     font-size: 22px;
     line-height: 30px;
     font-weight: 800;
-  }
-  .count {
-    margin-block: var(--space-1) var(--space-3);
-    color: var(--ink-muted);
-    font-size: 16px;
-    line-height: 24px;
-  }
-  .todo {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  /* Done: the title greys out and says so, the box inside turns yellow. */
-  .todo li:has(input:checked) :global(summary) {
-    color: var(--ink-muted);
-  }
-  .todo li:has(input:checked) :global(summary > span:not(.badge)) {
-    text-decoration: line-through 2px;
-  }
-  .badge {
-    display: none;
-    flex: none;
-    padding: 2px var(--space-2);
-    background: var(--tape);
-    color: var(--on-tape);
-  }
-  .todo li:has(input:checked) .badge {
-    display: block;
-  }
-  .mark {
-    display: flex;
-    gap: var(--space-3);
-    width: 100%;
-    margin-block-start: var(--space-4);
-    cursor: pointer;
-  }
-  .mark input {
-    appearance: none;
-    display: grid;
-    place-content: center;
-    flex: none;
-    width: 28px;
-    height: 28px;
-    margin: 0;
-    border: var(--border-hard) solid var(--edge);
-    background: var(--paper);
-    cursor: pointer;
-  }
-  .mark input::after {
-    content: '';
-    width: 12px;
-    height: 7px;
-    margin-block-start: -4px;
-    border: solid var(--on-tape);
-    border-width: 0 0 4px 4px;
-    transform: rotate(-45deg);
-    visibility: hidden;
-  }
-  .mark input:checked {
-    border-color: var(--tape);
-    background: var(--tape);
-  }
-  .mark input:checked::after {
-    visibility: visible;
-  }
-  .mark:has(input:focus-visible) {
-    box-shadow: var(--focus-ring);
   }
 </style>

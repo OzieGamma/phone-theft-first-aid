@@ -27,6 +27,7 @@
       "type": "string"
     },
     "allDone": {
+      "description": "Shown when every step is done. {total} becomes the number of steps",
       "type": "string"
     },
     "items": {

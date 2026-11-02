@@ -11,7 +11,7 @@ The checklist is the calm part. Anger goes into advocacy, never into instruction
 3. **Say it like it is.** Short words. No softening ("you may want to consider"), no hype ("powerful", "seamless").
 4. **We / us for who we are, you for what to do.** "It happened to us. Lock your phone now."
 5. **Numbers, not adjectives.** "About 2 minutes." "6 steps." "*#06#."
-6. **Angry at institutions, by name of role.** Say "operators", "phone makers", "banks". Name real companies only in sourced advocacy, never in the guide.
+6. **Angry at institutions, by name of role.** Say "operators", "phone makers", "banks". Name real companies only in sourced advocacy and in the list of official sources (Data sources, Recovery), never in the steps of the guide.
 7. **No exclamation marks** in layers 1–3. Advocacy can have one, rarely.
 8. **No taglines, no wordplay.** If a line sounds like an ad, cut it.
 9. **Write for translation.** No idioms, slang or phrasal verbs that machine translation breaks. Mild words like "pissed off" stay out of the product; the attitude comes from bluntness, not swearing.

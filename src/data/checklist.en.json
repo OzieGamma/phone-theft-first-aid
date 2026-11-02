@@ -3,7 +3,7 @@
   "lang": "en",
   "dir": "ltr",
   "title": "Phone stolen? Do this now",
-  "allDone": "All 7 done. Breathe",
+  "allDone": "All {total} done. Breathe",
   "items": [
     {
       "id": "safe",
@@ -119,12 +119,15 @@
       "id": "sim",
       "type": "step",
       "picto": "sim-block",
-      "title": "Block your SIM card",
+      "title": "Block your SIM card and IMEI",
       "time": "About 10 minutes, plus time on hold",
       "lines": [
         "Call your mobile operator from any phone",
         "1️⃣ Ask them to block the SIM",
-        "➡️ A blocked SIM cannot be used to receive login codes"
+        "➡️ A blocked SIM cannot be used to receive login codes",
+        "2️⃣ Ask them to block the phone by its IMEI too. They can often see the number on your account",
+        "➡️ A blocked phone stops working on networks that check the list",
+        "⚠️ Don't forget to block secondary sims / e-sims"
       ],
       "links": [
         {
@@ -295,6 +298,25 @@
       ]
     },
     {
+      "id": "digital-id",
+      "type": "step",
+      "picto": "lock",
+      "title": "Suspend your digital ID",
+      "time": "About 3 minutes",
+      "lines": [
+        "Do you sign in to your bank or the government with an app on the phone? Suspend it",
+        "For example itsme in Belgium, DigiD in the Netherlands, BankID in Sweden, Singpass in Singapore or My Number in Japan",
+        "Use its website or helpline, or ask your bank"
+      ],
+      "links": [
+        {
+          "label": "Google how to suspend your ID",
+          "href": "https://www.google.com/search?q=suspend+digital+ID+app+stolen+phone",
+          "primary": true
+        }
+      ]
+    },
+    {
       "id": "contacts",
       "type": "step",
       "picto": "borrowed-device",
@@ -310,7 +332,7 @@
       "id": "found",
       "type": "step",
       "picto": "alert",
-      "title": "Watch for physhing",
+      "title": "Watch for phishing",
       "time": "For the next weeks",
       "lines": [
         "⚠️ Given recent theft, you are in a vulnerable state. Be extra careful",
@@ -320,14 +342,27 @@
       ]
     },
     {
+      "id": "work",
+      "type": "step",
+      "picto": "info",
+      "title": "Work phone? Tell your IT team",
+      "time": "About 2 minutes",
+      "lines": [
+        "Also if you read work email or chat on it",
+        "They can lock your work accounts and erase work data"
+      ]
+    },
+    {
       "id": "police",
       "type": "step",
       "picto": "police-report",
       "title": "Report the theft to the police",
       "time": "Today",
       "lines": [
+        "Go to a station, or report online if your country allows it",
         "⚠️ Get a copy of the report and a reference number",
-        "Your insurer and your operator will ask for them",
+        "Your bank, insurer and operator will ask for them",
+        "Your report to the operator does not reach the police. Make both",
         {
           "text": "Bring the IMEI number if you can find it. It is on the phone box, and in your Apple account",
           "when": {

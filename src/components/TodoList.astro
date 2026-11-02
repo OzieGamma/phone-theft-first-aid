@@ -1,0 +1,139 @@
+---
+// A to-do list in any order, no steps: each item expands, with "Mark as done" inside.
+// Ticks live in sessionStorage under `storageKey`, like the checklist: gone when the tab closes.
+import Expander from './Expander.astro';
+import type { PictoName } from './Picto.astro';
+import { ui } from '../i18n/en';
+
+export interface TodoItem {
+  picto: PictoName;
+  title: string;
+  lines: string[];
+}
+
+interface Props {
+  items: TodoItem[];
+  storageKey: string;
+}
+
+const { items, storageKey } = Astro.props;
+---
+
+<div class="todo-list" data-key={storageKey}>
+  <p class="count" data-template={ui.progress('{done}', items.length)}>{ui.progress(0, items.length)}</p>
+  <ul class="todo">
+    {
+      items.map((item, i) => (
+        <li>
+          <Expander title={item.title} picto={item.picto}>
+            <span slot="status" class="badge label">
+              {ui.status.done}
+            </span>
+            {item.lines.map((line) => (
+              <p set:html={line.replace('*#06#', '<code>*#06#</code>')} />
+            ))}
+            <label class="btn mark">
+              <input type="checkbox" id={`${storageKey}-${i}`} />
+              {ui.markDone}
+            </label>
+          </Expander>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  for (const list of document.querySelectorAll<HTMLElement>('.todo-list')) {
+    const key = list.dataset.key!;
+    const boxes = [...list.querySelectorAll<HTMLInputElement>('.todo input')];
+    const count = list.querySelector<HTMLElement>('.count')!;
+    let ticked: string[] = [];
+    try {
+      ticked = JSON.parse(sessionStorage.getItem(key) ?? '[]');
+    } catch {}
+    const update = () => {
+      count.textContent = count.dataset.template!.replace('{done}', String(boxes.filter((box) => box.checked).length));
+    };
+    for (const box of boxes) {
+      box.checked = ticked.includes(box.id);
+      box.addEventListener('change', () => {
+        update();
+        try {
+          sessionStorage.setItem(key, JSON.stringify(boxes.filter((b) => b.checked).map((b) => b.id)));
+        } catch {}
+      });
+    }
+    update();
+  }
+</script>
+
+<style>
+  .count {
+    margin-block: var(--space-1) var(--space-3);
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .todo {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* Done: the title greys out and says so, the box inside turns yellow. */
+  .todo li:has(input:checked) :global(summary) {
+    color: var(--ink-muted);
+  }
+  .todo li:has(input:checked) :global(summary > span:not(.badge)) {
+    text-decoration: line-through 2px;
+  }
+  .badge {
+    display: none;
+    flex: none;
+    padding: 2px var(--space-2);
+    background: var(--tape);
+    color: var(--on-tape);
+  }
+  .todo li:has(input:checked) .badge {
+    display: block;
+  }
+  .mark {
+    display: flex;
+    gap: var(--space-3);
+    width: 100%;
+    margin-block-start: var(--space-4);
+    cursor: pointer;
+  }
+  .mark input {
+    appearance: none;
+    display: grid;
+    place-content: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    border: var(--border-hard) solid var(--edge);
+    background: var(--paper);
+    cursor: pointer;
+  }
+  .mark input::after {
+    content: '';
+    width: 12px;
+    height: 7px;
+    margin-block-start: -4px;
+    border: solid var(--on-tape);
+    border-width: 0 0 4px 4px;
+    transform: rotate(-45deg);
+    visibility: hidden;
+  }
+  .mark input:checked {
+    border-color: var(--tape);
+    background: var(--tape);
+  }
+  .mark input:checked::after {
+    visibility: visible;
+  }
+  .mark:has(input:focus-visible) {
+    box-shadow: var(--focus-ring);
+  }
+</style>
