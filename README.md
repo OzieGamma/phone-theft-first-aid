@@ -4,7 +4,7 @@
 
 What to do in the first minutes after your phone is stolen. Source for phone-theft-first-aid.org.
 
-A static site built with [Astro](https://astro.build). `npm run build` writes plain HTML to `dist/`. There is no server or backend, so any static host works. Pages ship almost no JavaScript, and what they do ship is inlined. Pushes to `main` publish it to GitHub Pages at <https://oziegamma.github.io/phone-theft-first-aid/> (`.github/workflows/pages.yml`). Link to pages with `url()` from `src/lib/site.ts`, so they work under that base path.
+A static site built with [Astro](https://astro.build). `npm run build` writes plain HTML to `dist/`. There is no server or backend, so any static host works. Pages ship almost no JavaScript, and what they do ship is inlined. Pushes to `main` publish it to GitHub Pages at <https://phone-theft-first-aid.org> (`.github/workflows/pages.yml`). Link to pages with `url()` from `src/lib/site.ts`, so they still work if the site is ever served under a sub-path.
 
 ## Develop
 

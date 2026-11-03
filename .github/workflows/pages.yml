@@ -1,5 +1,5 @@
 # Builds the site and publishes it to GitHub Pages on every push to main.
-# Pages serves it from https://oziegamma.github.io/phone-theft-first-aid/, so the build gets that base path.
+# Pages serves it at the root of the custom domain https://phone-theft-first-aid.org (astro.config.mjs defaults).
 name: Deploy to GitHub Pages
 
 on:
@@ -29,9 +29,6 @@ jobs:
         uses: actions/configure-pages@v5
       - run: npm ci
       - run: npm run build
-        env:
-          SITE: ${{ steps.pages.outputs.origin }}
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

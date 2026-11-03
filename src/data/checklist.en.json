@@ -77,67 +77,6 @@
       ]
     },
     {
-      "id": "cards",
-      "type": "step",
-      "picto": "card",
-      "title": "Block payments",
-      "time": "About 5 minutes per bank",
-      "alert": {
-        "title": "They are after your bank, not your phone",
-        "stat": "44%",
-        "text": "of identity fraud victims had money taken from their bank account",
-        "lines": [
-          "Your phone PIN will not stop them. Thieves watch you type it"
-        ]
-      },
-      "lines": [
-        "Call your bank. The number is on the back of your card and on the bank website",
-        {
-          "text": "1️⃣ Ask them to block your cards in Apple Pay and their banking app on the stolen phone",
-          "when": {
-            "phone": "iphone"
-          }
-        },
-        {
-          "text": "1️⃣ Ask them to block your cards in Google Wallet and their banking app on the stolen phone",
-          "when": {
-            "phone": "android"
-          }
-        },
-        "2️⃣ Wallet stolen too? Ask them to block the cards as well",
-        "Ask about any payments made since the theft"
-      ],
-      "links": [
-        {
-          "label": "Google your bank's number",
-          "primary": true,
-          "href": "https://www.google.com/search?q=bank+lost+card+phone+number"
-        }
-      ]
-    },
-    {
-      "id": "sim",
-      "type": "step",
-      "picto": "sim-block",
-      "title": "Block your SIM card and IMEI",
-      "time": "About 10 minutes, plus time on hold",
-      "lines": [
-        "Call your mobile operator from any phone",
-        "1️⃣ Ask them to block the SIM",
-        "➡️ A blocked SIM cannot be used to receive login codes",
-        "2️⃣ Ask them to block the phone by its IMEI too. They can often see the number on your account",
-        "➡️ A blocked phone stops working on networks that check the list",
-        "⚠️ Don't forget to block secondary sims / e-sims"
-      ],
-      "links": [
-        {
-          "label": "Google your operator's number",
-          "href": "https://www.google.com/search?q=mobile+operator+block+stolen+SIM+phone+number",
-          "primary": true
-        }
-      ]
-    },
-    {
       "id": "lock",
       "type": "step",
       "picto": "lock",
@@ -147,6 +86,12 @@
         "On any phone or computer, open the page for your phone. Sign in",
         {
           "text": "Choose Mark as lost",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "➡️ This also suspends Apple Pay on the phone",
           "when": {
             "phone": "iphone"
           }
@@ -192,11 +137,124 @@
       ]
     },
     {
+      "id": "sim",
+      "type": "step",
+      "picto": "sim-block",
+      "title": "Block your SIM card and IMEI",
+      "time": "About 10 minutes, plus time on hold",
+      "lines": [
+        "Call your mobile operator from any phone. The number is on your bill, your contract or their website",
+        "1️⃣ Ask them to block the SIM",
+        "➡️ A blocked SIM cannot be used to receive login codes",
+        "2️⃣ Ask them to block the phone by its IMEI too. They can often see the number on your account",
+        "➡️ A blocked phone stops working on networks that check the list",
+        "⚠️ Don't forget to block secondary sims / e-sims"
+      ]
+    },
+    {
+      "id": "cards",
+      "type": "step",
+      "picto": "card",
+      "title": "Block payments",
+      "time": "About 5 minutes per bank",
+      "alert": {
+        "title": "They are after your bank, not your phone",
+        "stat": "44%",
+        "text": "of identity fraud victims had money taken from their bank account",
+        "lines": [
+          "Your phone PIN will not stop them. Thieves watch you type it"
+        ]
+      },
+      "lines": [
+        "Call your bank. The number is on the back of your card",
+        "No card with you? Type your bank's web address yourself. The number is on the site",
+        "⚠️ Do not search for the number. Scammers buy ads with fake bank numbers",
+        {
+          "text": "1️⃣ Ask them to block your cards in Apple Pay and their banking app on the stolen phone",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "1️⃣ Ask them to block your cards in Google Wallet and their banking app on the stolen phone",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "2️⃣ Wallet stolen too? Ask them to block the cards as well",
+        "Ask about any payments made since the theft"
+      ]
+    },
+    {
+      "id": "account",
+      "type": "step",
+      "picto": "password",
+      "title": "Lock the account on your phone",
+      "time": "About 3 minutes",
+      "alert": {
+        "title": "Thieves go for this account first",
+        "lines": [
+          "If they saw your passcode, they can change its password and turn off finding your phone"
+        ]
+      },
+      "lines": [
+        {
+          "text": "This is your Apple Account, the one your iPhone is signed in to",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "This is your Google account, the one your phone is signed in to",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "1️⃣ On another phone or a computer, sign in",
+        "2️⃣ Change the password",
+        "3️⃣ Check the recovery email and phone numbers. Remove any you do not know",
+        "Cannot sign in? Start account recovery now. Every minute counts"
+      ],
+      "links": [
+        {
+          "label": "Apple Account",
+          "href": "https://account.apple.com",
+          "when": {
+            "phone": "iphone"
+          },
+          "primary": true
+        },
+        {
+          "label": "Recover Apple Account",
+          "href": "https://iforgot.apple.com",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "label": "Google account security",
+          "href": "https://myaccount.google.com/security",
+          "when": {
+            "phone": "android"
+          },
+          "primary": true
+        },
+        {
+          "label": "Recover Google account",
+          "href": "https://accounts.google.com/signin/recovery",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
       "id": "signin",
       "type": "choice",
       "picto": "password",
       "question": "Lock your email",
       "lines": [
+        "Same account as the one you just locked? Choose I am in. Then skip the next step",
         "Open your email in a new tab. Go to the security settings",
         "Can you get in?"
       ],
@@ -307,13 +365,6 @@
         "Do you sign in to your bank or the government with an app on the phone? Suspend it",
         "For example itsme in Belgium, DigiD in the Netherlands, BankID in Sweden, Singpass in Singapore or My Number in Japan",
         "Use its website or helpline, or ask your bank"
-      ],
-      "links": [
-        {
-          "label": "Google how to suspend your ID",
-          "href": "https://www.google.com/search?q=suspend+digital+ID+app+stolen+phone",
-          "primary": true
-        }
       ]
     },
     {
@@ -375,13 +426,19 @@
             "phone": "android"
           }
         }
-      ],
-      "links": [
-        {
-          "label": "Google nearest police station",
-          "href": "https://www.google.com/search?q=police+station+near+me",
-          "primary": true
-        }
+      ]
+    },
+    {
+      "id": "else",
+      "type": "step",
+      "picto": "info",
+      "title": "Anything else?",
+      "time": "About 1 minute",
+      "lines": [
+        "Think about what else was on the phone: other banks, shopping, crypto, health, social media",
+        "Lock or change the password of each one",
+        "⚠️ This list is not complete. Rules are different in every country",
+        "I am not a lawyer, a bank or a security company. You use this advice at your own risk. I cannot be held responsible for any loss"
       ]
     }
   ]

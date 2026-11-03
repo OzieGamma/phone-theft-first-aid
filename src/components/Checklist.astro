@@ -339,7 +339,7 @@ const stepFor = (index: number) =>
     padding-block: var(--space-5);
     border-block-end: 2px solid var(--line);
   }
-  /* One card at a time, centred in the space below the bar. */
+  /* One card at a time, from the top: centring left a big gap above the card on tall screens. */
   .wizard {
     flex: 1;
     display: flex;
@@ -349,7 +349,6 @@ const stepFor = (index: number) =>
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     padding-block-start: var(--space-3);
     border: 0;
   }

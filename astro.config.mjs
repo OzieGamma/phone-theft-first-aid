@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 // Static output only: `npm run build` writes plain files to dist/ for any static host.
-// SITE and BASE_PATH are set by the GitHub Pages workflow, which serves the site from /phone-theft-first-aid/.
+// The site lives at the root of its domain. Set SITE and BASE_PATH only to serve it elsewhere, such as under a sub-path.
 export default defineConfig({
   site: process.env.SITE ?? 'https://phone-theft-first-aid.org',
   base: process.env.BASE_PATH ?? '/',

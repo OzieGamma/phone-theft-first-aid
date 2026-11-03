@@ -41,7 +41,7 @@ export const home = {
       href: '/recovery/',
       picto: 'insurance',
       title: 'Recovery',
-      text: 'Money back, insurance, police report, new SIM',
+      text: 'New SIM, money back, phone bill, insurance',
     },
     {
       href: '/prevention/',

@@ -11,51 +11,33 @@ import { author, repo } from '../lib/site';
 
     <div class="stack body">
       <p>
-        My phone was stolen. I spent the next hour on hold, searching on borrowed phones, and finding out too late
-        what I should have done first. So I wrote it down. Here's what to do, in order
+        My phone was stolen. I didn't have another device, I was locked out of my accounts by security features such as double authentication. By the time I managed to get back in, thieves had done monstruous damage.
+        This website is an attempt to list wht I should have done in advance to limit damage, right after the incident, and to recover as much as possible.
       </p>
-      <p>I am not a security company or an agency. I never sell to anyone while they panic</p>
+      <p>I am not a security company or an agency. The information on this website is not meant to be exhaustive.</p>
       <p>Vibe-coded by <a href={repo}>{author}</a>. Found a mistake or a better step? <a href={repo}>Contribute</a></p>
+      <p>
+        Press, operators, phone makers, anyone who wants stolen phones to be worth nothing: write to
+        <a class="email" data-user="ycacovda" data-domain="gro.dia-tsrif-tfeht-enohp">advocacy at phone-theft-first-aid dot org</a>
+      </p>
     </div>
   </div>
-
-  <!-- Layer 4: advocacy. Black ground and condensed caps stay out of the checklist. -->
-  <section class="advocacy" aria-labelledby="advocacy-title">
-    <div class="wrap">
-      <h2 id="advocacy-title" class="display">This happened to me. It shouldn't take a website to fix it</h2>
-      <ul>
-        <li>A blocked phone should be a dead phone. Everywhere</li>
-        <li>Phone makers: stop making stolen phones worth reselling</li>
-        <li>Operators: one call, one minute, blocked</li>
-      </ul>
-    </div>
-  </section>
 </Base>
+
+<script>
+  // The address is stored reversed and assembled here, so simple scrapers reading the HTML do not find it.
+  // Without JavaScript the spelled-out text stays.
+  const reverse = (text: string) => [...text].reverse().join('');
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('a.email')) {
+    const address = `${reverse(link.dataset.user!)}@${reverse(link.dataset.domain!)}`;
+    link.href = `mailto:${address}`;
+    link.textContent = address;
+  }
+</script>
 
 <style>
   .body {
     font-size: 18px;
     line-height: 29px;
-  }
-
-  .advocacy {
-    margin-block-start: var(--space-8);
-    padding-block: var(--space-8);
-    background: var(--black);
-    color: var(--white);
-  }
-  .advocacy ul {
-    margin-block-start: var(--space-6);
-    padding: 0;
-    list-style: none;
-    font-family: var(--font-condensed);
-    font-stretch: 75%;
-    font-weight: 800;
-    font-size: 26px;
-    line-height: 32px;
-    text-transform: uppercase;
-  }
-  .advocacy li + li {
-    margin-block-start: var(--space-4);
   }
 </style>
