@@ -65,7 +65,23 @@
         "check",
         "arrow",
         "alert",
-        "info"
+        "info",
+        "phone",
+        "account",
+        "email",
+        "id-card",
+        "message",
+        "phishing",
+        "briefcase",
+        "question",
+        "bank",
+        "wallet",
+        "printer",
+        "authenticator",
+        "repeat",
+        "sim",
+        "receipt",
+        "eye"
       ]
     },
     "when": {

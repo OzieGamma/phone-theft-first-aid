@@ -188,7 +188,7 @@
     {
       "id": "account",
       "type": "step",
-      "picto": "password",
+      "picto": "account",
       "title": "Lock the account on your phone",
       "time": "About 3 minutes",
       "alert": {
@@ -251,7 +251,7 @@
     {
       "id": "signin",
       "type": "choice",
-      "picto": "password",
+      "picto": "email",
       "question": "Lock your email",
       "lines": [
         "Same account as the one you just locked? Choose I am in. Then skip the next step",
@@ -289,7 +289,7 @@
     {
       "id": "email",
       "type": "step",
-      "picto": "password",
+      "picto": "email",
       "title": "Lock your email",
       "time": "About 3 minutes",
       "lines": [
@@ -358,7 +358,7 @@
     {
       "id": "digital-id",
       "type": "step",
-      "picto": "lock",
+      "picto": "id-card",
       "title": "Suspend your digital ID",
       "time": "About 3 minutes",
       "lines": [
@@ -370,7 +370,7 @@
     {
       "id": "contacts",
       "type": "step",
-      "picto": "borrowed-device",
+      "picto": "message",
       "title": "Warn your contacts",
       "time": "About 2 minutes",
       "lines": [
@@ -382,7 +382,7 @@
     {
       "id": "found",
       "type": "step",
-      "picto": "alert",
+      "picto": "phishing",
       "title": "Watch for phishing",
       "time": "For the next weeks",
       "lines": [
@@ -395,7 +395,7 @@
     {
       "id": "work",
       "type": "step",
-      "picto": "info",
+      "picto": "briefcase",
       "title": "Work phone? Tell your IT team",
       "time": "About 2 minutes",
       "lines": [
@@ -431,7 +431,7 @@
     {
       "id": "else",
       "type": "step",
-      "picto": "info",
+      "picto": "question",
       "title": "Anything else?",
       "time": "About 1 minute",
       "lines": [
