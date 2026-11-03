@@ -12,4 +12,5 @@ All UI follows the Phone Theft First Aid design system in `brandkit/`.
 - Night theme only: `<html data-theme="dark">` in `Base.astro`. Don't add a theme switch.
 - Checklist content lives in `src/data/checklist.<lang>.json` (validate against `checklist.schema.json`); UI strings in `src/i18n/en.ts`. No copy in components.
 - Store nothing beyond `sessionStorage` (borrowed devices), and make no third-party requests.
+- Don't write reassurance about data on screens ("We never store your data", "Nothing leaves your browser", "We never see what you type"). It's useless and creepy. Just don't store it. The Privacy page is the only place that says what is kept.
 - Check `npm run build` passes and the home page stays under 100 KB before fonts.
