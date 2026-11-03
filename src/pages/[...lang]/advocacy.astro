@@ -1,15 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Picto from '../../components/Picto.astro';
-import { langPaths, locales, t, type Lang } from '../../i18n';
+import { langPaths, t, type Lang } from '../../i18n';
 import { pdfFile, url } from '../../lib/site';
 
 export const getStaticPaths = langPaths;
 const { lang } = Astro.props as { lang: Lang };
 const ui = t(lang);
 const page = ui.advocacy;
-// The checklist in the other languages too: one office may need several.
-const others = locales.filter((other) => other !== lang);
 ---
 
 <Base lang={lang} title={page.title} description={page.description}>
@@ -31,17 +29,6 @@ const others = locales.filter((other) => other !== lang);
           <Picto name="printer" />
           {page.download}
         </a>
-        <ul class="other-pdfs">
-          {
-            others.map((other) => (
-              <li>
-                <a href={url(`/${pdfFile(other)}`)} download lang={other} hreflang={other}>
-                  {t(other).advocacy.download}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
       </section>
 
       <section aria-labelledby="write-title">
@@ -83,15 +70,5 @@ const others = locales.filter((other) => other !== lang);
   .download {
     width: 100%;
     margin-block-start: var(--space-5);
-  }
-  .other-pdfs {
-    margin-block-start: var(--space-3);
-    padding: 0;
-    list-style: none;
-  }
-  .other-pdfs a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap-min);
   }
 </style>
