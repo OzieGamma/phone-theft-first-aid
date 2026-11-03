@@ -1,11 +1,16 @@
 ---
-import Base from '../layouts/Base.astro';
-import TodoList, { type TodoItem } from '../components/TodoList.astro';
-import thefts from '../data/london-thefts.json';
+import Base from '../../layouts/Base.astro';
+import TodoList from '../../components/TodoList.astro';
+import { langPaths, t, type Lang } from '../../i18n';
+import thefts from '../../data/london-thefts.json';
 
-const number = (n: number) => n.toLocaleString('en-GB');
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const page = t(lang).prevention;
+
+const number = (n: number) => n.toLocaleString(t(lang).locale);
 const date = (iso: string) =>
-  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+  new Date(iso).toLocaleDateString(t(lang).locale, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 const lastFull = thefts.years.at(-1)!;
 const minutes = Math.round((365 * 24 * 60) / lastFull.value);
 
@@ -21,115 +26,22 @@ const peak = points.reduce((a, b) => (b.value > a.value ? b : a));
 // Label only the first, lowest, highest and latest years, not every point.
 const labelled = new Set([points[0], points.reduce((a, b) => (b.value < a.value ? b : a)), peak, points.at(-1)!]);
 
-const items: TodoItem[] = [
-  {
-    picto: 'imei',
-    title: 'Write down your IMEI',
-    lines: ['Type *#06# in the phone app. The number appears', 'Write it on paper. Keep it at home'],
-  },
-  {
-    picto: 'phone',
-    title: 'Write down emergency phone numbers',
-    lines: [
-      "Your operator's lost-phone line, and the number to call it from abroad",
-      "Your bank's lost-card line. It is on the back of your card",
-      'Someone you trust. Without your phone you may not remember any number',
-      'The email of your Apple or Google account. You need it to lock the phone',
-      'Keep one copy at home and one in your bag or suitcase, away from your phone',
-    ],
-    link: { label: 'Make a recovery card', href: '/card/' },
-  },
-  {
-    picto: 'sim-block',
-    title: 'Set a SIM PIN',
-    lines: ['Then a thief cannot move your SIM to another phone to get your login codes'],
-  },
-  {
-    picto: 'card',
-    title: 'Do not keep your bank card on the back of your phone',
-    lines: ['A thief who takes the phone gets the card too', 'Keep your cards in a pocket or wallet, away from the phone'],
-  },
-  {
-    picto: 'bank',
-    title: 'Do not put all your banking on your phone',
-    lines: [
-      'Keep at least one bank account and card off the phone',
-      'If the phone is stolen, you can still pay and take out money',
-    ],
-  },
-  {
-    picto: 'wallet',
-    title: 'Keep a spare ID, cash and card somewhere safe',
-    lines: ['Travelling? Leave them in your hotel room', 'Then a theft does not leave you stuck with nothing'],
-  },
-  {
-    picto: 'locate',
-    title: 'Turn on Find My',
-    lines: ['iPhone: Find My iPhone. Android: Find My Device', 'Check that you know the password for that account'],
-  },
-  {
-    picto: 'lock',
-    title: 'Turn on theft protection',
-    lines: ['iPhone: Stolen Device Protection. Android: Theft protection', 'It asks for your face or fingerprint before big changes'],
-  },
-  {
-    picto: 'printer',
-    title: 'Print your backup codes',
-    lines: [
-      'Make them in the security settings of your email account. Do this for email first',
-      'Keep the paper at home, not in your wallet or phone case',
-    ],
-  },
-  {
-    picto: 'password',
-    title: 'Add a second way to sign in',
-    lines: [
-      'Add a recovery email address',
-      'Add a second phone number that is not in this phone, such as a family member',
-      'A security key or a passkey on a laptop also works',
-      'iPhone: add a Recovery Contact, someone you trust',
-    ],
-  },
-  {
-    picto: 'authenticator',
-    title: 'Do not keep your login codes only on the phone',
-    lines: ['Turn on backup in your code app', 'Or set it up on a second device too'],
-  },
-  {
-    picto: 'check',
-    title: 'Test it',
-    lines: ['Sign in to your email on a computer without your phone', 'If it does not work, fix it now, not after a theft'],
-  },
-  {
-    picto: 'repeat',
-    title: 'Phone already stolen once?',
-    lines: [
-      'Once you are back in your accounts, make new backup codes',
-      'The old ones may have been stolen with the phone',
-    ],
-  },
-  {
-    picto: 'backup',
-    title: 'Back up your phone',
-    lines: ['Photos and contacts are what people miss most'],
-  },
-];
 ---
 
-<Base title="Prevention" description="So the next thief gets less. What to set up on your phone and accounts before a theft.">
+<Base lang={lang} title={page.title} description={page.description}>
   <div class="wrap">
     <header class="page-head">
-      <h1 class="display">Prevention</h1>
-      <p>So the next thief gets less</p>
+      <h1 class="display">{page.title}</h1>
+      <p>{page.lead}</p>
     </header>
 
     <section class="context" aria-labelledby="context-title">
       <p class="hero"><strong>{number(lastFull.value)}</strong></p>
-      <h2 id="context-title">Phone thefts and robberies in London in {lastFull.year}</h2>
-      <p>About one every {minutes} minutes</p>
+      <h2 id="context-title">{page.chartTitle(lastFull.year)}</h2>
+      <p>{page.every(minutes)}</p>
 
       <figure class="chart">
-        <figcaption>{thefts.measure}</figcaption>
+        <figcaption>{page.measure}</figcaption>
         <svg viewBox={`0 0 ${chart.width} ${chart.height}`} role="img" aria-labelledby="chart-desc">
           <desc id="chart-desc">
             {points.map((point) => `${point.year}: ${number(point.value)}`).join(', ')}
@@ -166,28 +78,27 @@ const items: TodoItem[] = [
       </figure>
 
       <p class="source">
-        Updated <time datetime={thefts.updated}>{date(thefts.updated)}</time> · <a href={thefts.source.href}>Source</a>
+        {page.updated} <time datetime={thefts.updated}>{date(thefts.updated)}</time> · <a href={thefts.source.href}>{page.source}</a>
       </p>
     </section>
 
     <div class="warning">
-      <p class="warning-kicker">The most important thing</p>
-      <p class="warning-text">They are after your bank accounts, not only your phone</p>
+      <p class="warning-kicker">{page.warningKicker}</p>
+      <p class="warning-text">{page.warningText}</p>
       <p class="warning-stat">
         <strong>44%</strong>
-        of identity fraud victims had money taken from their bank account
+        {page.warningStat}
       </p>
       <p class="warning-source">
         <a
           href="https://www.prnewswire.com/news-releases/more-than-5-5-million-adults-in-the-uk-fell-victim-to-identity-fraud-in-the-last-12-months-301496787.html"
-          title="Not all identity fraud comes from phone theft, but I could not find more precise numbers"
-          >GBG survey, 2022</a
+          title={page.warningSourceNote}>{page.warningSource}</a
         >
       </p>
     </div>
 
-    <h2 class="list-title">Do this before it happens</h2>
-    <TodoList items={items} storageKey="ptfa-prevention" />
+    <h2 class="list-title">{page.listTitle}</h2>
+    <TodoList lang={lang} items={page.items} storageKey="ptfa-prevention" />
   </div>
 </Base>
 

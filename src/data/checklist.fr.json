@@ -1,0 +1,445 @@
+{
+  "$schema": "./checklist.schema.json",
+  "lang": "fr",
+  "dir": "ltr",
+  "title": "Téléphone volé ? Faites ceci maintenant",
+  "allDone": "Les {total} sont faits. Respirez",
+  "items": [
+    {
+      "id": "safe",
+      "type": "check",
+      "picto": "alert",
+      "title": "Êtes-vous en sécurité ?",
+      "lines": [
+        "Si vous êtes blessé ou en danger, appelez d’abord le numéro d’urgence",
+        "Vous pouvez l’appeler depuis n’importe quel téléphone, même sans carte SIM",
+        "Ailleurs ? Essayez le 112 depuis un téléphone mobile. La plupart des réseaux le relient au numéro d’urgence local"
+      ],
+      "links": [
+        {
+          "label": "112",
+          "detail": "Europe et la plupart des pays",
+          "href": "tel:112"
+        },
+        {
+          "label": "911",
+          "detail": "États-Unis et Canada",
+          "href": "tel:911"
+        },
+        {
+          "label": "999",
+          "detail": "Royaume-Uni",
+          "href": "tel:999"
+        }
+      ],
+      "continue": "Je suis en sécurité",
+      "wait": 3
+    },
+    {
+      "id": "calm",
+      "type": "check",
+      "style": "poster",
+      "title": "Restez\ncalme\net\ncontinuez",
+      "lines": [
+        "Inspirez lentement par le nez",
+        "Expirez lentement par la bouche",
+        "Faites-le 3 fois",
+        "Ça m’est arrivé aussi. Nous allons avancer une étape à la fois"
+      ],
+      "continue": "Je suis prêt",
+      "wait": 5
+    },
+    {
+      "id": "borrowed",
+      "type": "check",
+      "picto": "borrowed-device",
+      "title": "Sur un téléphone ou un ordinateur emprunté ?",
+      "lines": [
+        "Ouvrez une fenêtre de navigation privée",
+        "Déconnectez-vous de chaque compte quand vous avez fini"
+      ],
+      "continue": "Continuer"
+    },
+    {
+      "id": "phone",
+      "type": "choice",
+      "picto": "info",
+      "question": "Quel téléphone a été volé ?",
+      "options": [
+        {
+          "id": "iphone",
+          "label": "iPhone"
+        },
+        {
+          "id": "android",
+          "label": "Android"
+        }
+      ]
+    },
+    {
+      "id": "lock",
+      "type": "step",
+      "picto": "lock",
+      "title": "Verrouillez votre téléphone",
+      "time": "Environ 2 minutes",
+      "lines": [
+        "Sur n’importe quel téléphone ou ordinateur, ouvrez la page de votre téléphone. Connectez-vous",
+        {
+          "text": "Choisissez Marquer comme perdu",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "➡️ Cela suspend aussi Apple Pay sur le téléphone",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "Choisissez Sécuriser l’appareil",
+          "when": {
+            "phone": "android"
+          }
+        },
+        {
+          "text": "On vous demande un code que vous ne pouvez pas recevoir ? Essayez android.com/lock. Il suffit de votre numéro de téléphone",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "La même page montre où est le téléphone. N’y allez pas vous-même. Donnez le lieu à la police"
+      ],
+      "links": [
+        {
+          "label": "Localiser mon iPhone",
+          "href": "https://www.icloud.com/find",
+          "when": {
+            "phone": "iphone"
+          },
+          "primary": true
+        },
+        {
+          "label": "Localiser mon téléphone Android",
+          "href": "https://www.google.com/android/find",
+          "when": {
+            "phone": "android"
+          },
+          "primary": true
+        },
+        {
+          "label": "Samsung",
+          "href": "https://smartthingsfind.samsung.com",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sim",
+      "type": "step",
+      "picto": "sim-block",
+      "title": "Bloquez votre carte SIM et l’IMEI",
+      "time": "Environ 10 minutes, plus l’attente au téléphone",
+      "lines": [
+        "Appelez votre opérateur depuis n’importe quel téléphone. Le numéro est sur votre facture, votre contrat ou son site web",
+        "1️⃣ Demandez-lui de bloquer la SIM",
+        "➡️ Une SIM bloquée ne peut plus recevoir de codes de connexion",
+        "2️⃣ Demandez-lui aussi de bloquer le téléphone par son IMEI. Il voit souvent le numéro dans votre compte",
+        "➡️ Un téléphone bloqué ne fonctionne plus sur les réseaux qui consultent la liste",
+        "⚠️ N’oubliez pas de bloquer aussi les autres SIM et eSIM"
+      ]
+    },
+    {
+      "id": "cards",
+      "type": "step",
+      "picto": "card",
+      "title": "Bloquez les paiements",
+      "time": "Environ 5 minutes par banque",
+      "alert": {
+        "title": "Ils visent votre banque, pas votre téléphone",
+        "stat": "44 %",
+        "text": "des victimes d’usurpation d’identité se sont fait prendre de l’argent sur leur compte bancaire",
+        "lines": [
+          "Le code de votre téléphone ne les arrêtera pas. Les voleurs vous regardent le taper"
+        ]
+      },
+      "lines": [
+        "Appelez votre banque. Le numéro est au dos de votre carte",
+        "Pas de carte sur vous ? Tapez vous-même l’adresse du site de votre banque. Le numéro y est",
+        "⚠️ Ne cherchez pas le numéro sur un moteur de recherche. Des escrocs achètent des publicités avec de faux numéros de banque",
+        {
+          "text": "1️⃣ Demandez-lui de bloquer vos cartes dans Apple Pay et son appli bancaire sur le téléphone volé",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "1️⃣ Demandez-lui de bloquer vos cartes dans Google Wallet et son appli bancaire sur le téléphone volé",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "2️⃣ Portefeuille volé aussi ? Demandez-lui de bloquer aussi les cartes",
+        "Posez des questions sur les paiements faits depuis le vol"
+      ]
+    },
+    {
+      "id": "account",
+      "type": "step",
+      "picto": "account",
+      "title": "Verrouillez le compte de votre téléphone",
+      "time": "Environ 3 minutes",
+      "alert": {
+        "title": "Les voleurs visent ce compte en premier",
+        "lines": [
+          "S’ils ont vu votre code, ils peuvent changer son mot de passe et désactiver la localisation de votre téléphone"
+        ]
+      },
+      "lines": [
+        {
+          "text": "C’est votre compte Apple, celui auquel votre iPhone est connecté",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "C’est votre compte Google, celui auquel votre téléphone est connecté",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "1️⃣ Sur un autre téléphone ou un ordinateur, connectez-vous",
+        "2️⃣ Changez le mot de passe",
+        "3️⃣ Vérifiez l’e-mail et les numéros de téléphone de récupération. Supprimez ceux que vous ne connaissez pas",
+        "Impossible de vous connecter ? Lancez la récupération du compte maintenant. Chaque minute compte"
+      ],
+      "links": [
+        {
+          "label": "Compte Apple",
+          "href": "https://account.apple.com",
+          "when": {
+            "phone": "iphone"
+          },
+          "primary": true
+        },
+        {
+          "label": "Récupérer le compte Apple",
+          "href": "https://iforgot.apple.com",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "label": "Sécurité du compte Google",
+          "href": "https://myaccount.google.com/security",
+          "when": {
+            "phone": "android"
+          },
+          "primary": true
+        },
+        {
+          "label": "Récupérer le compte Google",
+          "href": "https://accounts.google.com/signin/recovery",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "signin",
+      "type": "choice",
+      "picto": "email",
+      "question": "Verrouillez votre e-mail",
+      "lines": [
+        "Même compte que celui que vous venez de verrouiller ? Choisissez J’ai accès. Puis passez l’étape suivante",
+        "Ouvrez votre e-mail dans un nouvel onglet. Allez dans les paramètres de sécurité",
+        "Pouvez-vous y accéder ?"
+      ],
+      "options": [
+        {
+          "id": "in",
+          "label": "J’ai accès"
+        },
+        {
+          "id": "out",
+          "label": "Je n’ai pas accès"
+        }
+      ],
+      "links": [
+        {
+          "label": "Gmail",
+          "href": "https://myaccount.google.com/security",
+          "primary": true
+        },
+        {
+          "label": "Outlook et Hotmail",
+          "href": "https://account.microsoft.com/security",
+          "primary": true
+        },
+        {
+          "label": "iCloud Mail",
+          "href": "https://account.apple.com",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "email",
+      "type": "step",
+      "picto": "email",
+      "title": "Verrouillez votre e-mail",
+      "time": "Environ 3 minutes",
+      "lines": [
+        {
+          "text": "➡️ Mot de passe oublié ? Choisissez Mot de passe oublié",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "➡️ On vous demande un code par SMS ou dans une appli d’authentification ? Sur la page de connexion, choisissez Essayer une autre méthode. Un code de secours ou une clé de sécurité fonctionne aussi",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "➡️ Encore connecté sur un ordinateur portable ou une tablette ? Utilisez-le. Il ne demandera peut-être pas de code",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "➡️ Aucun autre moyen d’y accéder ? Lancez la récupération du compte",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "Une fois connecté, allez dans les paramètres de sécurité",
+          "when": {
+            "signin": "out"
+          }
+        },
+        "Retirez le téléphone volé de vos appareils et de vos méthodes de connexion",
+        "1️⃣ Choisissez Se déconnecter de tous les autres appareils",
+        "2️⃣ Changez le mot de passe",
+        "Ensuite, faites de même pour vos autres comptes (réseaux sociaux, banques, PayPal…)"
+      ],
+      "links": [
+        {
+          "label": "Récupérer Gmail",
+          "href": "https://accounts.google.com/signin/recovery",
+          "when": {
+            "signin": "out"
+          },
+          "primary": true
+        },
+        {
+          "label": "Récupérer Outlook",
+          "href": "https://account.live.com/acsr",
+          "when": {
+            "signin": "out"
+          },
+          "primary": true
+        },
+        {
+          "label": "Récupérer iCloud",
+          "href": "https://iforgot.apple.com",
+          "when": {
+            "signin": "out"
+          },
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "digital-id",
+      "type": "step",
+      "picto": "id-card",
+      "title": "Suspendez votre identité numérique",
+      "time": "Environ 3 minutes",
+      "lines": [
+        "Vous vous connectez à votre banque ou aux services publics avec une appli sur le téléphone ? Suspendez-la",
+        "Par exemple itsme en Belgique, DigiD aux Pays-Bas, BankID en Suède, Singpass à Singapour ou My Number au Japon",
+        "Passez par son site web ou sa ligne d’aide, ou demandez à votre banque"
+      ]
+    },
+    {
+      "id": "contacts",
+      "type": "step",
+      "picto": "message",
+      "title": "Prévenez vos contacts",
+      "time": "Environ 2 minutes",
+      "lines": [
+        "Depuis un autre téléphone ou votre e-mail, écrivez à votre famille et à vos proches",
+        "Dites-leur que votre téléphone a été volé. Un message de votre numéro qui demande de l’argent ou des codes ne vient pas de vous",
+        "⚠️ Prévenez-les que votre identité pourrait être usurpée, et qu’ils doivent se méfier des messages venant de vous"
+      ]
+    },
+    {
+      "id": "found",
+      "type": "step",
+      "picto": "phishing",
+      "title": "Méfiez-vous du hameçonnage",
+      "time": "Pendant les prochaines semaines",
+      "lines": [
+        "⚠️ Après ce vol, vous êtes plus vulnérable. Soyez très prudent",
+        "⚠️ Ne cliquez pas sur des liens inconnus dans vos e-mails",
+        "⚠️ Si la banque vous appelle, demandez un nom et rappelez-la vous-même",
+        "⚠️ Les entreprises ne demandent jamais vos mots de passe ni vos codes. Si on vous les demande, c’est une arnaque"
+      ]
+    },
+    {
+      "id": "work",
+      "type": "step",
+      "picto": "briefcase",
+      "title": "Téléphone professionnel ? Prévenez votre service informatique",
+      "time": "Environ 2 minutes",
+      "lines": [
+        "Aussi si vous y lisiez vos e-mails ou messages de travail",
+        "Il peut verrouiller vos comptes professionnels et effacer les données de travail"
+      ]
+    },
+    {
+      "id": "police",
+      "type": "step",
+      "picto": "police-report",
+      "title": "Signalez le vol à la police",
+      "time": "Aujourd’hui",
+      "lines": [
+        "Allez au commissariat, ou portez plainte en ligne si votre pays le permet",
+        "⚠️ Demandez une copie de la plainte et un numéro de référence",
+        "Votre banque, votre assureur et votre opérateur vous les demanderont",
+        "Votre signalement à l’opérateur ne va pas à la police. Faites les deux",
+        {
+          "text": "Prenez le numéro IMEI si vous le trouvez. Il est sur la boîte du téléphone et dans votre compte Apple",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "Prenez le numéro IMEI si vous le trouvez. Il est sur la boîte du téléphone et dans votre compte Google",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "else",
+      "type": "step",
+      "picto": "question",
+      "title": "Autre chose ?",
+      "time": "Environ 1 minute",
+      "lines": [
+        "Pensez à ce qu’il y avait d’autre sur le téléphone : autres banques, achats, crypto, santé, réseaux sociaux",
+        "Verrouillez chacun ou changez son mot de passe",
+        "⚠️ Cette liste n’est pas complète. Les règles changent d’un pays à l’autre",
+        "Je ne suis ni avocat, ni banque, ni entreprise de sécurité. Vous suivez ces conseils à vos propres risques. Je ne peux pas être tenu responsable d’une perte"
+      ]
+    }
+  ]
+}

@@ -328,7 +328,7 @@
           "enum": [
             "poster"
           ],
-          "description": "poster: shows the Keep Calm poster image; the title is its text (one line per \\n), for screen readers and print. Needs no picto."
+          "description": "poster: shows the Keep Calm poster image; the title is its text, for screen readers and print. On the poster each word is a row; a line that is one word of 3 letters or fewer (\"and\") is set small. Needs no picto."
         },
         "wait": {
           "type": "integer",

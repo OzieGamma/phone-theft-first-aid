@@ -8,7 +8,7 @@ export default defineConfig({
   site: process.env.SITE ?? 'https://phone-theft-first-aid.org',
   base: process.env.BASE_PATH ?? '/',
   output: 'static',
-  // Prints the checklist to a PDF for /advocacy/ after each build.
+  // Prints the checklist to a PDF per language for /advocacy/ after each build.
   integrations: [pdf()],
   trailingSlash: 'ignore',
   build: {
@@ -17,7 +17,8 @@ export default defineConfig({
   },
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'fr', 'nl'],
+    routing: { prefixDefaultLocale: false },
   },
   // Dev and preview only: lets a cloudflared quick tunnel reach the local server for phone testing.
   server: {

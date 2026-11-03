@@ -1,14 +1,22 @@
 ---
+// One 404 for every language: the host serves it for any missing path, so it says it in each.
 import Base from '../layouts/Base.astro';
+import { locales, t } from '../i18n';
 import { url } from '../lib/site';
 ---
 
-<Base title="Page not found">
-  <div class="wrap">
-    <header class="page-head stack">
-      <h1 class="display">Page not found</h1>
-      <p>Phone stolen? Go to the checklist</p>
-      <a class="btn btn-primary" href={url('/')}>Go to the checklist</a>
-    </header>
+<Base lang="en" title={t('en').notFound.title}>
+  <div class="wrap stack">
+    {
+      locales.map((lang) => (
+        <header class="page-head stack" lang={lang}>
+          <h1 class="display">{t(lang).notFound.title}</h1>
+          <p>{t(lang).notFound.lead}</p>
+          <a class="btn btn-primary" href={url('/', lang)}>
+            {t(lang).notFound.go}
+          </a>
+        </header>
+      ))
+    }
   </div>
 </Base>

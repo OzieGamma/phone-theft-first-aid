@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import Links from '../../components/Links.astro';
+import Expander from '../../components/Expander.astro';
+import Notice from '../../components/Notice.astro';
+import { langPaths, t, type Lang } from '../../i18n';
+import { countries } from '../../lib/sources';
+import { repo } from '../../lib/site';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const ui = t(lang);
+const page = ui.sources;
+---
+
+<Base lang={lang} title={page.title} description={page.description}>
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">{page.title}</h1>
+      <p>{page.lead}</p>
+    </header>
+
+    <div class="warning">
+      <Notice tone="warn" title={ui.aiWarning.title}>
+        <p>{ui.aiWarning.text}</p>
+        <p><a href={repo}>{ui.aiWarning.report}</a></p>
+      </Notice>
+    </div>
+
+    {
+      countries(lang).map((group) => (
+        <Expander title={group.country}>
+          <Links links={group.links} />
+        </Expander>
+      ))
+    }
+  </div>
+</Base>
+
+
+<style>
+  .warning {
+    margin-block-end: var(--space-6);
+  }
+</style>

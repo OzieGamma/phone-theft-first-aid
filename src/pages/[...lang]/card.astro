@@ -1,40 +1,45 @@
 ---
-import Base from '../layouts/Base.astro';
-import Picto from '../components/Picto.astro';
+import Base from '../../layouts/Base.astro';
+import Picto from '../../components/Picto.astro';
+import { langPaths, t, type Lang } from '../../i18n';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const page = t(lang).card;
 
 // Four rows, empty: the card shows only what people type. Rows without a number are left off.
 const numbers = [0, 1, 2, 3];
 ---
 
-<Base title="Recovery card" description="Print a card with your IMEI and emergency phone numbers, to keep away from your phone.">
+<Base lang={lang} title={page.title} description={page.description}>
   <div class="wrap">
     <header class="page-head">
-      <h1 class="display">Recovery card</h1>
-      <p>Your IMEI and the numbers to call, on paper. Keep it away from your phone</p>
+      <h1 class="display">{page.title}</h1>
+      <p>{page.lead}</p>
     </header>
 
     <form class="form stack" id="card-form">
       <fieldset>
-        <legend>IMEI</legend>
-        <p class="hint">Type <code>*#06#</code> in the phone app. The number appears</p>
-        <label for="imei-1">IMEI</label>
+        <legend>{page.imei}</legend>
+        <p class="hint" set:html={page.imeiHint.replace('*#06#', '<code>*#06#</code>')} />
+        <label for="imei-1">{page.imei}</label>
         <input id="imei-1" name="imei-1" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="20" />
-        <label for="imei-2">Second IMEI, if the phone shows two</label>
+        <label for="imei-2">{page.imei2}</label>
         <input id="imei-2" name="imei-2" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="20" />
       </fieldset>
 
       <fieldset>
-        <legend>Emergency phone numbers</legend>
-        <p class="hint">For your operator and your bank, use their lost-phone and lost-card lines. Add the number to call from abroad too</p>
+        <legend>{page.numbers}</legend>
+        <p class="hint">{page.numbersHint}</p>
         {
           numbers.map((i) => (
             <div class="row">
               <div>
-                <label for={`label-${i}`}>Name</label>
+                <label for={`label-${i}`}>{page.nameLabel}</label>
                 <input id={`label-${i}`} name={`label-${i}`} autocomplete="off" maxlength="32" />
               </div>
               <div>
-                <label for={`number-${i}`}>Number</label>
+                <label for={`number-${i}`}>{page.numberLabel}</label>
                 <input id={`number-${i}`} name={`number-${i}`} type="tel" autocomplete="off" maxlength="24" />
               </div>
             </div>
@@ -43,8 +48,8 @@ const numbers = [0, 1, 2, 3];
       </fieldset>
     </form>
 
-    <h2 class="preview-title">Your card</h2>
-    <p class="hint">It prints twice: one for your bag or wallet, one for home</p>
+    <h2 class="preview-title">{page.preview}</h2>
+    <p class="hint">{page.previewHint}</p>
 
     <div class="sheet">
       {
@@ -69,7 +74,7 @@ const numbers = [0, 1, 2, 3];
 
     <button class="btn btn-primary print" type="button" id="print">
       <Picto name="printer" />
-      Print the card
+      {page.print}
     </button>
   </div>
 </Base>

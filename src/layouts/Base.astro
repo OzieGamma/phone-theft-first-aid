@@ -3,28 +3,36 @@ import '../styles/fonts.css';
 import '../../brandkit/tokens.css';
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { ui } from '../i18n/en';
+import { locales, t, type Lang } from '../i18n';
 import { author, repo, url } from '../lib/site';
 
 interface Props {
+  lang: Lang;
   title?: string;
   description?: string;
 }
 
-const { title, description = 'What to do in the first minutes after your phone is stolen.' } = Astro.props;
+const { lang, title } = Astro.props;
+const ui = t(lang);
+const description = Astro.props.description ?? ui.description;
 const fullTitle = title ? `${title} | ${ui.name}` : ui.name;
 const path = Astro.url.pathname.replace(/\/?$/, '/');
+// This page without its language prefix, to link to it in the other languages.
+const prefix = url('/', lang);
+// The 404 page has no counterpart: its language links go home.
+const page = path.startsWith(prefix) && !/\/404(\.html)?\/$/.test(path) ? path.slice(prefix.length - 1) : '/';
 const nav = [
-  { href: url('/'), label: ui.nav.home },
-  { href: url('/recovery/'), label: ui.nav.recovery },
-  { href: url('/prevention/'), label: ui.nav.prevention },
-  { href: url('/card/'), label: ui.nav.card },
-  { href: url('/sources/'), label: ui.nav.sources },
-  { href: url('/advocacy/'), label: ui.nav.advocacy },
-  { href: url('/about/'), label: ui.nav.about },
-  { href: url('/privacy/'), label: ui.nav.privacy },
+  { href: url('/', lang), label: ui.nav.home },
+  { href: url('/recovery/', lang), label: ui.nav.recovery },
+  { href: url('/prevention/', lang), label: ui.nav.prevention },
+  { href: url('/card/', lang), label: ui.nav.card },
+  { href: url('/sources/', lang), label: ui.nav.sources },
+  { href: url('/advocacy/', lang), label: ui.nav.advocacy },
+  { href: url('/about/', lang), label: ui.nav.about },
+  { href: url('/privacy/', lang), label: ui.nav.privacy },
   { href: repo, label: ui.nav.contribute },
 ];
+const languages = locales.map((other) => ({ lang: other, href: url(page, other), label: t(other).languageName }));
 ---
 
 <!doctype html>
@@ -37,12 +45,30 @@ const nav = [
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta name="theme-color" content="#FFD400" />
+    {languages.map((other) => <link rel="alternate" hreflang={other.lang} href={new URL(other.href, Astro.site)} />)}
   </head>
   <body>
     <a class="skip btn" href="#main">{ui.skip}</a>
     <header class="site-header">
       <div class="wrap bar">
-        <Logo />
+        <Logo lang={lang} />
+        <nav class="languages" aria-label={ui.languages}>
+          <ul>
+            {languages.map((other) => (
+              <li>
+                <a
+                  href={other.href}
+                  lang={other.lang}
+                  hreflang={other.lang}
+                  aria-label={other.label}
+                  aria-current={other.lang === lang ? 'true' : undefined}
+                >
+                  {other.lang.toUpperCase()}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </header>
 
@@ -83,12 +109,40 @@ const nav = [
     border-block-end: var(--border-hard) solid var(--edge);
     background: var(--surface-raised);
   }
+  /* Language switch: short codes in the typed voice, the current one on tape. Each code says its language's name. */
+  .languages ul {
+    display: flex;
+    padding: 0;
+    list-style: none;
+  }
+  .languages a {
+    display: grid;
+    place-content: center;
+    min-width: var(--tap-min);
+    min-height: var(--tap-min);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .languages a[aria-current] {
+    background: var(--tape);
+    color: var(--on-tape);
+  }
   .bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
     padding-block: var(--space-2);
+  }
+  /* Under 360px the logo and three codes do not fit: show only the languages to switch to. */
+  @media (max-width: 359px) {
+    .languages li:has([aria-current]) {
+      display: none;
+    }
   }
 
 

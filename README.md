@@ -21,13 +21,13 @@ npm run preview   # serve dist/ locally
 | Path | What |
 |---|---|
 | `brandkit/` | The design system: tokens, voice, logos, pictograms. Single source of truth, imported directly. |
-| `src/data/checklist.en.json` | The checklist: questions and steps, in order. Schema in `checklist.schema.json`. Shared with the PDF. |
+| `src/data/checklist.<lang>.json` | The checklist (`en`, `fr`, `nl`): questions and steps, in order. Schema in `checklist.schema.json`. Shared with the PDF. |
 | `src/lib/checklist.ts` | Types and helpers for the checklist JSON (no Astro, reusable from a PDF script). |
-| `src/pages/print/checklist.astro`, `src/integrations/pdf.ts` | The checklist on A4. After each build, headless Chromium prints it to `dist/phone-theft-first-aid-checklist.pdf`, linked from `/advocacy/`, and the print page is removed. |
-| `src/i18n/en.ts` | UI strings. Translate by copying this file and the checklist JSON. |
+| `src/pages/print/[...lang]/checklist.astro`, `src/integrations/pdf.ts` | The checklist on A4. After each build, headless Chromium prints it to `dist/phone-theft-first-aid-checklist.pdf` (`-fr.pdf`, `-nl.pdf`), linked from `/advocacy/`, and the print pages are removed. The dev server prints them on request. |
+| `src/i18n/` | Every string outside the checklist, page copy included: `en.ts`, `fr.ts`, `nl.ts`, same shape. `index.ts` lists the languages. To add one, copy `en.ts` and the checklist JSON, translate both, and register it in `index.ts` and `astro.config.mjs`. |
 | `src/components/` | `Checklist`, `Picto`, `Logo`, `Notice`, `RightsCallout`, `AfterLinks` |
 | `src/layouts/Base.astro` | Page shell, footer nav |
-| `src/pages/` | `/` start button, `/checklist/`, `/recovery/`, `/prevention/`, `/card/`, `/sources/`, `/advocacy/`, `/about/`, `/privacy/`, 404 |
+| `src/pages/[...lang]/` | Built once per language: English at the root, `/fr/…`, `/nl/…`. `/` start button, `/checklist/`, `/recovery/`, `/prevention/`, `/card/`, `/sources/`, `/advocacy/`, `/about/`, `/privacy/`, 404 |
 | `src/styles/fonts.css` | Self-hosted Noto Sans (with width axis) and Noto Sans Mono, generated from `@fontsource-variable` |
 
 ## Principles

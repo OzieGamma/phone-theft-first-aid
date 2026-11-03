@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro';
+import Picto from '../../components/Picto.astro';
+import { langPaths, locales, t, type Lang } from '../../i18n';
+import { pdfFile, url } from '../../lib/site';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const ui = t(lang);
+const page = ui.advocacy;
+// The checklist in the other languages too: one office may need several.
+const others = locales.filter((other) => other !== lang);
+---
+
+<Base lang={lang} title={page.title} description={page.description}>
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">{page.title}</h1>
+    </header>
+
+    <div class="stack">
+      <section aria-labelledby="police-title">
+        <h2 id="police-title">{page.policeTitle}</h2>
+        {page.police.map((line) => <p>{line}</p>)}
+      </section>
+
+      <section aria-labelledby="print-title">
+        <h2 id="print-title">{page.printTitle}</h2>
+        {page.print.map((line) => <p>{line}</p>)}
+        <a class="btn btn-primary download" href={url(`/${pdfFile(lang)}`)} download>
+          <Picto name="printer" />
+          {page.download}
+        </a>
+        <ul class="other-pdfs">
+          {
+            others.map((other) => (
+              <li>
+                <a href={url(`/${pdfFile(other)}`)} download lang={other} hreflang={other}>
+                  {t(other).advocacy.download}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="write-title">
+        <h2 id="write-title">{page.writeTitle}</h2>
+        <p>
+          {page.writeTo}{' '}
+          <a class="email" data-user="ycacovda" data-domain="gro.dia-tsrif-tfeht-enohp">{page.address}</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<script>
+  // The address is stored reversed and assembled here, so simple scrapers reading the HTML do not find it.
+  // Without JavaScript the spelled-out text stays.
+  const reverse = (text: string) => [...text].reverse().join('');
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('a.email')) {
+    const address = `${reverse(link.dataset.user!)}@${reverse(link.dataset.domain!)}`;
+    link.href = `mailto:${address}`;
+    link.textContent = address;
+  }
+</script>
+
+<style>
+  .stack {
+    font-size: 18px;
+    line-height: 29px;
+  }
+  h2 {
+    margin-block-end: var(--space-2);
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  section > p + p {
+    margin-block-start: var(--space-2);
+  }
+  .download {
+    width: 100%;
+    margin-block-start: var(--space-5);
+  }
+  .other-pdfs {
+    margin-block-start: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+  .other-pdfs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+</style>

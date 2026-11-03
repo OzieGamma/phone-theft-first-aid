@@ -1,20 +1,23 @@
 ---
-import Base from '../layouts/Base.astro';
-import Picto from '../components/Picto.astro';
-import AfterLinks from '../components/AfterLinks.astro';
-import { ui } from '../i18n/en';
-import { getChecklist } from '../lib/checklist';
-import { url } from '../lib/site';
+import Base from '../../layouts/Base.astro';
+import Picto from '../../components/Picto.astro';
+import AfterLinks from '../../components/AfterLinks.astro';
+import { langPaths, t, type Lang } from '../../i18n';
+import { getChecklist } from '../../lib/checklist';
+import { url } from '../../lib/site';
 
-const list = getChecklist(ui.lang);
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const ui = t(lang);
+const list = getChecklist(lang);
 ---
 
-<Base>
+<Base lang={lang}>
   <div class="wrap home">
     <div class="hero">
       <section class="start" aria-labelledby="start-title">
         <h1 id="start-title" class="display">{list.title}</h1>
-        <a class="btn go" href={url('/checklist/')}>
+        <a class="btn go" href={url('/checklist/', lang)}>
           {ui.start}
           <Picto name="arrow" />
         </a>
@@ -22,7 +25,7 @@ const list = getChecklist(ui.lang);
     </div>
 
     <div class="after">
-      <AfterLinks />
+      <AfterLinks lang={lang} />
     </div>
   </div>
 </Base>

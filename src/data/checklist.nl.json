@@ -1,0 +1,445 @@
+{
+  "$schema": "./checklist.schema.json",
+  "lang": "nl",
+  "dir": "ltr",
+  "title": "Telefoon gestolen? Doe dit nu",
+  "allDone": "Alle {total} klaar. Adem rustig",
+  "items": [
+    {
+      "id": "safe",
+      "type": "check",
+      "picto": "alert",
+      "title": "Ben je veilig?",
+      "lines": [
+        "Ben je gewond of in gevaar? Bel eerst het noodnummer",
+        "Je kunt het bellen vanaf elke telefoon, ook zonder simkaart",
+        "Ergens anders? Probeer 112 vanaf een mobiele telefoon. De meeste netwerken verbinden je door naar het lokale noodnummer"
+      ],
+      "links": [
+        {
+          "label": "112",
+          "detail": "Europa en de meeste landen",
+          "href": "tel:112"
+        },
+        {
+          "label": "911",
+          "detail": "Verenigde Staten en Canada",
+          "href": "tel:911"
+        },
+        {
+          "label": "999",
+          "detail": "Verenigd Koninkrijk",
+          "href": "tel:999"
+        }
+      ],
+      "continue": "Ik ben veilig",
+      "wait": 3
+    },
+    {
+      "id": "calm",
+      "type": "check",
+      "style": "poster",
+      "title": "Blijf\nkalm\nen\nga door",
+      "lines": [
+        "Adem langzaam in door je neus",
+        "Adem langzaam uit door je mond",
+        "Doe dit 3 keer",
+        "Het is mij ook overkomen. We gaan er stap voor stap doorheen"
+      ],
+      "continue": "Ik ben klaar om te beginnen",
+      "wait": 5
+    },
+    {
+      "id": "borrowed",
+      "type": "check",
+      "picto": "borrowed-device",
+      "title": "Op een geleende telefoon of computer?",
+      "lines": [
+        "Open een privévenster",
+        "Log uit bij elk account als je klaar bent"
+      ],
+      "continue": "Verder"
+    },
+    {
+      "id": "phone",
+      "type": "choice",
+      "picto": "info",
+      "question": "Welke telefoon is gestolen?",
+      "options": [
+        {
+          "id": "iphone",
+          "label": "iPhone"
+        },
+        {
+          "id": "android",
+          "label": "Android"
+        }
+      ]
+    },
+    {
+      "id": "lock",
+      "type": "step",
+      "picto": "lock",
+      "title": "Vergrendel je telefoon",
+      "time": "Ongeveer 2 minuten",
+      "lines": [
+        "Open op een andere telefoon of computer de pagina voor je telefoon. Log in",
+        {
+          "text": "Kies Markeer als verloren",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "➡️ Dit schort ook Apple Pay op de telefoon op",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "Kies Apparaat beveiligen",
+          "when": {
+            "phone": "android"
+          }
+        },
+        {
+          "text": "Vraagt het een code die je niet kunt krijgen? Probeer android.com/lock. Daarvoor heb je alleen je telefoonnummer nodig",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "Dezelfde pagina toont waar de telefoon is. Ga er niet zelf naartoe. Geef de locatie aan de politie"
+      ],
+      "links": [
+        {
+          "label": "Zoek mijn iPhone",
+          "href": "https://www.icloud.com/find",
+          "when": {
+            "phone": "iphone"
+          },
+          "primary": true
+        },
+        {
+          "label": "Vind mijn Android-telefoon",
+          "href": "https://www.google.com/android/find",
+          "when": {
+            "phone": "android"
+          },
+          "primary": true
+        },
+        {
+          "label": "Samsung",
+          "href": "https://smartthingsfind.samsung.com",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sim",
+      "type": "step",
+      "picto": "sim-block",
+      "title": "Blokkeer je simkaart en IMEI",
+      "time": "Ongeveer 10 minuten, plus wachttijd aan de lijn",
+      "lines": [
+        "Bel je provider vanaf eender welke telefoon. Het nummer staat op je factuur, je contract of hun website",
+        "1️⃣ Vraag hen de simkaart te blokkeren",
+        "➡️ Met een geblokkeerde simkaart kan niemand je inlogcodes ontvangen",
+        "2️⃣ Vraag hen ook de telefoon te blokkeren op zijn IMEI. Ze zien het nummer vaak in je account",
+        "➡️ Een geblokkeerde telefoon werkt niet meer op netwerken die de lijst controleren",
+        "⚠️ Vergeet niet je andere simkaarten en eSIMs te blokkeren"
+      ]
+    },
+    {
+      "id": "cards",
+      "type": "step",
+      "picto": "card",
+      "title": "Blokkeer betalingen",
+      "time": "Ongeveer 5 minuten per bank",
+      "alert": {
+        "title": "Ze willen je bank, niet je telefoon",
+        "stat": "44%",
+        "text": "van de slachtoffers van identiteitsfraude zag geld verdwijnen van de bankrekening",
+        "lines": [
+          "Je pincode van de telefoon houdt hen niet tegen. Dieven kijken mee terwijl je hem typt"
+        ]
+      },
+      "lines": [
+        "Bel je bank. Het nummer staat op de achterkant van je kaart",
+        "Geen kaart bij je? Typ zelf het webadres van je bank. Het nummer staat op de site",
+        "⚠️ Zoek het nummer niet op. Oplichters kopen advertenties met valse banknummers",
+        {
+          "text": "1️⃣ Vraag hen je kaarten in Apple Pay en hun bankapp op de gestolen telefoon te blokkeren",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "1️⃣ Vraag hen je kaarten in Google Wallet en hun bankapp op de gestolen telefoon te blokkeren",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "2️⃣ Portemonnee ook gestolen? Vraag hen ook die kaarten te blokkeren",
+        "Vraag naar alle betalingen sinds de diefstal"
+      ]
+    },
+    {
+      "id": "account",
+      "type": "step",
+      "picto": "account",
+      "title": "Vergrendel het account van je telefoon",
+      "time": "Ongeveer 3 minuten",
+      "alert": {
+        "title": "Dieven gaan eerst voor dit account",
+        "lines": [
+          "Als ze je toegangscode zagen, kunnen ze het wachtwoord wijzigen en het zoeken van je telefoon uitzetten"
+        ]
+      },
+      "lines": [
+        {
+          "text": "Dit is je Apple Account, het account waarmee je iPhone is ingelogd",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "Dit is je Google-account, het account waarmee je telefoon is ingelogd",
+          "when": {
+            "phone": "android"
+          }
+        },
+        "1️⃣ Log in op een andere telefoon of een computer",
+        "2️⃣ Wijzig het wachtwoord",
+        "3️⃣ Controleer het herstel-e-mailadres en de telefoonnummers. Verwijder de nummers en adressen die je niet kent",
+        "Kun je niet inloggen? Start nu het accountherstel. Elke minuut telt"
+      ],
+      "links": [
+        {
+          "label": "Apple Account",
+          "href": "https://account.apple.com",
+          "when": {
+            "phone": "iphone"
+          },
+          "primary": true
+        },
+        {
+          "label": "Apple Account herstellen",
+          "href": "https://iforgot.apple.com",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "label": "Beveiliging van je Google-account",
+          "href": "https://myaccount.google.com/security",
+          "when": {
+            "phone": "android"
+          },
+          "primary": true
+        },
+        {
+          "label": "Google-account herstellen",
+          "href": "https://accounts.google.com/signin/recovery",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "signin",
+      "type": "choice",
+      "picto": "email",
+      "question": "Vergrendel je e-mail",
+      "lines": [
+        "Hetzelfde account als het account dat je net vergrendelde? Kies Ik ben binnen. Sla dan de volgende stap over",
+        "Open je e-mail in een nieuw tabblad. Ga naar de beveiligingsinstellingen",
+        "Kom je erin?"
+      ],
+      "options": [
+        {
+          "id": "in",
+          "label": "Ik ben binnen"
+        },
+        {
+          "id": "out",
+          "label": "Ik kom er niet in"
+        }
+      ],
+      "links": [
+        {
+          "label": "Gmail",
+          "href": "https://myaccount.google.com/security",
+          "primary": true
+        },
+        {
+          "label": "Outlook en Hotmail",
+          "href": "https://account.microsoft.com/security",
+          "primary": true
+        },
+        {
+          "label": "iCloud Mail",
+          "href": "https://account.apple.com",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "email",
+      "type": "step",
+      "picto": "email",
+      "title": "Vergrendel je e-mail",
+      "time": "Ongeveer 3 minuten",
+      "lines": [
+        {
+          "text": "➡️ Wachtwoord vergeten? Kies Wachtwoord vergeten",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "➡️ Vraagt het een code via sms of een authenticator-app? Kies op de inlogpagina Probeer het op een andere manier. Een back-upcode of een beveiligingssleutel werkt ook",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "➡️ Nog ingelogd op een laptop of tablet? Gebruik die. Hij vraagt misschien geen code",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "➡️ Geen andere manier om binnen te komen? Start het accountherstel",
+          "when": {
+            "signin": "out"
+          }
+        },
+        {
+          "text": "Ben je binnen? Ga dan naar de beveiligingsinstellingen",
+          "when": {
+            "signin": "out"
+          }
+        },
+        "Verwijder de gestolen telefoon uit je apparaten en inlogmethoden",
+        "1️⃣ Kies Uitloggen op alle andere apparaten",
+        "2️⃣ Wijzig het wachtwoord",
+        "Doe daarna hetzelfde voor je andere accounts (sociale media, banken, PayPal en zo verder)"
+      ],
+      "links": [
+        {
+          "label": "Gmail herstellen",
+          "href": "https://accounts.google.com/signin/recovery",
+          "when": {
+            "signin": "out"
+          },
+          "primary": true
+        },
+        {
+          "label": "Outlook herstellen",
+          "href": "https://account.live.com/acsr",
+          "when": {
+            "signin": "out"
+          },
+          "primary": true
+        },
+        {
+          "label": "iCloud herstellen",
+          "href": "https://iforgot.apple.com",
+          "when": {
+            "signin": "out"
+          },
+          "primary": true
+        }
+      ]
+    },
+    {
+      "id": "digital-id",
+      "type": "step",
+      "picto": "id-card",
+      "title": "Schort je digitale ID op",
+      "time": "Ongeveer 3 minuten",
+      "lines": [
+        "Log je in bij je bank of de overheid met een app op de telefoon? Schort die op",
+        "Bijvoorbeeld itsme in België, DigiD in Nederland, BankID in Zweden, Singpass in Singapore of My Number in Japan",
+        "Gebruik de website of hulplijn ervan, of vraag het aan je bank"
+      ]
+    },
+    {
+      "id": "contacts",
+      "type": "step",
+      "picto": "message",
+      "title": "Waarschuw je contacten",
+      "time": "Ongeveer 2 minuten",
+      "lines": [
+        "Stuur vanaf een andere telefoon of via je e-mail een bericht aan familie en goede vrienden",
+        "Zeg dat je telefoon is gestolen. Een bericht vanaf je nummer dat om geld of codes vraagt, komt niet van jou",
+        "⚠️ Waarschuw hen dat iemand je identiteit kan stelen. Vraag hen voorzichtig te zijn met berichten van jou"
+      ]
+    },
+    {
+      "id": "found",
+      "type": "step",
+      "picto": "phishing",
+      "title": "Let op phishing",
+      "time": "De komende weken",
+      "lines": [
+        "⚠️ Na een diefstal ben je kwetsbaar. Wees extra voorzichtig",
+        "⚠️ Klik niet op onbekende links in je mailbox",
+        "⚠️ Belt de bank je? Vraag een naam en bel zelf terug",
+        "⚠️ Bedrijven vragen nooit naar je wachtwoorden of codes. Doen ze het toch, dan is het oplichting"
+      ]
+    },
+    {
+      "id": "work",
+      "type": "step",
+      "picto": "briefcase",
+      "title": "Telefoon van het werk? Laat het je IT-afdeling weten",
+      "time": "Ongeveer 2 minuten",
+      "lines": [
+        "Ook als je er werkmail of werkchat op leest",
+        "Zij kunnen je werkaccounts vergrendelen en werkgegevens wissen"
+      ]
+    },
+    {
+      "id": "police",
+      "type": "step",
+      "picto": "police-report",
+      "title": "Doe aangifte van de diefstal bij de politie",
+      "time": "Vandaag",
+      "lines": [
+        "Ga naar een politiekantoor, of doe online aangifte als dat in je land kan",
+        "⚠️ Vraag een kopie van de aangifte en een referentienummer",
+        "Je bank, je verzekeraar en je provider vragen erom",
+        "Je melding bij de provider komt niet bij de politie terecht. Doe beide",
+        {
+          "text": "Neem het IMEI-nummer mee als je het kunt vinden. Het staat op de doos van de telefoon en in je Apple Account",
+          "when": {
+            "phone": "iphone"
+          }
+        },
+        {
+          "text": "Neem het IMEI-nummer mee als je het kunt vinden. Het staat op de doos van de telefoon en in je Google-account",
+          "when": {
+            "phone": "android"
+          }
+        }
+      ]
+    },
+    {
+      "id": "else",
+      "type": "step",
+      "picto": "question",
+      "title": "Nog iets anders?",
+      "time": "Ongeveer 1 minuut",
+      "lines": [
+        "Denk na over wat er nog op de telefoon stond: andere banken, winkelen, crypto, gezondheid, sociale media",
+        "Vergrendel elk account of wijzig het wachtwoord",
+        "⚠️ Deze lijst is niet volledig. De regels zijn in elk land anders",
+        "Ik ben geen advocaat, bank of beveiligingsbedrijf. Je volgt dit advies op eigen risico. Ik kan niet aansprakelijk worden gesteld voor enig verlies"
+      ]
+    }
+  ]
+}

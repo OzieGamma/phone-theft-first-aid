@@ -8,16 +8,44 @@ import Picto from './Picto.astro';
 import AfterLinks from './AfterLinks.astro';
 import Links from './Links.astro';
 import keepCalmSvg from '../assets/keep-calm.svg?raw';
-import { ui } from '../i18n/en';
+import { t, type Lang } from '../i18n';
 import { getChecklist, steps, lineText, variantLabel, whenAttr } from '../lib/checklist';
 import { url } from '../lib/site';
 
-const list = getChecklist(ui.lang);
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const ui = t(lang);
+const list = getChecklist(lang);
 const stepList = steps(list);
 const total = stepList.length;
 const allDone = list.allDone.replace('{total}', String(total));
 // Drawn for this site after the public-domain 1939 poster. Inlined so its text uses the page's Noto Sans.
-const keepCalm = keepCalmSvg.replace(/ role="img" aria-label="[^"]*"/, '');
+// Its text comes from the poster item's title: one word per row, upward from the bottom row.
+// A title line that is one short word ("and") is set small, as on the original.
+const poster = (title: string) => {
+  const rows = title
+    .split('\n')
+    .map((line) => line.trim().split(/\s+/))
+    .flatMap((words) => words.map((word) => ({ word, small: words.length === 1 && word.length <= 3 })));
+  let y = 666;
+  const text = rows
+    .reverse()
+    .map(({ word, small }) => {
+      // Long words shrink to fit the 440-unit column.
+      const size = small ? 56 : Math.min(100, Math.floor(440 / (word.length * 0.66)));
+      const row = `<text x="250" y="${y}" font-size="${size}">${word.toLocaleUpperCase(lang)}</text>`;
+      y -= small ? 70 : Math.round(size * 1.05);
+      return row;
+    })
+    .reverse()
+    .join('');
+  return keepCalmSvg
+    .replace(/ role="img" aria-label="[^"]*"/, '')
+    .replace(/(<g [^>]*text-anchor="middle">)[\s\S]*?(<\/g>)/, `$1${text}$2`);
+};
 
 // A choice or check met after the steps have started belongs to the step that follows it.
 const stepFor = (index: number) =>
@@ -28,7 +56,7 @@ const stepFor = (index: number) =>
 
 <div class="checklist" lang={list.lang} dir={list.dir}>
   <nav class="bar" aria-label={ui.nav.home} hidden>
-    <a class="back btn" href={url('/')}>{ui.back}</a>
+    <a class="back btn" href={url('/', lang)}>{ui.back}</a>
     <div class="track" aria-hidden="true">
       {stepList.map((step) => <span class="seg" data-for={step.id} />)}
     </div>
@@ -80,7 +108,7 @@ const stepFor = (index: number) =>
               <h2 class="item-title visually-hidden" id={`${item.id}-title`} tabindex="-1">
                 {item.title}
               </h2>
-              <div class="poster" aria-hidden="true" set:html={keepCalm} />
+              <div class="poster" aria-hidden="true" set:html={poster(item.title)} />
             </>
           ) : (
             <>
@@ -181,7 +209,7 @@ const stepFor = (index: number) =>
     </ol>
     <button class="btn reset" type="button">{ui.startOver}</button>
     <div class="after">
-      <AfterLinks />
+      <AfterLinks lang={lang} />
     </div>
   </section>
 </div>

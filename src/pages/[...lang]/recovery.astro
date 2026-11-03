@@ -1,0 +1,123 @@
+---
+import Base from '../../layouts/Base.astro';
+import TodoList from '../../components/TodoList.astro';
+import Links from '../../components/Links.astro';
+import Notice from '../../components/Notice.astro';
+import AfterLinks from '../../components/AfterLinks.astro';
+import { langPaths, t, type Lang } from '../../i18n';
+import { countries } from '../../lib/sources';
+import { repo, url } from '../../lib/site';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const ui = t(lang);
+const page = ui.recovery;
+const groups = countries(lang);
+---
+
+<Base lang={lang} title={page.title} description={page.description}>
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">{page.title}</h1>
+      <p>{page.lead}</p>
+    </header>
+
+    <div class="stack">
+      <section aria-labelledby="todo-title">
+        <h2 class="list-title" id="todo-title">{page.listTitle}</h2>
+        <TodoList lang={lang} items={page.items} storageKey="ptfa-recovery" />
+      </section>
+
+      <section class="official" aria-labelledby="official-title">
+        <h2 id="official-title">{page.officialTitle}</h2>
+        <p>{page.officialLead}</p>
+        <Notice tone="warn" title={ui.aiWarning.title}>
+          <p>{ui.aiWarning.text}</p>
+          <p><a href={repo}>{ui.aiWarning.report}</a></p>
+        </Notice>
+        <div class="pick" hidden>
+          <label for="country">{page.country}</label>
+          <select id="country">
+            <option value="">{page.choose}</option>
+            {groups.map((group, i) => <option value={i}>{group.country}</option>)}
+          </select>
+          {
+            groups.map((group, i) => (
+              <div data-country={i} hidden>
+                <Links links={group.links} />
+              </div>
+            ))
+          }
+        </div>
+        <a class="all" href={url('/sources/', lang)}>{page.all}</a>
+      </section>
+
+      <AfterLinks
+        lang={lang}
+        items={ui.home.next
+          .filter((item) => item.href === '/prevention/')
+          .map((item) => ({ ...item, title: ui.next(item.title) }))}
+      />
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Without JavaScript the combo box stays hidden; the link to all sources still works.
+  const pick = document.querySelector<HTMLElement>('.pick')!;
+  const select = pick.querySelector('select')!;
+  pick.hidden = false;
+  select.addEventListener('change', () => {
+    for (const group of pick.querySelectorAll<HTMLElement>('[data-country]')) {
+      group.hidden = group.dataset.country !== select.value;
+    }
+  });
+</script>
+
+<style>
+  .list-title,
+  .official h2 {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  .official > p {
+    margin-block: var(--space-2) var(--space-4);
+    font-size: 18px;
+    line-height: 29px;
+  }
+  .official :global(.notice) {
+    margin-block-end: var(--space-6);
+  }
+  .pick label {
+    display: block;
+    margin-block-end: var(--space-2);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  select {
+    width: 100%;
+    min-height: var(--tap-min);
+    padding: var(--space-2) var(--space-4);
+    border: var(--border-hard) solid var(--edge);
+    border-radius: 0;
+    background: var(--surface-raised);
+    color: var(--ink);
+    font: inherit;
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 700;
+  }
+  select:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+  .all {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    margin-block-start: var(--space-3);
+    color: var(--ink);
+    font-size: 18px;
+  }
+</style>

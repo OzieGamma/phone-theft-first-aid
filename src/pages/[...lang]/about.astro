@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { langPaths, t, type Lang } from '../../i18n';
+import { author, repo, url } from '../../lib/site';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const ui = t(lang);
+const page = ui.about;
+---
+
+<Base lang={lang} title={page.title} description={page.description}>
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">{page.title}</h1>
+    </header>
+
+    <div class="stack body">
+      {page.story.map((line) => <p>{line}</p>)}
+      <p>
+        {page.madeBy} <a href={repo}>{author}</a>. {page.mistake} <a href={repo}>{page.contribute}</a>
+      </p>
+      <p>
+        {page.press} <a href={url('/advocacy/', lang)}>{ui.nav.advocacy}</a>
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .body {
+    font-size: 18px;
+    line-height: 29px;
+  }
+</style>

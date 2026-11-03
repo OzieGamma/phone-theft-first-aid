@@ -1,15 +1,18 @@
-// Prints /print/checklist/ to /phone-theft-first-aid-checklist.pdf with headless Chromium.
-// Build: pages are served straight from dist/ to the browser (no server); the PDF is written to dist/
-// and the print page removed. Dev: the dev server prints the PDF fresh on each request.
+// Prints /print/checklist/ to /phone-theft-first-aid-checklist.pdf with headless Chromium, and each
+// other language too (/print/fr/checklist/ to …-fr.pdf). Build: pages are served straight from dist/ to the
+// browser (no server); the PDFs are written to dist/ and the print pages removed.
+// Dev: the dev server prints the PDF fresh on each request.
 // Either way, every request outside the site is refused.
 // Needs the browser once per machine: npx playwright install chromium
 import type { AstroIntegration } from 'astro';
 import { readFile, rm, writeFile } from 'node:fs/promises';
 import { extname } from 'node:path';
 import { chromium, type Route } from 'playwright';
+import { locales } from '../i18n/index.ts';
 import { pdfFile } from '../lib/site.ts';
 
-const page = 'print/checklist/';
+/** The print page for a language, under the base path. */
+const page = (lang: string) => (lang === 'en' ? 'print/checklist/' : `print/${lang}/checklist/`);
 const origin = 'http://pdf.local';
 const types: Record<string, string> = {
   '.html': 'text/html',
@@ -48,32 +51,35 @@ export default function pdf(): AstroIntegration {
       },
       'astro:server:setup': ({ server, logger }) => {
         server.middlewares.use(async (req, res, next) => {
-          if (req.url?.split('?')[0] !== base + pdfFile) return next();
+          const lang = locales.find((other) => req.url?.split('?')[0] === base + pdfFile(other));
+          if (!lang) return next();
           try {
-            const body = await print(`http://${req.headers.host}${base}${page}`);
+            const body = await print(`http://${req.headers.host}${base}${page(lang)}`);
             res.setHeader('Content-Type', 'application/pdf');
             res.end(body);
           } catch (error) {
-            logger.error(`could not print ${pdfFile}: ${error}`);
+            logger.error(`could not print ${pdfFile(lang)}: ${error}`);
             next(error);
           }
         });
       },
       'astro:build:done': async ({ dir, logger }) => {
-        const body = await print(origin + base + page, async (route, url) => {
-          if (!url.pathname.startsWith(base)) return route.abort();
-          let path = decodeURIComponent(url.pathname.slice(base.length));
-          if (path === '' || path.endsWith('/')) path += 'index.html';
-          try {
-            const file = await readFile(new URL(path, dir));
-            await route.fulfill({ body: file, contentType: types[extname(path)] ?? 'application/octet-stream' });
-          } catch {
-            await route.fulfill({ status: 404 });
-          }
-        });
-        await writeFile(new URL(pdfFile, dir), body);
-        logger.info(`wrote ${pdfFile}`);
-        await rm(new URL(page.split('/')[0] + '/', dir), { recursive: true });
+        for (const lang of locales) {
+          const body = await print(origin + base + page(lang), async (route, url) => {
+            if (!url.pathname.startsWith(base)) return route.abort();
+            let path = decodeURIComponent(url.pathname.slice(base.length));
+            if (path === '' || path.endsWith('/')) path += 'index.html';
+            try {
+              const file = await readFile(new URL(path, dir));
+              await route.fulfill({ body: file, contentType: types[extname(path)] ?? 'application/octet-stream' });
+            } catch {
+              await route.fulfill({ status: 404 });
+            }
+          });
+          await writeFile(new URL(pdfFile(lang), dir), body);
+          logger.info(`wrote ${pdfFile(lang)}`);
+        }
+        await rm(new URL('print/', dir), { recursive: true });
       },
     },
   };

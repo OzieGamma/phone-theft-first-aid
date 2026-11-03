@@ -2,6 +2,8 @@
 // Plain TS with no Astro imports, so a PDF script can reuse it.
 
 import en from '../data/checklist.en.json';
+import fr from '../data/checklist.fr.json';
+import nl from '../data/checklist.nl.json';
 import type { PictoName } from '../components/Picto.astro';
 
 /** Show only when choice <key> was answered with this option id (or one of these). */
@@ -64,7 +66,7 @@ export interface Checklist {
   items: (Check | Choice | Step)[];
 }
 
-const checklists: Record<string, Checklist> = { en: en as Checklist };
+const checklists: Record<string, Checklist> = { en: en as Checklist, fr: fr as Checklist, nl: nl as Checklist };
 
 export function getChecklist(lang = 'en'): Checklist {
   return checklists[lang] ?? checklists.en;
