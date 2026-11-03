@@ -4,11 +4,14 @@
 import Expander from './Expander.astro';
 import type { PictoName } from './Picto.astro';
 import { ui } from '../i18n/en';
+import { url } from '../lib/site';
 
 export interface TodoItem {
   picto: PictoName;
   title: string;
   lines: string[];
+  /** A page on this site that helps do it, shown as a button above "Mark as done". */
+  link?: { label: string; href: string };
 }
 
 interface Props {
@@ -32,6 +35,11 @@ const { items, storageKey } = Astro.props;
             {item.lines.map((line) => (
               <p set:html={line.replace('*#06#', '<code>*#06#</code>')} />
             ))}
+            {item.link && (
+              <a class="btn btn-primary do" href={url(item.link.href)}>
+                {item.link.label}
+              </a>
+            )}
             <label class="btn mark">
               <input type="checkbox" id={`${storageKey}-${i}`} />
               {ui.markDone}
@@ -96,6 +104,10 @@ const { items, storageKey } = Astro.props;
   }
   .todo li:has(input:checked) .badge {
     display: block;
+  }
+  .do {
+    width: 100%;
+    margin-block-start: var(--space-4);
   }
   .mark {
     display: flex;

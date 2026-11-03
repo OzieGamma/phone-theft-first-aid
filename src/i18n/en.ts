@@ -14,6 +14,7 @@ export const ui = {
     home: 'Checklist',
     recovery: 'Recovery',
     prevention: 'Prevention',
+    card: 'Card',
     sources: 'Data sources',
     about: 'About',
     contribute: 'Contribute',

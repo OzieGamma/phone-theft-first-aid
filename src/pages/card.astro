@@ -1,0 +1,254 @@
+---
+import Base from '../layouts/Base.astro';
+import Picto from '../components/Picto.astro';
+
+// Four rows, empty: the card shows only what people type. Rows without a number are left off.
+const numbers = [0, 1, 2, 3];
+---
+
+<Base title="Recovery card" description="Print a card with your IMEI and emergency phone numbers, to keep away from your phone.">
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">Recovery card</h1>
+      <p>Your IMEI and the numbers to call, on paper. Keep it away from your phone</p>
+    </header>
+
+    <form class="form stack" id="card-form">
+      <fieldset>
+        <legend>IMEI</legend>
+        <p class="hint">Type <code>*#06#</code> in the phone app. The number appears</p>
+        <label for="imei-1">IMEI</label>
+        <input id="imei-1" name="imei-1" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="20" />
+        <label for="imei-2">Second IMEI, if the phone shows two</label>
+        <input id="imei-2" name="imei-2" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="20" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Emergency phone numbers</legend>
+        <p class="hint">For your operator and your bank, use their lost-phone and lost-card lines. Add the number to call from abroad too</p>
+        {
+          numbers.map((i) => (
+            <div class="row">
+              <div>
+                <label for={`label-${i}`}>Name</label>
+                <input id={`label-${i}`} name={`label-${i}`} autocomplete="off" maxlength="32" />
+              </div>
+              <div>
+                <label for={`number-${i}`}>Number</label>
+                <input id={`number-${i}`} name={`number-${i}`} type="tel" autocomplete="off" maxlength="24" />
+              </div>
+            </div>
+          ))
+        }
+      </fieldset>
+    </form>
+
+    <h2 class="preview-title">Your card</h2>
+    <p class="hint">It prints twice: one for your bag or wallet, one for home</p>
+
+    <div class="sheet">
+      {
+        [0, 1].map(() => (
+          <article class="card" data-theme="light">
+            <p class="card-imei">
+              <span data-field="imei-1" />
+              <span data-field="imei-2" />
+            </p>
+            <dl class="card-numbers">
+              {numbers.map((i) => (
+                <div data-row={i} hidden>
+                  <dt data-field={`label-${i}`} />
+                  <dd data-field={`number-${i}`} />
+                </div>
+              ))}
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+
+    <button class="btn btn-primary print" type="button" id="print">
+      <Picto name="printer" />
+      Print the card
+    </button>
+  </div>
+</Base>
+
+<script>
+  // Copies the form into both cards as you type. Nothing is kept: closing the tab clears it.
+  const form = document.querySelector<HTMLFormElement>('#card-form')!;
+  const update = () => {
+    for (const input of form.querySelectorAll<HTMLInputElement>('input')) {
+      for (const el of document.querySelectorAll<HTMLElement>(`[data-field="${input.name}"]`)) {
+        el.textContent = input.value.trim();
+      }
+    }
+    for (const row of document.querySelectorAll<HTMLElement>('[data-row]')) {
+      const number = form.querySelector<HTMLInputElement>(`[name="number-${row.dataset.row}"]`)!;
+      row.hidden = !number.value.trim();
+    }
+  };
+  form.addEventListener('input', update);
+  update();
+  document.querySelector('#print')!.addEventListener('click', () => print());
+</script>
+
+<style>
+  .form {
+    margin-block-end: var(--space-7);
+  }
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  legend {
+    padding: 0;
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  .hint {
+    margin-block: var(--space-1) var(--space-3);
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 24px;
+  }
+  label {
+    display: block;
+    margin-block: var(--space-3) var(--space-1);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+  input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: var(--tap-min);
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-hard) solid var(--edge);
+    border-radius: var(--radius-0);
+    background: var(--surface-raised);
+    color: var(--ink);
+    font: inherit;
+    font-size: 18px;
+  }
+  input:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  .preview-title {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  .print {
+    width: 100%;
+    margin-block: var(--space-6) var(--space-7);
+  }
+
+  /* The card is a real object: ID-1 bank-card size, 85.6 × 54 mm, so its sizes are in mm and pt, not screen tokens. */
+  .sheet {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+  .card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    width: 85.6mm;
+    max-width: 100%;
+    height: 54mm;
+    padding: 3mm 3.5mm;
+    overflow: hidden;
+    border: 0.3mm solid var(--line);
+    border-radius: 3mm;
+    background: var(--white);
+    color: var(--ink);
+    font-size: 8pt;
+    line-height: 1.25;
+  }
+  .card + .card {
+    display: none;
+  }
+  .card dl {
+    margin: 0;
+  }
+  .card dt {
+    font-size: 9pt;
+  }
+  .card dd {
+    margin: 0;
+  }
+  .card-imei {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 3mm;
+    font-family: var(--font-mono);
+    font-size: 11pt;
+    font-weight: 700;
+  }
+  .card-numbers {
+    display: grid;
+    gap: 1mm;
+  }
+  .card-numbers div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2mm;
+  }
+  .card-numbers div[hidden] {
+    display: none;
+  }
+  .card-numbers dt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-numbers dd {
+    flex: none;
+    margin-inline-start: auto;
+    font-family: var(--font-mono);
+    font-size: 10pt;
+    font-weight: 700;
+  }
+
+  /* Print only the two cards, in black on white, with a cut line around each. */
+  @media print {
+    @page {
+      size: A4;
+      margin: 15mm;
+    }
+    :global(body) {
+      background: var(--white);
+    }
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.skip),
+    .page-head,
+    .form,
+    .preview-title,
+    .hint,
+    .print {
+      display: none;
+    }
+    .sheet {
+      gap: 8mm;
+    }
+    .card,
+    .card + .card {
+      display: flex;
+      border-style: dashed;
+      print-color-adjust: exact;
+      break-inside: avoid;
+    }
+  }
+</style>
