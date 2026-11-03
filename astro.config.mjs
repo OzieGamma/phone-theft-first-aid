@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import pdf from './src/integrations/pdf.ts';
 
 // Static output only: `npm run build` writes plain files to dist/ for any static host.
 // The site lives at the root of its domain. Set SITE and BASE_PATH only to serve it elsewhere, such as under a sub-path.
@@ -7,6 +8,8 @@ export default defineConfig({
   site: process.env.SITE ?? 'https://phone-theft-first-aid.org',
   base: process.env.BASE_PATH ?? '/',
   output: 'static',
+  // Prints the checklist to a PDF for /advocacy/ after each build.
+  integrations: [pdf()],
   trailingSlash: 'ignore',
   build: {
     // One fewer request on 2G: every page carries its own CSS.

@@ -10,6 +10,7 @@ A static site built with [Astro](https://astro.build). `npm run build` writes pl
 
 ```sh
 npm install
+npx playwright install chromium   # once: the build prints the checklist PDF with it
 npm run dev       # http://localhost:4321
 npm run build     # static files in dist/
 npm run preview   # serve dist/ locally
@@ -20,12 +21,13 @@ npm run preview   # serve dist/ locally
 | Path | What |
 |---|---|
 | `brandkit/` | The design system: tokens, voice, logos, pictograms. Single source of truth, imported directly. |
-| `src/data/checklist.en.json` | The checklist: questions and steps, in order. Schema in `checklist.schema.json`. Shared with the future PDF. |
+| `src/data/checklist.en.json` | The checklist: questions and steps, in order. Schema in `checklist.schema.json`. Shared with the PDF. |
 | `src/lib/checklist.ts` | Types and helpers for the checklist JSON (no Astro, reusable from a PDF script). |
+| `src/pages/print/checklist.astro`, `src/integrations/pdf.ts` | The checklist on A4. After each build, headless Chromium prints it to `dist/phone-theft-first-aid-checklist.pdf`, linked from `/advocacy/`, and the print page is removed. |
 | `src/i18n/en.ts` | UI strings. Translate by copying this file and the checklist JSON. |
 | `src/components/` | `Checklist`, `Picto`, `Logo`, `Notice`, `RightsCallout`, `AfterLinks` |
 | `src/layouts/Base.astro` | Page shell, footer nav |
-| `src/pages/` | `/` start button, `/checklist/`, `/recovery/`, `/prevention/`, `/about/`, `/privacy/`, 404 |
+| `src/pages/` | `/` start button, `/checklist/`, `/recovery/`, `/prevention/`, `/card/`, `/sources/`, `/advocacy/`, `/about/`, `/privacy/`, 404 |
 | `src/styles/fonts.css` | Self-hosted Noto Sans (with width axis) and Noto Sans Mono, generated from `@fontsource-variable` |
 
 ## Principles

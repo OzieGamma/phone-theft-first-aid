@@ -1,0 +1,268 @@
+---
+// The checklist on paper, for the PDF on /advocacy/. The build prints this page to
+// /phone-theft-first-aid-checklist.pdf (src/integrations/pdf.ts) and then removes it.
+// Like the no-JS checklist: every step in order, every variant labelled ("iPhone: ...").
+// Sizes are in mm and pt: it is an A4 sheet, not a screen.
+import '../../styles/fonts.css';
+import '../../../brandkit/tokens.css';
+import '../../styles/global.css';
+import Picto from '../../components/Picto.astro';
+import Mark from '../../components/Mark.astro';
+import { ui } from '../../i18n/en';
+import { getChecklist, steps, lineText, variantLabel, type Line, type Link } from '../../lib/checklist';
+
+const list = getChecklist(ui.lang);
+const stepList = steps(list);
+const before = list.items.slice(0, list.items.indexOf(stepList[0])).filter((item) => item.type === 'check');
+// A choice among the steps ("Lock your email") prints as part of the step after it.
+const choiceFor = (step: (typeof stepList)[number]) => {
+  const prev = list.items[list.items.indexOf(step) - 1];
+  return prev?.type === 'choice' ? prev : undefined;
+};
+const label = (item: Line | Link) => (typeof item === 'string' ? undefined : variantLabel(list, item.when));
+const address = (link: Link) =>
+  link.href.startsWith('tel:') ? link.detail : link.href.replace(/^https:\/\/(www\.)?/, '');
+const site = new URL(import.meta.env.BASE_URL, Astro.site).href.replace(/^https:\/\//, '').replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang={list.lang} dir={list.dir} data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>{list.title} | {ui.name}</title>
+  </head>
+  <body>
+    <header class="head">
+      <div class="logo" lang="en" dir="ltr">
+        <Mark class="mark" />
+        <span class="name">Phone Theft<br />First Aid</span>
+      </div>
+      <p class="site">{site}</p>
+    </header>
+
+    <h1 class="display">{list.title}</h1>
+
+    <section class="before">
+      {
+        before.map((item) => (
+          <div class="check">
+            <h2>
+              {item.picto && <Picto name={item.picto} />}
+              <span>{item.title.replace(/\n/g, ' ')}</span>
+            </h2>
+            {item.lines.map((line) => (
+              <p>{lineText(line)}</p>
+            ))}
+            {item.links && (
+              <ul class="links">
+                {item.links.map((link) => (
+                  <li>
+                    <strong>{link.label}</strong> {address(link)}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+    </section>
+
+    <ol class="steps">
+      {
+        stepList.map((step, i) => {
+          const choice = choiceFor(step);
+          const links = [...(choice?.links ?? []), ...(step.links ?? [])];
+          return (
+            <li class="row">
+              <span class="box" aria-hidden="true" />
+              <div>
+                <h2>
+                  <span class="num">{i + 1}</span>
+                  <Picto name={step.picto} />
+                  <span>{step.title}</span>
+                </h2>
+                <p class="time">{step.time}</p>
+                {step.alert && (
+                  <div class="alert">
+                    <p class="alert-title">{step.alert.title}</p>
+                    {step.alert.stat && (
+                      <p>
+                        <strong>{step.alert.stat}</strong> {step.alert.text}
+                      </p>
+                    )}
+                    {step.alert.lines?.map((line) => <p>{line}</p>)}
+                  </div>
+                )}
+                {choice?.lines?.map((line) => <p>{line}</p>)}
+                {step.lines.map((line) => (
+                  <p>
+                    {label(line) && <strong>{label(line)}: </strong>}
+                    {lineText(line)}
+                  </p>
+                ))}
+                {links.length > 0 && (
+                  <ul class="links">
+                    {links.map((link) => (
+                      <li>
+                        {label(link) && <strong>{label(link)}: </strong>}
+                        {link.label} <a href={link.href}>{address(link)}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </body>
+</html>
+
+<style>
+  @page {
+    size: A4;
+    margin: 15mm 15mm 18mm;
+  }
+  :global(html) {
+    color-scheme: light;
+  }
+  :global(body) {
+    display: block;
+    min-height: 0;
+    max-width: 180mm;
+    margin-inline: auto;
+    background: var(--white);
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.45;
+    print-color-adjust: exact;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6mm;
+    padding-block-end: 4mm;
+    border-block-end: 1mm solid var(--black);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+  }
+  .logo :global(.mark) {
+    width: 11mm;
+    height: 11mm;
+  }
+  .name {
+    font-family: var(--font-condensed);
+    font-stretch: 75%;
+    font-weight: 900;
+    font-size: 13pt;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .site {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11pt;
+  }
+  h1 {
+    margin-block: 6mm 5mm;
+    font-size: 30pt;
+    line-height: 1;
+  }
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 2mm;
+    font-size: 13pt;
+    line-height: 1.3;
+    font-weight: 800;
+  }
+  h2 :global(.picto) {
+    width: 6mm;
+    height: 6mm;
+  }
+  strong {
+    font-weight: 800;
+  }
+  .before {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4mm;
+    margin-block-end: 6mm;
+  }
+  .check {
+    padding: 3mm;
+    border: 0.5mm solid var(--black);
+    font-size: 9.5pt;
+  }
+  .check h2 {
+    margin-block-end: 1.5mm;
+    font-size: 11pt;
+  }
+  .steps {
+    padding: 0;
+    list-style: none;
+  }
+  .row {
+    display: flex;
+    gap: 4mm;
+    padding-block: 4mm;
+    border-block-start: 0.3mm solid var(--line-strong);
+    break-inside: avoid;
+  }
+  .row > div {
+    flex: 1;
+  }
+  /* A square to tick with a pen. */
+  .box {
+    flex: none;
+    width: 7mm;
+    height: 7mm;
+    margin-block-start: 0.5mm;
+    border: 0.6mm solid var(--black);
+  }
+  .num {
+    display: grid;
+    place-content: center;
+    flex: none;
+    width: 7mm;
+    height: 7mm;
+    border-radius: var(--radius-round);
+    background: var(--tape);
+    color: var(--on-tape);
+    font-size: 11pt;
+    font-weight: 900;
+  }
+  .time {
+    margin-block-end: 1.5mm;
+    font-family: var(--font-mono);
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .alert {
+    margin-block: 1.5mm 2mm;
+    padding: 2mm 3mm;
+    border: 0.6mm solid var(--black);
+    border-inline-start-width: 2.5mm;
+    background: var(--tape-soft);
+  }
+  .alert-title {
+    font-weight: 800;
+  }
+  .links {
+    margin-block-start: 1.5mm;
+    padding: 0;
+    list-style: none;
+  }
+  .links a {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

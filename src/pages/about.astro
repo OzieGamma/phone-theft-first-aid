@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { author, repo } from '../lib/site';
+import { author, repo, url } from '../lib/site';
 ---
 
 <Base title="About" description="Made by someone whose phone was stolen.">
@@ -16,24 +16,10 @@ import { author, repo } from '../lib/site';
       </p>
       <p>I am not a security company or an agency. The information on this website is not meant to be exhaustive.</p>
       <p>Vibe-coded by <a href={repo}>{author}</a>. Found a mistake or a better step? <a href={repo}>Contribute</a></p>
-      <p>
-        Press, operators, phone makers, anyone who wants stolen phones to be worth nothing: write to
-        <a class="email" data-user="ycacovda" data-domain="gro.dia-tsrif-tfeht-enohp">advocacy at phone-theft-first-aid dot org</a>
-      </p>
+      <p>Press, operators, phone makers: see <a href={url('/advocacy/')}>Advocacy</a></p>
     </div>
   </div>
 </Base>
-
-<script>
-  // The address is stored reversed and assembled here, so simple scrapers reading the HTML do not find it.
-  // Without JavaScript the spelled-out text stays.
-  const reverse = (text: string) => [...text].reverse().join('');
-  for (const link of document.querySelectorAll<HTMLAnchorElement>('a.email')) {
-    const address = `${reverse(link.dataset.user!)}@${reverse(link.dataset.domain!)}`;
-    link.href = `mailto:${address}`;
-    link.textContent = address;
-  }
-</script>
 
 <style>
   .body {

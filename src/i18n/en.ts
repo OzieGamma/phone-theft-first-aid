@@ -16,6 +16,7 @@ export const ui = {
     prevention: 'Prevention',
     card: 'Card',
     sources: 'Data sources',
+    advocacy: 'Advocacy',
     about: 'About',
     contribute: 'Contribute',
     privacy: 'Privacy',

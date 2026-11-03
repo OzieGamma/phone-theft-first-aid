@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Picto from '../components/Picto.astro';
+import { pdfFile, url } from '../lib/site';
+---
+
+<Base title="Advocacy" description="Keep the checklist on paper for people whose phone was just stolen.">
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="display">Advocacy</h1>
+    </header>
+
+    <div class="stack">
+      <section aria-labelledby="police-title">
+        <h2 id="police-title">Police should help victims block their accounts</h2>
+        <p>When my phone was stolen, the police officer told me to block my bank account by email</p>
+        <p>
+          The job of the police is not only to catch criminals and tell victims "we can't do anything". They
+          should help people block access to their accounts and call their bank
+        </p>
+      </section>
+
+      <section aria-labelledby="print-title">
+        <h2 id="print-title">The checklist on paper</h2>
+        <p>⚠️ Someone whose phone was just stolen cannot look up what to do. They have no phone, and often no internet</p>
+        <p>Police, hotels, shops: print this checklist. Keep it ready and hand it to them</p>
+        <p>⚠️ Take the theft seriously. It is not just a phone. Their bank and accounts are at risk</p>
+        <a class="btn btn-primary download" href={url(`/${pdfFile}`)} download>
+          <Picto name="printer" />
+          Download the checklist (PDF)
+        </a>
+      </section>
+
+      <section aria-labelledby="write-title">
+        <h2 id="write-title">Write to us</h2>
+        <p>
+          Press, operators, phone makers, anyone who wants stolen phones to be worth nothing: write to{' '}
+          <a class="email" data-user="ycacovda" data-domain="gro.dia-tsrif-tfeht-enohp">advocacy at phone-theft-first-aid dot org</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<script>
+  // The address is stored reversed and assembled here, so simple scrapers reading the HTML do not find it.
+  // Without JavaScript the spelled-out text stays.
+  const reverse = (text: string) => [...text].reverse().join('');
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('a.email')) {
+    const address = `${reverse(link.dataset.user!)}@${reverse(link.dataset.domain!)}`;
+    link.href = `mailto:${address}`;
+    link.textContent = address;
+  }
+</script>
+
+<style>
+  .stack {
+    font-size: 18px;
+    line-height: 29px;
+  }
+  h2 {
+    margin-block-end: var(--space-2);
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 800;
+  }
+  section > p + p {
+    margin-block-start: var(--space-2);
+  }
+  .download {
+    width: 100%;
+    margin-block-start: var(--space-5);
+  }
+</style>
