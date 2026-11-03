@@ -22,7 +22,7 @@ const prefix = url('/', lang);
 // The 404 page has no counterpart: its language links go home.
 const page = path.startsWith(prefix) && !/\/404(\.html)?\/$/.test(path) ? path.slice(prefix.length - 1) : '/';
 const nav = [
-  { href: url('/', lang), label: ui.nav.home },
+  { href: url('/checklist/', lang), label: ui.nav.home },
   { href: url('/recovery/', lang), label: ui.nav.recovery },
   { href: url('/prevention/', lang), label: ui.nav.prevention },
   { href: url('/card/', lang), label: ui.nav.card },

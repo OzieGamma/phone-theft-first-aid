@@ -148,7 +148,7 @@
         "➡️ A blocked SIM cannot be used to receive login codes",
         "2️⃣ Ask them to block the phone by its IMEI too. They can often see the number on your account",
         "➡️ A blocked phone stops working on networks that check the list",
-        "⚠️ Don't forget to block secondary sims / e-sims"
+        "⚠️ Do not forget to block secondary SIMs / eSIMs"
       ]
     },
     {
@@ -326,7 +326,7 @@
         "Remove the stolen phone from your devices and sign-in methods",
         "1️⃣ Choose Sign out of all other devices",
         "2️⃣ Change the password",
-        "Next, do the same for your other accounts (social media, banks, paypal ...)"
+        "Next, do the same for your other accounts (social media, banks, PayPal ...)"
       ],
       "links": [
         {
