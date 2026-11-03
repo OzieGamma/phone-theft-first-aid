@@ -3,11 +3,12 @@
 // browser (no server); the PDFs are written to dist/ and the print pages removed.
 // Dev: the dev server prints the PDF fresh on each request.
 // Either way, every request outside the site is refused.
-// Needs the browser once per machine: npx playwright install chromium
+// Uses a Chrome already on the machine (GitHub's runners have one), so nothing is downloaded.
+// No Chrome? Set CHROME_PATH to any Chromium-based browser, or run once: npx playwright-core install chromium
 import type { AstroIntegration } from 'astro';
 import { readFile, rm, writeFile } from 'node:fs/promises';
 import { extname } from 'node:path';
-import { chromium, type Route } from 'playwright';
+import { chromium, type Browser, type Route } from 'playwright-core';
 import { locales } from '../i18n/index.ts';
 import { pdfFile } from '../lib/site.ts';
 
@@ -22,9 +23,20 @@ const types: Record<string, string> = {
   '.woff2': 'font/woff2',
 };
 
+/** CHROME_PATH if set, else installed Chrome, else Edge, else a Chromium from `playwright-core install`. */
+async function launch(): Promise<Browser> {
+  if (process.env.CHROME_PATH) return chromium.launch({ executablePath: process.env.CHROME_PATH });
+  for (const channel of ['chrome', 'msedge', undefined]) {
+    try {
+      return await chromium.launch({ channel });
+    } catch {}
+  }
+  throw new Error('No Chrome found to print the checklist PDF. Install Chrome, set CHROME_PATH, or run: npx playwright-core install chromium');
+}
+
 /** Opens `address` and prints it. `serve` answers the site's own requests; requests elsewhere are refused. */
 async function print(address: string, serve?: (route: Route, url: URL) => Promise<void>): Promise<Buffer> {
-  const browser = await chromium.launch();
+  const browser = await launch();
   try {
     const tab = await browser.newPage();
     const site = new URL(address).origin;

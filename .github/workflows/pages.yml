@@ -28,8 +28,7 @@ jobs:
       - id: pages
         uses: actions/configure-pages@v5
       - run: npm ci
-      # Headless Chromium prints the checklist PDF at the end of the build (src/integrations/pdf.ts).
-      - run: npx playwright install --with-deps chromium
+      # The build prints the checklist PDFs with the runner's own Chrome (src/integrations/pdf.ts).
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

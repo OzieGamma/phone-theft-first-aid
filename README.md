@@ -10,7 +10,8 @@ A static site built with [Astro](https://astro.build). `npm run build` writes pl
 
 ```sh
 npm install
-npx playwright install chromium   # once: the build prints the checklist PDF with it
+# The build prints the checklist PDFs with an installed Chrome or Edge. None? Set CHROME_PATH,
+# or run once: npx playwright-core install chromium
 npm run dev       # http://localhost:4321
 npm run build     # static files in dist/
 npm run preview   # serve dist/ locally
@@ -23,7 +24,7 @@ npm run preview   # serve dist/ locally
 | `brandkit/` | The design system: tokens, voice, logos, pictograms. Single source of truth, imported directly. |
 | `src/data/checklist.<lang>.json` | The checklist (`en`, `fr`, `nl`): questions and steps, in order. Schema in `checklist.schema.json`. Shared with the PDF. |
 | `src/lib/checklist.ts` | Types and helpers for the checklist JSON (no Astro, reusable from a PDF script). |
-| `src/pages/print/[...lang]/checklist.astro`, `src/integrations/pdf.ts` | The checklist on A4. After each build, headless Chromium prints it to `dist/phone-theft-first-aid-checklist.pdf` (`-fr.pdf`, `-nl.pdf`), linked from `/advocacy/`, and the print pages are removed. The dev server prints them on request. |
+| `src/pages/print/[...lang]/checklist.astro`, `src/integrations/pdf.ts` | The checklist on A4. After each build, headless Chrome prints it to `dist/phone-theft-first-aid-checklist.pdf` (`-fr.pdf`, `-nl.pdf`), linked from `/advocacy/`, and the print pages are removed. The dev server prints them on request. |
 | `src/i18n/` | Every string outside the checklist, page copy included: `en.ts`, `fr.ts`, `nl.ts`, same shape. `index.ts` lists the languages. To add one, copy `en.ts` and the checklist JSON, translate both, and register it in `index.ts` and `astro.config.mjs`. |
 | `src/components/` | `Checklist`, `Picto`, `Logo`, `Notice`, `RightsCallout`, `AfterLinks` |
 | `src/layouts/Base.astro` | Page shell, footer nav |
