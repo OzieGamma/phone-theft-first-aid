@@ -211,11 +211,43 @@ const en = {
     warningSource: 'GBG survey, 2022',
     warningSourceNote: 'Not all identity fraud comes from phone theft, but I could not find more precise numbers',
     listTitle: 'Do this before it happens',
+    listNote: 'Menu names can differ on your phone. Cannot find one? Search for it in Settings',
     items: [
       {
         picto: 'imei',
         title: 'Write down your IMEI',
-        lines: ['Type *#06# in the phone app. The number appears', 'Write it on paper. Keep it at home'],
+        lines: [
+          'Type *#06# in the phone app. The number appears',
+          'Write it on paper. Keep it at home',
+          'No number? Find it in Settings'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Open Settings',
+              'Tap General',
+              'Tap About',
+              'Scroll down to IMEI'
+            ],
+            doc: {
+              label: 'Apple guide',
+              href: 'https://support.apple.com/en-us/108037'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Open Settings',
+              'Tap About phone',
+              'Look for IMEI'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/android/answer/15146908?hl=en'
+            }
+          }
+        ]
       },
       {
         picto: 'phone',
@@ -232,7 +264,45 @@ const en = {
       {
         picto: 'sim-block',
         title: 'Set a SIM PIN',
-        lines: ['Then a thief cannot move your SIM to another phone to get your login codes'],
+        lines: [
+          'Then a thief cannot move your SIM to another phone to get your login codes',
+          'Asked for a PIN you never set? Get the default PIN from your operator',
+          'Do not guess it. Wrong guesses can lock the SIM for good',
+          'Change the default PIN. Anyone can look up some of them'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Open Settings',
+              'Tap Cellular or Mobile Service',
+              'Two numbers? Tap the number you want',
+              'Tap SIM PIN',
+              'Turn on SIM PIN',
+              'Enter the PIN',
+              'Tap Done'
+            ],
+            doc: {
+              label: 'Apple guide',
+              href: 'https://support.apple.com/en-us/118228'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Open Settings',
+              'Tap Security & Privacy',
+              'Tap More Security Settings',
+              'Tap SIM Lock',
+              'Turn on Lock SIM',
+              'Enter the PIN'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/android/answer/15146908?hl=en'
+            }
+          }
+        ]
       },
       {
         picto: 'card',
@@ -254,39 +324,199 @@ const en = {
       },
       {
         picto: 'locate',
-        title: 'Turn on Find My',
-        lines: ['iPhone: Find My iPhone. Android: Find My Device', 'Check that you know the password for that account'],
+        title: 'Turn on Find My or Find Hub',
+        lines: [
+          'Check that you know the password for that account'
+        ],
+        guides: [
+          {
+            name: 'iPhone: Find My',
+            steps: [
+              'Open Settings',
+              'Tap your name',
+              'Tap Find My',
+              'Tap Find My iPhone',
+              'Turn on Find My iPhone',
+              'Turn on Find My network',
+              'Turn on Send Last Location'
+            ],
+            doc: {
+              label: 'Apple guide',
+              href: 'https://support.apple.com/en-us/102648'
+            }
+          },
+          {
+            name: 'Android: Find Hub',
+            steps: [
+              'Open Settings',
+              'Tap Location',
+              'Turn on Use location',
+              'Go back to Settings',
+              'Tap Security',
+              'Tap Find Hub',
+              'Turn on Allow device to be located',
+              'Go back to Settings',
+              'Tap Google',
+              'Tap All services',
+              'Tap Find Hub',
+              'Tap Find your offline devices',
+              'Choose With network everywhere'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/android/answer/3265955?hl=en'
+            }
+          }
+        ]
       },
       {
         picto: 'lock',
         title: 'Turn on theft protection',
-        lines: [
-          'iPhone: Stolen Device Protection. Android: Theft protection',
-          'It asks for your face or fingerprint before big changes',
-        ],
+        lines: [],
+        guides: [
+          {
+            name: 'iPhone: Stolen Device Protection',
+            notes: [
+              'It asks for your face or fingerprint before big changes',
+              'It needs two-factor authentication, Find My, a passcode, Face ID or Touch ID, and Significant Locations'
+            ],
+            steps: [
+              'Open Settings',
+              'Tap Face ID & Passcode',
+              'Enter your passcode',
+              'Tap Stolen Device Protection',
+              'Turn on Stolen Device Protection',
+              'Under Require Security Delay, tap Always'
+            ],
+            doc: {
+              label: 'Apple guide',
+              href: 'https://support.apple.com/en-us/120340'
+            }
+          },
+          {
+            name: 'Android: Theft protection',
+            notes: [
+              'It locks the screen if someone grabs the phone, if the phone goes offline, or after wrong tries',
+              'It needs a screen lock',
+              'A setting is grey? Your phone does not have that lock'
+            ],
+            steps: [
+              'Open Settings',
+              'Tap Google',
+              'Tap All services',
+              'Tap Theft protection',
+              'Turn on Theft Detection Lock',
+              'Turn on Offline Device Lock',
+              'Turn on Failed Authentication Lock',
+              'Tap Remote Lock',
+              'Turn on Remote lock'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/android/answer/15146908?hl=en'
+            }
+          }
+        ]
       },
       {
         picto: 'printer',
         title: 'Print your backup codes',
         lines: [
-          'Make them in the security settings of your email account. Do this for email first',
+          'Do this for your email first',
+          'Another email provider? Look in the security settings of that account',
           'Keep the paper at home, not in your wallet or phone case',
+          'Apple Account: use a Recovery Contact instead. See Add a second way to sign in'
         ],
+        guides: [
+          {
+            name: 'Google Account',
+            notes: [
+              'Turn on 2-Step Verification first'
+            ],
+            steps: [
+              'Open your Google Account',
+              'Tap Security & sign-in',
+              'Tap 2-Step Verification',
+              'Under Backup codes, tap Continue',
+              'Tap Get backup codes',
+              'Tap Print codes'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/accounts/answer/1187538?hl=en'
+            }
+          }
+        ]
       },
       {
         picto: 'password',
         title: 'Add a second way to sign in',
         lines: [
-          'Add a recovery email address',
-          'Add a second phone number that is not in this phone, such as a family member',
-          'A security key or a passkey on a laptop also works',
-          'iPhone: add a Recovery Contact, someone you trust',
+          'A security key or a passkey on a laptop also works'
         ],
+        guides: [
+          {
+            name: 'Apple Account: Recovery Contact',
+            notes: [
+              'Choose someone you trust who has an Apple device',
+              'You both need iMessage turned on'
+            ],
+            steps: [
+              'Open Settings',
+              'Tap your name',
+              'Tap Sign-In & Security',
+              'Tap Recovery Contacts',
+              'Tap Add Recovery Contact',
+              'Follow the steps on the screen'
+            ],
+            doc: {
+              label: 'Apple guide',
+              href: 'https://support.apple.com/en-us/102641'
+            }
+          },
+          {
+            name: 'Google Account: recovery email and phone',
+            notes: [
+              'Use an email address that is not the one you sign in with',
+              'Add a second phone number that is not in this phone, such as a family member'
+            ],
+            steps: [
+              'Open your Google Account',
+              'Tap Security & sign-in',
+              'Tap Recovery email',
+              'Follow the steps on the screen',
+              'Go back to Security & sign-in',
+              'Tap Recovery phone',
+              'Follow the steps on the screen'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/accounts/answer/183723?hl=en'
+            }
+          }
+        ]
       },
       {
         picto: 'authenticator',
         title: 'Do not keep your login codes only on the phone',
-        lines: ['Turn on backup in your code app', 'Or set it up on a second device too'],
+        lines: [
+          'Another code app? Turn on backup in its settings',
+          'Or set it up on a second device too'
+        ],
+        guides: [
+          {
+            name: 'Google Authenticator',
+            steps: [
+              'Open Google Authenticator',
+              'Sign in to your Google Account in the app',
+              'Asked to save your codes to the account? Tap Continue'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/accounts/answer/1066447?hl=en&co=GENIE.Platform%3DAndroid'
+            }
+          }
+        ]
       },
       {
         picto: 'check',
@@ -296,12 +526,66 @@ const en = {
       {
         picto: 'repeat',
         title: 'Phone already stolen once?',
-        lines: ['Once you are back in your accounts, make new backup codes', 'The old ones may have been stolen with the phone'],
+        lines: [
+          'Once you are back in your accounts, make new backup codes',
+          'The old ones may have been stolen with the phone'
+        ],
+        guides: [
+          {
+            name: 'Google Account',
+            steps: [
+              'Open your Google Account',
+              'Tap Security & sign-in',
+              'Tap 2-Step Verification',
+              'Under Backup codes, tap Continue',
+              'Tap Refresh',
+              'Print the new codes'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/accounts/answer/1187538?hl=en'
+            }
+          }
+        ]
       },
       {
         picto: 'backup',
         title: 'Back up your phone',
-        lines: ['Photos and contacts are what people miss most'],
+        lines: [
+          'Photos and contacts are what people miss most'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Open Settings',
+              'Tap your name',
+              'Tap iCloud',
+              'Tap iCloud Backup',
+              'Turn on Back Up This iPhone',
+              'Tap Back Up Now'
+            ],
+            doc: {
+              label: 'Apple guide',
+              href: 'https://support.apple.com/en-us/108366'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Open Settings',
+              'Tap Google',
+              'Tap All services',
+              'Tap Backup',
+              'Turn on Backup',
+              'Tap Back up now'
+            ],
+            doc: {
+              label: 'Google guide',
+              href: 'https://support.google.com/android/answer/2819582?hl=en'
+            }
+          }
+        ]
       },
     ] as TodoItem[],
   },

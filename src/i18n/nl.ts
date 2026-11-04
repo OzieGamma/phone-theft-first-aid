@@ -205,11 +205,43 @@ const nl: Strings = {
     warningSource: 'Enquête van GBG, 2022',
     warningSourceNote: 'Niet alle identiteitsfraude komt door telefoondiefstal, maar ik vond geen preciezere cijfers',
     listTitle: 'Doe dit voor het gebeurt',
+    listNote: 'Menunamen kunnen op je telefoon anders zijn. Vind je er een niet? Zoek ernaar in de instellingen',
     items: [
       {
         picto: 'imei',
         title: 'Schrijf je IMEI op',
-        lines: ['Typ *#06# in de telefoonapp. Het nummer verschijnt', 'Schrijf het op papier. Bewaar het thuis'],
+        lines: [
+          'Typ *#06# in de telefoonapp. Het nummer verschijnt',
+          'Schrijf het op papier. Bewaar het thuis',
+          'Geen nummer? Zoek het in de instellingen'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Open Instellingen',
+              'Tik op Algemeen',
+              'Tik op Info',
+              'Scrol omlaag naar IMEI'
+            ],
+            doc: {
+              label: 'Uitleg van Apple',
+              href: 'https://support.apple.com/nl-nl/108037'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Open Instellingen',
+              'Tik op Over de telefoon',
+              'Zoek IMEI'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/android/answer/15146908?hl=nl'
+            }
+          }
+        ]
       },
       {
         picto: 'phone',
@@ -226,7 +258,45 @@ const nl: Strings = {
       {
         picto: 'sim-block',
         title: 'Stel een pincode in voor je simkaart',
-        lines: ['Dan kan een dief je simkaart niet in een andere telefoon steken om je inlogcodes te krijgen'],
+        lines: [
+          'Dan kan een dief je simkaart niet in een andere telefoon steken om je inlogcodes te krijgen',
+          'Vraagt het een pincode die je nooit hebt gekozen? Vraag de standaardpincode aan je provider',
+          'Raad niet. Een foute pincode kan je simkaart voorgoed blokkeren',
+          'Wijzig de standaardpincode. Sommige zijn voor iedereen te vinden'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Open Instellingen',
+              'Tik op Mobiel netwerk',
+              'Twee nummers? Tik op het nummer dat je wilt',
+              'Tik op Simpincode',
+              'Zet Simpincode aan',
+              'Voer de pincode in',
+              'Tik op Gereed'
+            ],
+            doc: {
+              label: 'Uitleg van Apple',
+              href: 'https://support.apple.com/nl-nl/118228'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Open Instellingen',
+              'Tik op Beveiliging en privacy',
+              'Tik op Meer beveiligingsinstellingen',
+              'Tik op Simlock',
+              'Zet Simkaart vergrendelen aan',
+              'Voer de pincode in'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/android/answer/15146908?hl=nl'
+            }
+          }
+        ]
       },
       {
         picto: 'card',
@@ -248,39 +318,199 @@ const nl: Strings = {
       },
       {
         picto: 'locate',
-        title: 'Zet Zoek mijn aan',
-        lines: ['iPhone: Zoek mijn iPhone. Android: Vind mijn apparaat', 'Controleer of je het wachtwoord van dat account kent'],
+        title: 'Zet Zoek mijn of Vind-plek aan',
+        lines: [
+          'Controleer of je het wachtwoord van dat account kent'
+        ],
+        guides: [
+          {
+            name: 'iPhone: Zoek mijn',
+            steps: [
+              'Open Instellingen',
+              'Tik op je naam',
+              'Tik op Zoek mijn',
+              'Tik op Zoek mijn iPhone',
+              'Zet Zoek mijn iPhone aan',
+              'Zet Zoek mijn-netwerk aan',
+              'Zet Stuur laatste locatie aan'
+            ],
+            doc: {
+              label: 'Uitleg van Apple',
+              href: 'https://support.apple.com/nl-nl/102648'
+            }
+          },
+          {
+            name: 'Android: Vind-plek',
+            steps: [
+              'Open Instellingen',
+              'Tik op Locatie',
+              'Zet Locatie gebruiken aan',
+              'Ga terug naar Instellingen',
+              'Tik op Beveiliging',
+              'Tik op Vind-plek',
+              'Zet Toestaan dat het apparaat wordt gevonden aan',
+              'Ga terug naar Instellingen',
+              'Tik op Google',
+              'Tik op Alle services',
+              'Tik op Vind-plek',
+              'Tik op Je offline apparaten vinden',
+              'Kies Met netwerk overal'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/android/answer/3265955?hl=nl'
+            }
+          }
+        ]
       },
       {
         picto: 'lock',
         title: 'Zet diefstalbeveiliging aan',
-        lines: [
-          'iPhone: Bescherming gestolen apparaat. Android: Diefstalbeveiliging',
-          'Die vraagt je gezicht of vingerafdruk voor grote wijzigingen',
-        ],
+        lines: [],
+        guides: [
+          {
+            name: 'iPhone: Bescherming voor gestolen apparaat',
+            notes: [
+              'Die vraagt je gezicht of vingerafdruk voor grote wijzigingen',
+              'Je hebt twee-factor-authenticatie, Zoek mijn, een toegangscode, Face ID of Touch ID en Belangrijke locaties nodig'
+            ],
+            steps: [
+              'Open Instellingen',
+              'Tik op Face ID en toegangscode',
+              'Voer je toegangscode in',
+              'Tik op Bescherming voor gestolen apparaat',
+              'Zet Bescherming voor gestolen apparaat aan',
+              'Kies onder Beveiligingsvertraging vereist de optie Altijd'
+            ],
+            doc: {
+              label: 'Uitleg van Apple',
+              href: 'https://support.apple.com/nl-nl/120340'
+            }
+          },
+          {
+            name: 'Android: Diefstalbeveiliging',
+            notes: [
+              'Die vergrendelt het scherm als iemand de telefoon grijpt, als de telefoon offline gaat of na foute pogingen',
+              'Je hebt een schermvergrendeling nodig',
+              'Is een optie grijs? Je telefoon heeft die vergrendeling niet'
+            ],
+            steps: [
+              'Open Instellingen',
+              'Tik op Google',
+              'Tik op Alle services',
+              'Tik op Diefstalbeveiliging',
+              'Zet Vergrendeling bij diefstaldetectie aan',
+              'Zet Offline apparaatvergrendeling aan',
+              'Zet Vergrendeling bij mislukte verificatie aan',
+              'Tik op Apparaatvergrendeling op afstand',
+              'Zet Apparaatvergrendeling op afstand aan'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/android/answer/15146908?hl=nl'
+            }
+          }
+        ]
       },
       {
         picto: 'printer',
         title: 'Print je back-upcodes',
         lines: [
-          'Maak ze aan in de beveiligingsinstellingen van je e-mailaccount. Doe dit eerst voor je e-mail',
+          'Doe dit eerst voor je e-mail',
+          'Een andere e-mailprovider? Kijk in de beveiligingsinstellingen van dat account',
           'Bewaar het papier thuis, niet in je portemonnee of telefoonhoesje',
+          'Apple Account: gebruik in plaats daarvan een herstelcontact. Zie Voeg een tweede manier om in te loggen toe'
         ],
+        guides: [
+          {
+            name: 'Google-account',
+            notes: [
+              'Zet eerst tweestapsverificatie aan'
+            ],
+            steps: [
+              'Open je Google-account',
+              'Tik op Beveiliging en inloggen',
+              'Tik op Tweestapsverificatie',
+              'Tik onder Back-upcodes op Doorgaan',
+              'Tik op Back-upcodes verkrijgen',
+              'Tik op Afdrukken'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/accounts/answer/1187538?hl=nl'
+            }
+          }
+        ]
       },
       {
         picto: 'password',
         title: 'Voeg een tweede manier om in te loggen toe',
         lines: [
-          'Voeg een herstel-e-mailadres toe',
-          'Voeg een tweede telefoonnummer toe dat niet in deze telefoon zit, bijvoorbeeld van een familielid',
-          'Een beveiligingssleutel of een toegangssleutel op een laptop werkt ook',
-          'iPhone: voeg een herstelcontact toe, iemand die je vertrouwt',
+          'Een beveiligingssleutel of een toegangssleutel op een laptop werkt ook'
         ],
+        guides: [
+          {
+            name: 'Apple Account: herstelcontact',
+            notes: [
+              'Kies iemand die je vertrouwt en die een Apple apparaat heeft',
+              'Jullie moeten allebei iMessage aan hebben staan'
+            ],
+            steps: [
+              'Open Instellingen',
+              'Tik op je naam',
+              'Tik op Inloggen en beveiliging',
+              'Tik op Herstelcontacten',
+              'Tik op Voeg herstelcontact toe',
+              'Volg de stappen op het scherm'
+            ],
+            doc: {
+              label: 'Uitleg van Apple',
+              href: 'https://support.apple.com/nl-nl/102641'
+            }
+          },
+          {
+            name: 'Google-account: herstelmailadres en hersteltelefoonnummer',
+            notes: [
+              'Gebruik een ander e-mailadres dan dat waarmee je inlogt',
+              'Voeg een tweede telefoonnummer toe dat niet in deze telefoon zit, bijvoorbeeld van een familielid'
+            ],
+            steps: [
+              'Open je Google-account',
+              'Tik op Beveiliging en inloggen',
+              'Tik op Herstelmailadres',
+              'Volg de stappen op het scherm',
+              'Ga terug naar Beveiliging en inloggen',
+              'Tik op Hersteltelefoonnummer',
+              'Volg de stappen op het scherm'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/accounts/answer/183723?hl=nl'
+            }
+          }
+        ]
       },
       {
         picto: 'authenticator',
         title: 'Bewaar je inlogcodes niet alleen op de telefoon',
-        lines: ['Zet back-up aan in je code-app', 'Of stel hem ook in op een tweede apparaat'],
+        lines: [
+          'Een andere code-app? Zet back-up aan in de instellingen van die app',
+          'Of stel hem ook in op een tweede apparaat'
+        ],
+        guides: [
+          {
+            name: 'Google Authenticator',
+            steps: [
+              'Open Google Authenticator',
+              'Log in de app in op je Google-account',
+              'Vraagt de app om je codes op te slaan in het account? Tik op Toestaan'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/accounts/answer/1066447?hl=nl&co=GENIE.Platform%3DAndroid'
+            }
+          }
+        ]
       },
       {
         picto: 'check',
@@ -290,12 +520,66 @@ const nl: Strings = {
       {
         picto: 'repeat',
         title: 'Al eens een telefoon gestolen?',
-        lines: ['Maak nieuwe back-upcodes zodra je weer in je accounts kunt', 'De oude zijn misschien samen met de telefoon gestolen'],
+        lines: [
+          'Maak nieuwe back-upcodes zodra je weer in je accounts kunt',
+          'De oude zijn misschien samen met de telefoon gestolen'
+        ],
+        guides: [
+          {
+            name: 'Google-account',
+            steps: [
+              'Open je Google-account',
+              'Tik op Beveiliging en inloggen',
+              'Tik op Tweestapsverificatie',
+              'Tik onder Back-upcodes op Doorgaan',
+              'Tik op Vernieuwen',
+              'Print de nieuwe codes'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/accounts/answer/1187538?hl=nl'
+            }
+          }
+        ]
       },
       {
         picto: 'backup',
         title: 'Maak een back-up van je telefoon',
-        lines: ['Foto’s en contacten missen mensen het meest'],
+        lines: [
+          'Foto’s en contacten missen mensen het meest'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Open Instellingen',
+              'Tik op je naam',
+              'Tik op iCloud',
+              'Tik op iCloud-reservekopie',
+              'Zet Back-up van deze iPhone aan',
+              'Tik op Maak nu back-up'
+            ],
+            doc: {
+              label: 'Uitleg van Apple',
+              href: 'https://support.apple.com/nl-nl/108366'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Open Instellingen',
+              'Tik op Google',
+              'Tik op Alle services',
+              'Tik op Back-up',
+              'Zet Back-up aan',
+              'Tik op Nu back-up maken'
+            ],
+            doc: {
+              label: 'Uitleg van Google',
+              href: 'https://support.google.com/android/answer/2819582?hl=nl'
+            }
+          }
+        ]
       },
     ],
   },

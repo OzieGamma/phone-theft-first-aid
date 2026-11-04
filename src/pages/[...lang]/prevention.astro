@@ -98,6 +98,7 @@ const labelled = new Set([points[0], points.reduce((a, b) => (b.value < a.value 
     </div>
 
     <h2 class="list-title">{page.listTitle}</h2>
+    <p class="list-note">{page.listNote}</p>
     <TodoList lang={lang} items={page.items} storageKey="ptfa-prevention" />
   </div>
 </Base>
@@ -231,5 +232,11 @@ const labelled = new Set([points[0], points.reduce((a, b) => (b.value < a.value 
     font-size: 22px;
     line-height: 30px;
     font-weight: 800;
+  }
+  .list-note {
+    margin-block-start: var(--space-2);
+    color: var(--ink-muted);
+    font-size: 16px;
+    line-height: 24px;
   }
 </style>

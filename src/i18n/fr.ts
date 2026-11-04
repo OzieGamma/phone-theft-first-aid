@@ -206,11 +206,43 @@ const fr: Strings = {
     warningSource: 'Enquête GBG, 2022',
     warningSourceNote: 'L’usurpation d’identité ne vient pas toujours d’un vol de téléphone, mais je n’ai pas trouvé de chiffres plus précis',
     listTitle: 'À faire avant que ça arrive',
+    listNote: 'Les noms des menus peuvent être différents sur votre téléphone. Vous n’en trouvez pas un ? Cherchez-le dans les réglages',
     items: [
       {
         picto: 'imei',
         title: 'Notez votre IMEI',
-        lines: ['Tapez *#06# dans l’appli Téléphone. Le numéro s’affiche', 'Écrivez-le sur papier. Gardez-le chez vous'],
+        lines: [
+          'Tapez *#06# dans l’appli Téléphone. Le numéro s’affiche',
+          'Écrivez-le sur papier. Gardez-le chez vous',
+          'Pas de numéro ? Cherchez-le dans les réglages'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Ouvrez Réglages',
+              'Touchez Général',
+              'Touchez Informations',
+              'Faites défiler jusqu’à IMEI'
+            ],
+            doc: {
+              label: 'Guide Apple',
+              href: 'https://support.apple.com/fr-fr/108037'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Ouvrez Paramètres',
+              'Appuyez sur À propos du téléphone',
+              'Cherchez IMEI'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/android/answer/15146908?hl=fr'
+            }
+          }
+        ]
       },
       {
         picto: 'phone',
@@ -227,7 +259,45 @@ const fr: Strings = {
       {
         picto: 'sim-block',
         title: 'Mettez un code PIN sur la SIM',
-        lines: ['Un voleur ne peut alors pas mettre votre SIM dans un autre téléphone pour recevoir vos codes de connexion'],
+        lines: [
+          'Un voleur ne peut alors pas mettre votre SIM dans un autre téléphone pour recevoir vos codes de connexion',
+          'On vous demande un code que vous n’avez jamais choisi ? Demandez le code PIN par défaut à votre opérateur',
+          'Ne devinez pas. Une erreur peut bloquer la SIM définitivement',
+          'Changez le code PIN par défaut. Certains sont connus de tous'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Ouvrez Réglages',
+              'Touchez Données cellulaires',
+              'Deux numéros ? Touchez le numéro voulu',
+              'Touchez PIN de la carte SIM',
+              'Activez le code PIN',
+              'Saisissez le code PIN',
+              'Touchez OK'
+            ],
+            doc: {
+              label: 'Guide Apple',
+              href: 'https://support.apple.com/fr-fr/118228'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Ouvrez Paramètres',
+              'Appuyez sur Sécurité et confidentialité',
+              'Appuyez sur Autres paramètres de sécurité',
+              'Appuyez sur Verrouillage de carte SIM',
+              'Activez Verrouiller la carte SIM',
+              'Saisissez le code PIN'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/android/answer/15146908?hl=fr'
+            }
+          }
+        ]
       },
       {
         picto: 'card',
@@ -249,39 +319,199 @@ const fr: Strings = {
       },
       {
         picto: 'locate',
-        title: 'Activez la localisation',
-        lines: ['iPhone : Localiser mon iPhone. Android : Localiser mon appareil', 'Vérifiez que vous connaissez le mot de passe de ce compte'],
+        title: 'Activez Localiser',
+        lines: [
+          'Vérifiez que vous connaissez le mot de passe de ce compte'
+        ],
+        guides: [
+          {
+            name: 'iPhone : Localiser',
+            steps: [
+              'Ouvrez Réglages',
+              'Touchez votre nom',
+              'Touchez Localiser',
+              'Touchez Localiser mon iPhone',
+              'Activez Localiser mon iPhone',
+              'Activez le réseau Localiser',
+              'Activez Envoyer la dernière position'
+            ],
+            doc: {
+              label: 'Guide Apple',
+              href: 'https://support.apple.com/fr-fr/102648'
+            }
+          },
+          {
+            name: 'Android : Localiser',
+            steps: [
+              'Ouvrez Paramètres',
+              'Appuyez sur Localisation',
+              'Activez Utiliser la localisation',
+              'Revenez à Paramètres',
+              'Appuyez sur Sécurité',
+              'Appuyez sur Localiser',
+              'Activez Autoriser la localisation de l’appareil',
+              'Revenez à Paramètres',
+              'Appuyez sur Google',
+              'Appuyez sur Tous les services',
+              'Appuyez sur Localiser',
+              'Appuyez sur Localiser vos appareils hors connexion',
+              'Choisissez Avec le réseau partout'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/android/answer/3265955?hl=fr'
+            }
+          }
+        ]
       },
       {
         picto: 'lock',
         title: 'Activez la protection contre le vol',
-        lines: [
-          'iPhone : Protection de l’appareil volé. Android : Protection contre le vol',
-          'Elle demande votre visage ou votre empreinte avant les changements importants',
-        ],
+        lines: [],
+        guides: [
+          {
+            name: 'iPhone : Protection en cas de vol de l’appareil',
+            notes: [
+              'Elle demande votre visage ou votre empreinte avant les changements importants',
+              'Il vous faut l’identification à deux facteurs, Localiser, un code, Face ID ou Touch ID, et Lieux importants'
+            ],
+            steps: [
+              'Ouvrez Réglages',
+              'Touchez Face ID et code',
+              'Saisissez votre code',
+              'Touchez Protection en cas de vol de l’appareil',
+              'Activez Protection en cas de vol de l’appareil',
+              'Sous Exiger un délai de sécurité, touchez Toujours'
+            ],
+            doc: {
+              label: 'Guide Apple',
+              href: 'https://support.apple.com/fr-fr/120340'
+            }
+          },
+          {
+            name: 'Android : Protection contre le vol',
+            notes: [
+              'Elle verrouille l’écran si quelqu’un arrache le téléphone, si le téléphone est hors connexion ou après des erreurs',
+              'Il vous faut un verrouillage de l’écran',
+              'Une option est grisée ? Votre téléphone n’a pas ce verrouillage'
+            ],
+            steps: [
+              'Ouvrez Paramètres',
+              'Appuyez sur Google',
+              'Appuyez sur Tous les services',
+              'Appuyez sur Protection contre le vol',
+              'Activez Verrouillage en cas de détection de vol',
+              'Activez Verrouillage de l’appareil hors connexion',
+              'Activez Verrouillage en cas d’échec de l’authentification',
+              'Appuyez sur Verrouillage à distance',
+              'Activez Verrouillage à distance'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/android/answer/15146908?hl=fr'
+            }
+          }
+        ]
       },
       {
         picto: 'printer',
         title: 'Imprimez vos codes de secours',
         lines: [
-          'Créez-les dans les réglages de sécurité de votre compte e-mail. Commencez par l’e-mail',
+          'Commencez par votre e-mail',
+          'Un autre fournisseur d’e-mail ? Regardez dans les réglages de sécurité de ce compte',
           'Gardez le papier chez vous, pas dans votre portefeuille ni dans la coque du téléphone',
+          'Compte Apple : utilisez plutôt un contact de récupération. Voir Ajoutez un deuxième moyen de connexion'
         ],
+        guides: [
+          {
+            name: 'Compte Google',
+            notes: [
+              'Activez d’abord la validation en deux étapes'
+            ],
+            steps: [
+              'Ouvrez votre compte Google',
+              'Appuyez sur Sécurité et connexion',
+              'Appuyez sur Validation en deux étapes',
+              'Sous Codes de secours, appuyez sur Continuer',
+              'Appuyez sur Générez des codes de secours',
+              'Appuyez sur Imprimer'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/accounts/answer/1187538?hl=fr'
+            }
+          }
+        ]
       },
       {
         picto: 'password',
         title: 'Ajoutez un deuxième moyen de connexion',
         lines: [
-          'Ajoutez une adresse e-mail de récupération',
-          'Ajoutez un deuxième numéro de téléphone qui n’est pas dans ce téléphone, par exemple celui d’un proche',
-          'Une clé de sécurité ou une clé d’accès sur un ordinateur portable fonctionne aussi',
-          'iPhone : ajoutez un contact de récupération, une personne de confiance',
+          'Une clé de sécurité ou une clé d’accès sur un ordinateur portable fonctionne aussi'
         ],
+        guides: [
+          {
+            name: 'Compte Apple : contact de récupération',
+            notes: [
+              'Choisissez une personne de confiance qui a un appareil Apple',
+              'iMessage doit être activé chez vous deux'
+            ],
+            steps: [
+              'Ouvrez Réglages',
+              'Touchez votre nom',
+              'Touchez Connexion et sécurité',
+              'Touchez Contacts de récupération',
+              'Touchez Ajouter un contact de récupération',
+              'Suivez les étapes à l’écran'
+            ],
+            doc: {
+              label: 'Guide Apple',
+              href: 'https://support.apple.com/fr-fr/102641'
+            }
+          },
+          {
+            name: 'Compte Google : e-mail et téléphone de récupération',
+            notes: [
+              'Utilisez une adresse e-mail différente de celle de votre compte',
+              'Ajoutez un deuxième numéro de téléphone qui n’est pas dans ce téléphone, par exemple celui d’un proche'
+            ],
+            steps: [
+              'Ouvrez votre compte Google',
+              'Appuyez sur Sécurité et connexion',
+              'Appuyez sur Adresse e-mail de récupération',
+              'Suivez les étapes à l’écran',
+              'Revenez à Sécurité et connexion',
+              'Appuyez sur Numéro de téléphone de récupération',
+              'Suivez les étapes à l’écran'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/accounts/answer/183723?hl=fr'
+            }
+          }
+        ]
       },
       {
         picto: 'authenticator',
         title: 'Ne gardez pas vos codes de connexion seulement sur le téléphone',
-        lines: ['Activez la sauvegarde dans votre appli de codes', 'Ou configurez-la aussi sur un deuxième appareil'],
+        lines: [
+          'Une autre appli de codes ? Activez la sauvegarde dans ses réglages',
+          'Ou configurez-la aussi sur un deuxième appareil'
+        ],
+        guides: [
+          {
+            name: 'Google Authenticator',
+            steps: [
+              'Ouvrez Google Authenticator',
+              'Connectez-vous à votre compte Google dans l’appli',
+              'On vous demande d’enregistrer vos codes dans le compte ? Appuyez sur Autoriser'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/accounts/answer/1066447?hl=fr&co=GENIE.Platform%3DAndroid'
+            }
+          }
+        ]
       },
       {
         picto: 'check',
@@ -290,13 +520,67 @@ const fr: Strings = {
       },
       {
         picto: 'repeat',
-        title: 'Téléphone déjà volé une fois ?',
-        lines: ['Quand vous avez de nouveau accès à vos comptes, créez de nouveaux codes de secours', 'Les anciens ont pu être volés avec le téléphone'],
+        title: 'Téléphone déjà volé une fois ?',
+        lines: [
+          'Quand vous avez de nouveau accès à vos comptes, créez de nouveaux codes de secours',
+          'Les anciens ont pu être volés avec le téléphone'
+        ],
+        guides: [
+          {
+            name: 'Compte Google',
+            steps: [
+              'Ouvrez votre compte Google',
+              'Appuyez sur Sécurité et connexion',
+              'Appuyez sur Validation en deux étapes',
+              'Sous Codes de secours, appuyez sur Continuer',
+              'Appuyez sur Actualiser',
+              'Imprimez les nouveaux codes'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/accounts/answer/1187538?hl=fr'
+            }
+          }
+        ]
       },
       {
         picto: 'backup',
         title: 'Sauvegardez votre téléphone',
-        lines: ['Les photos et les contacts sont ce qui manque le plus'],
+        lines: [
+          'Les photos et les contacts sont ce qui manque le plus'
+        ],
+        guides: [
+          {
+            name: 'iPhone',
+            steps: [
+              'Ouvrez Réglages',
+              'Touchez votre nom',
+              'Touchez iCloud',
+              'Touchez Sauvegarde iCloud',
+              'Activez Sauvegarder cet iPhone',
+              'Touchez Sauvegarder maintenant'
+            ],
+            doc: {
+              label: 'Guide Apple',
+              href: 'https://support.apple.com/fr-fr/108366'
+            }
+          },
+          {
+            name: 'Android',
+            steps: [
+              'Ouvrez Paramètres',
+              'Appuyez sur Google',
+              'Appuyez sur Tous les services',
+              'Appuyez sur Sauvegarde',
+              'Activez Sauvegarde',
+              'Appuyez sur Sauvegarder maintenant'
+            ],
+            doc: {
+              label: 'Guide Google',
+              href: 'https://support.google.com/android/answer/2819582?hl=fr'
+            }
+          }
+        ]
       },
     ],
   },

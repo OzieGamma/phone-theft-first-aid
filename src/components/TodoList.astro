@@ -2,6 +2,7 @@
 // A to-do list in any order, no steps: each item expands, with "Mark as done" inside.
 // Ticks live in sessionStorage under `storageKey`, like the checklist: gone when the tab closes.
 import Expander from './Expander.astro';
+import Links from './Links.astro';
 import type { PictoName } from './Picto.astro';
 import { t, type Lang } from '../i18n';
 import { url } from '../lib/site';
@@ -12,6 +13,8 @@ export interface TodoItem {
   lines: string[];
   /** A page on this site that helps do it, shown as a button above "Mark as done". */
   link?: { label: string; href: string };
+  /** Numbered steps per platform, each with a link to the official guide. */
+  guides?: { name: string; notes?: string[]; steps: string[]; doc: { label: string; href: string } }[];
 }
 
 interface Props {
@@ -36,6 +39,20 @@ const ui = t(lang);
             </span>
             {item.lines.map((line) => (
               <p set:html={line.replace('*#06#', '<code>*#06#</code>')} />
+            ))}
+            {item.guides?.map((guide) => (
+              <section class="guide">
+                <h3 class="label">{guide.name}</h3>
+                {guide.notes?.map((note) => (
+                  <p>{note}</p>
+                ))}
+                <ol>
+                  {guide.steps.map((step) => (
+                    <li>{step}</li>
+                  ))}
+                </ol>
+                <Links links={[guide.doc]} />
+              </section>
             ))}
             {item.link && (
               <a class="btn btn-primary do" href={url(item.link.href, lang)}>
@@ -106,6 +123,19 @@ const ui = t(lang);
   }
   .todo li:has(input:checked) .badge {
     display: block;
+  }
+  .guide {
+    margin-block-start: var(--space-5);
+  }
+  .guide h3 {
+    margin-block-end: var(--space-2);
+  }
+  .guide ol {
+    margin-block: var(--space-2) var(--space-3);
+    padding-inline-start: var(--space-6);
+  }
+  .guide ol li + li {
+    margin-block-start: var(--space-1);
   }
   .do {
     width: 100%;
